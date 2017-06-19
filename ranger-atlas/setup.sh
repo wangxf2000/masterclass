@@ -5,18 +5,24 @@ set -o xtrace
 ########################################################################
 ## variables
 
+
+
 export HOME=${HOME:-/root}
 export TERM=xterm
-: ${ambari_pass:="BadPass#1"}
-ambari_password="${ambari_pass}"
-: ${stack:="mycluster"}
-: ${cluster_name:=${stack}}
-: ${ambari_services:="HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER AMBARI_METRICS SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN"}
-: ${install_ambari_server:=true}
-: ${ambari_stack_version:=2.6}
-: ${deploy:=true}
-: ${host_count:=skip}
-: ${recommendation_strategy:="ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"}
+
+#overridable vars
+export stack=${stack:-hdp}    #cluster name
+export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
+export ambari_services=${ambari_services:-HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER AMBARI_METRICS SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
+export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
+export host_count=${host_count:-skip}      #number of nodes, defaults to 1
+
+#internal vars
+export ambari_password="${ambari_pass}"
+export cluster_name=${stack}
+export recommendation_strategy="ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"
+export install_ambari_server=true
+export deploy=true
 
 ## overrides
 #export ambari_stack_version=2.6
@@ -189,7 +195,7 @@ cat << EOF > configuration-custom.json
 }
 EOF
 
-    sleep 1
+    sleep 20
     ./deploy-recommended-cluster.bash
 
     if [ "${deploy}" = "true" ]; then
@@ -251,13 +257,23 @@ EOF
           -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
         sleep 5
 
-        ## import ranger policies
+        ## import ranger Hive policies
         < ranger-policies.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
         ${ranger_curl} -X POST \
         -H "Content-Type: multipart/form-data" \
         -H "Content-Type: application/json" \
         -F 'file=@ranger-policies-apply.json' \
                   "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+
+        ## import ranger HDFS policies
+        < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
+        ${ranger_curl} -X POST \
+        -H "Content-Type: multipart/form-data" \
+        -H "Content-Type: application/json" \
+        -F 'file=@ranger-hdfs-policies-apply.json' \
+                  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
+
+
 
         sleep 30
         ./create-secgovdemo-hortoniabank-tables.sh
