@@ -312,10 +312,16 @@ host=$(hostname -f)
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
+#kill any previous Hive/tez apps to clear queue
+for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+do 
+    yarn application -kill  "$app"
+done
+
 
       #create/load Hive tables
       #./create-secgovdemo-hortoniabank-tables.sh
-      beeline -n hive -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f create-secgovdemo-hortoniabank-tables.ddl
+      beeline -n hive -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f ~/masterclass/ranger-atlas/Scripts/create-secgovdemo-hortoniabank-tables.ddl
 
     fi
 fi
