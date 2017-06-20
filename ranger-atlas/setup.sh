@@ -223,7 +223,7 @@ EOF
         ~/ambari-bootstrap/extras/onboarding.sh
 
         cd ~/
-        git clone https://github.com/seanorama/masterclass
+        git clone https://github.com/abajwa-hw/masterclass
         cd ~/masterclass/ranger-atlas/Scripts/
         ./create-secgovdemo-hortoniabank-userfolders.sh
         yum -y install bzip2
