@@ -291,7 +291,7 @@ host=$(hostname -f)
     -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
     > /tmp/zeppelin-env.json
 
-  ${ambari_config_set}  zeppelin-env /tmp/zeppelin-env.json
+  ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
   sleep 5
   sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
