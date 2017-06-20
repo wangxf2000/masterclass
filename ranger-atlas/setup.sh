@@ -277,7 +277,7 @@ EOF
 
         sleep 30
         #./create-secgovdemo-hortoniabank-tables.sh
-        beeline -n hive -u "jdbc:hive2://localhost:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f create-secgovdemo-hortoniabank-tables.ddl
+        beeline -n hive -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f create-secgovdemo-hortoniabank-tables.ddl
 
 
 
