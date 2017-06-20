@@ -311,34 +311,34 @@ EOF
 host=$(hostname -f)
 
   #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
-  #${ambari_config_get} zeppelin-shiro-ini \
-    #| sed -e '1,4d' \
-    #-e "s/^admin = admin, admin/admin = ${ambari_pass}, admin/"  \
-    #-e "s/^user1 = .*/ivana-eu-hr = ${ambari_pass}, admin/" \
-    #-e "s/^user2 = .*/compliance-admin = ${ambari_pass}, admin/" \
-    #-e "s/^user3 = .*/joe-analyst = ${ambari_pass}, admin/" \
-    #> /tmp/zeppelin-env.json
+  ${ambari_config_get} zeppelin-shiro-ini \
+    | sed -e '1,4d' \
+    -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
+    -e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
+    -e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
+    -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
+    > /tmp/zeppelin-env.json
 
-  #${ambari_config_set}  zeppelin-env /tmp/zeppelin-env.json
-  #sleep 5
-  #sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-#{
-   #\"RequestInfo\":{
-      #\"command\":\"RESTART\",
-      #\"context\":\"Restart Zeppelin\",
-      #\"operation_level\":{
-         #\"level\":\"HOST\",
-         #\"cluster_name\":\"${cluster_name}\"
-      #}
-   #},
-   #\"Requests/resource_filters\":[
-      #{
-         #\"service_name\":\"ZEPPELIN\",
-         #\"component_name\":\"ZEPPELIN_MASTER\",
-         #\"hosts\":\"${host}\"
-      #}
-   #]
-#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+  ${ambari_config_set}  zeppelin-env /tmp/zeppelin-env.json
+  sleep 5
+  sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+   \"RequestInfo\":{
+      \"command\":\"RESTART\",
+      \"context\":\"Restart Zeppelin\",
+      \"operation_level\":{
+         \"level\":\"HOST\",
+         \"cluster_name\":\"${cluster_name}\"
+      }
+   },
+   \"Requests/resource_filters\":[
+      {
+         \"service_name\":\"ZEPPELIN\",
+         \"component_name\":\"ZEPPELIN_MASTER\",
+         \"hosts\":\"${host}\"
+      }
+   ]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
         # TODO
 
         #ad_host="ad01.lab.hortonworks.net"
