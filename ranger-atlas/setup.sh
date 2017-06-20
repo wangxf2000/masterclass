@@ -206,7 +206,7 @@ EOF
         ambari_configs
         ambari_wait_request_complete 1
         cd ~
-        sleep 20
+        sleep 30
 
         usermod -a -G users ${USER}
         usermod -a -G users admin
@@ -255,7 +255,7 @@ EOF
         ${ranger_curl} -i \
           -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
           -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
-        sleep 5
+        sleep 10
 
         ## import ranger Hive policies
         < ranger-policies.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
@@ -275,7 +275,7 @@ EOF
 
 
 
-        sleep 30
+        sleep 40
   
 
         ## update zeppelin notebooks
