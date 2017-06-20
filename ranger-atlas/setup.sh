@@ -276,7 +276,9 @@ EOF
 
 
         sleep 30
-        ./create-secgovdemo-hortoniabank-tables.sh
+        #./create-secgovdemo-hortoniabank-tables.sh
+        beeline -n hive -u "jdbc:hive2://localhost:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f create-secgovdemo-hortoniabank-tables.ddl
+
 
 
         #${ranger_curl} -v ${ranger_url}/users/1/passwordchange \
@@ -367,3 +369,4 @@ host=$(hostname -f)
     fi
 fi
 
+echo "Done!"
