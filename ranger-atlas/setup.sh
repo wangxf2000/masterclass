@@ -201,12 +201,12 @@ EOF
     if [ "${deploy}" = "true" ]; then
 
         cd ~
-        sleep 5
+        sleep 20
         source ~/ambari-bootstrap/extras/ambari_functions.sh
         ambari_configs
         ambari_wait_request_complete 1
         cd ~
-        sleep 10
+        sleep 20
 
         usermod -a -G users ${USER}
         usermod -a -G users admin
