@@ -74,6 +74,40 @@ usermod -a -G hadoop-admins hadoop-admin
 ## Ambari Server specific tasks
 if [ "${install_ambari_server}" = "true" ]; then
 
+    sleep 30
+
+    #Create users in Ambari
+	for user in ${users}; do
+	  echo "adding user ${user} to Ambari"
+	  curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" http://localhost:8080/api/v1/users 
+	done 
+
+    #create groups in Ambari
+	for group in ${groups}; do
+	  curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d "{\"Groups/group_name\":\"${group}\"}" http://localhost:8080/api/v1/groups
+	done
+
+	#HR group membership
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' http://localhost:8080/api/v1/groups/hr/members
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' http://localhost:8080/api/v1/groups/hr/members
+
+	#analyst group membership
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' http://localhost:8080/api/v1/groups/analyst/members
+
+	#compliance group membership
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' http://localhost:8080/api/v1/groups/compliance/members
+
+	#us_employees group membership
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
+
+	#eu_employees group membership
+	curl -iv -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' http://localhost:8080/api/v1/groups/eu_employees/members
+
+
+
+    
     ## add admin user to postgres for other services, such as Ranger
     cd /tmp
     sudo -u postgres createuser -U postgres -d -e -E -l -r -s admin
