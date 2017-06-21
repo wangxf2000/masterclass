@@ -13,7 +13,7 @@ export TERM=xterm
 #overridable vars
 export stack=${stack:-hdp}    #cluster name
 export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
-export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER AMBARI_METRICS SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
+export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
 export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
 export host_count=${host_count:-skip}      #number of nodes, defaults to 1
 
@@ -173,15 +173,12 @@ cat << EOF > configuration-custom.json
         "atlas.kafka.zookeeper.connection.timeout.ms": "20000",
         "atlas.kafka.zookeeper.session.timeout.ms": "40000",
         "atlas.rest.address": "http://localhost:21000",
-        "atlas.graph.storage.backend": "berkeleyje",
+        "atlas.graph.storage.backend": "hbase",
+        "atlas.graph.storage.hbase.table":"atlas_titan",
         "atlas.graph.storage.hostname": "localhost",
-        "atlas.graph.storage.directory": "/tmp/data/berkeley",
         "atlas.EntityAuditRepository.impl": "org.apache.atlas.repository.audit.NoopEntityAuditRepository",
-        "atlas.graph.index.search.backend": "elasticsearch",
-        "atlas.graph.index.search.directory": "/tmp/data/es",
-        "atlas.graph.index.search.elasticsearch.client-only": "false",
-        "atlas.graph.index.search.elasticsearch.local-mode": "true",
-        "atlas.graph.index.search.elasticsearch.create.sleep": "2000",
+        "atlas.graph.index.search.backend": "solr5",
+        "atlas.graph.index.search.solr.mode": "cloud",
         "atlas.notification.embedded": "false",
         "atlas.graph.index.search.solr.zookeeper-url": "localhost:2181/infra-solr",
         "atlas.audit.hbase.zookeeper.quorum": "localhost",
@@ -258,7 +255,7 @@ EOF
         sleep 10
 
         ## import ranger Hive policies
-        < ranger-policies.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+        < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
         ${ranger_curl} -X POST \
         -H "Content-Type: multipart/form-data" \
         -H "Content-Type: application/json" \
@@ -280,7 +277,7 @@ EOF
 
         ## update zeppelin notebooks
         curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
-host=$(hostname -f)
+        host=$(hostname -f)
 
   #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
   ${ambari_config_get} zeppelin-shiro-ini \
