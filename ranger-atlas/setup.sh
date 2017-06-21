@@ -164,29 +164,6 @@ cat << EOF > configuration-custom.json
         "xasecure.audit.destination.hdfs" : "true",
         "xasecure.audit.destination.solr" : "true",
         "xasecure.audit.destination.solr.zookeepers" : "localhost:2181/infra-solr"
-    },
-    "application-properties": {
-        "atlas.cluster.name.off":"${cluster_name}",
-        "atlas.feature.taxonomy.enable":"true",
-        "atlas.kafka.bootstrap.servers": "localhost:6667",
-        "atlas.kafka.zookeeper.connect": "localhost:2181",
-        "atlas.kafka.zookeeper.connection.timeout.ms": "20000",
-        "atlas.kafka.zookeeper.session.timeout.ms": "40000",
-        "atlas.rest.address": "http://localhost:21000",
-        "atlas.graph.storage.backend": "hbase",
-        "atlas.graph.storage.hbase.table":"atlas_titan",
-        "atlas.graph.storage.hostname": "localhost",
-        "atlas.EntityAuditRepository.impl": "org.apache.atlas.repository.audit.NoopEntityAuditRepository",
-        "atlas.graph.index.search.backend": "solr5",
-        "atlas.graph.index.search.solr.mode": "cloud",
-        "atlas.notification.embedded": "false",
-        "atlas.graph.index.search.solr.zookeeper-url": "localhost:2181/infra-solr",
-        "atlas.audit.hbase.zookeeper.quorum": "localhost",
-        "atlas.graph.storage.hostname": "localhost",
-        "atlas.kafka.data": "/tmp/data/kafka"
-    },
-    "atlas-env" : {
-        "content" : "\n      # The java implementation to use. If JAVA_HOME is not found we expect java and jar to be in path\n      export JAVA_HOME={{java64_home}}\n\n      # any additional java opts you want to set. This will apply to both client and server operations\n      {% if security_enabled %}\n      export ATLAS_OPTS=\"{{metadata_opts}} -Djava.security.auth.login.config={{atlas_jaas_file}}\"\n      {% else %}\n      export ATLAS_OPTS=\"{{metadata_opts}}\"\n      {% endif %}\n\n      # metadata configuration directory\n      export ATLAS_CONF={{conf_dir}}\n\n      # Where log files are stored. Defatult is logs directory under the base install location\n      export ATLAS_LOG_DIR={{log_dir}}\n\n      # additional classpath entries\n      export ATLASCPPATH={{metadata_classpath}}\n\n      # data dir\n      export ATLAS_DATA_DIR={{data_dir}}\n\n      # pid dir\n      export ATLAS_PID_DIR={{pid_dir}}\n\n      # hbase conf dir\n      export MANAGE_LOCAL_HBASE=false\n export MANAGE_LOCAL_SOLR=false\n\n\n      # Where do you want to expand the war file. By Default it is in /server/webapp dir under the base install dir.\n      export ATLAS_EXPANDED_WEBAPP_DIR={{expanded_war_dir}}\n      export ATLAS_SERVER_OPTS=\"-server -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+PrintTenuringDistribution -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$ATLAS_LOG_DIR/atlas_server.hprof -Xloggc:$ATLAS_LOG_DIRgc-worker.log -verbose:gc -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1m -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCTimeStamps\"\n      {% if java_version == 8 %}\n      export ATLAS_SERVER_HEAP=\"-Xms{{atlas_server_xmx}}m -Xmx{{atlas_server_xmx}}m -XX:MaxNewSize={{atlas_server_max_new_size}}m -XX:MetaspaceSize=100m -XX:MaxMetaspaceSize=512m\"\n      {% else %}\n      export ATLAS_SERVER_HEAP=\"-Xms{{atlas_server_xmx}}m -Xmx{{atlas_server_xmx}}m -XX:MaxNewSize={{atlas_server_max_new_size}}m -XX:MaxPermSize=512m\"\n      {% endif %}"
     }
   }
 }
