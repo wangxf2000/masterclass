@@ -242,6 +242,31 @@ EOF
         ranger_curl="curl -u admin:admin"
         ranger_url="http://localhost:6080/service"
 	
+        ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
+          | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
+          | jq '.policyConditions = [
+        {
+              "itemId": 1,
+              "name": "resources-accessed-together",
+              "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
+              "evaluatorOptions": {},
+              "label": "Resources Accessed Together?",
+              "description": "Resources Accessed Together?"
+        },{
+            "itemId": 2,
+            "name": "not-accessed-together",
+            "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
+            "evaluatorOptions": {},
+            "label": "Resources Not Accessed Together?",
+            "description": "Resources Not Accessed Together?"
+        }
+        ]' > hive.json
+
+        ${ranger_curl} -i \
+          -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
+          -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
+        sleep 10
+
 
         ## import ranger Hive policies
         < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
