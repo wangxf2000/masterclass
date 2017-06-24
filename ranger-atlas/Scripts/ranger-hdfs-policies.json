@@ -133,14 +133,14 @@
       },
       {
          "service":"hadoop",
-         "name":"/user/admin/hortoniabank_data",
+         "name":"/hive_data",
          "policyType":0,
          "description":"",
          "isAuditEnabled":true,
          "resources":{
             "path":{
                "values":[
-                  "/user/admin/hortoniabank_data"
+                  "/hive_data"
                ],
                "isExcludes":false,
                "isRecursive":true

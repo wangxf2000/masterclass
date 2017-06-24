@@ -209,102 +209,84 @@ EOF
 
     if [ "${deploy}" = "true" ]; then
 
-        cd ~
-        sleep 20
-        source ~/ambari-bootstrap/extras/ambari_functions.sh
-        ambari_configs
-        ambari_wait_request_complete 1
-        cd ~
-        sleep 30
+		cd ~
+		sleep 20
+		source ~/ambari-bootstrap/extras/ambari_functions.sh
+		ambari_configs
+		ambari_wait_request_complete 1
+		cd ~
+		sleep 30
 
-        usermod -a -G users ${USER}
-        usermod -a -G users admin
-        echo "${ambari_pass}" | passwd admin --stdin
-        sudo sudo -u hdfs bash -c "
-            hadoop fs -mkdir /user/admin;
-            hadoop fs -chown admin /user/admin;
-            hdfs dfsadmin -refreshUserToGroupsMappings"
-
-        UID_MIN=$(awk '$1=="UID_MIN" {print $2}' /etc/login.defs)
-        users="$(getent passwd|awk -v UID_MIN="${UID_MIN}" -F: '$3>=UID_MIN{print $1}')"
-        for user in ${users}; do sudo usermod -a -G users ${user}; done
-        for user in ${users}; do sudo usermod -a -G hadoop-users ${user}; done
-        ~/ambari-bootstrap/extras/onboarding.sh
-
-        cd ~/
-        git clone https://github.com/abajwa-hw/masterclass
-        cd ~/masterclass/ranger-atlas/Scripts/
-        ./create-secgovdemo-hortoniabank-userfolders.sh
-        yum -y install bzip2
-        ./load-secgovdemo-hortoniabank-files.sh
-
-        ## update ranger to support deny policies
-        ranger_curl="curl -u admin:admin"
-        ranger_url="http://localhost:6080/service"
-	
-        ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
-          | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
-          | jq '.policyConditions = [
-        {
-              "itemId": 1,
-              "name": "resources-accessed-together",
-              "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
-              "evaluatorOptions": {},
-              "label": "Resources Accessed Together?",
-              "description": "Resources Accessed Together?"
-        },{
-            "itemId": 2,
-            "name": "not-accessed-together",
-            "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
-            "evaluatorOptions": {},
-            "label": "Resources Not Accessed Together?",
-            "description": "Resources Not Accessed Together?"
-        }
-        ]' > hive.json
-
-        ${ranger_curl} -i \
-          -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
-          -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
-        sleep 10
+		cd ~/
+		git clone https://github.com/abajwa-hw/masterclass
 
 
-        ## import ranger Hive policies
-        < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
-        ${ranger_curl} -X POST \
-        -H "Content-Type: multipart/form-data" \
-        -H "Content-Type: application/json" \
-        -F 'file=@ranger-policies-apply.json' \
-                  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+		## update ranger to support deny policies
+		ranger_curl="curl -u admin:admin"
+		ranger_url="http://localhost:6080/service"
 
-        ## import ranger HDFS policies
-        < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
-        ${ranger_curl} -X POST \
-        -H "Content-Type: multipart/form-data" \
-        -H "Content-Type: application/json" \
-        -F 'file=@ranger-hdfs-policies-apply.json' \
-                  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
+		${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
+		  | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
+		  | jq '.policyConditions = [
+		{
+			  "itemId": 1,
+			  "name": "resources-accessed-together",
+			  "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
+			  "evaluatorOptions": {},
+			  "label": "Resources Accessed Together?",
+			  "description": "Resources Accessed Together?"
+		},{
+			"itemId": 2,
+			"name": "not-accessed-together",
+			"evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
+			"evaluatorOptions": {},
+			"label": "Resources Not Accessed Together?",
+			"description": "Resources Not Accessed Together?"
+		}
+		]' > hive.json
+
+		${ranger_curl} -i \
+		  -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
+		  -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
+		sleep 10
 
 
+		## import ranger Hive policies
+		< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+		${ranger_curl} -X POST \
+		-H "Content-Type: multipart/form-data" \
+		-H "Content-Type: application/json" \
+		-F 'file=@ranger-policies-apply.json' \
+				  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
-        sleep 40
-  
+		## import ranger HDFS policies
+		< ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
+		${ranger_curl} -X POST \
+		-H "Content-Type: multipart/form-data" \
+		-H "Content-Type: application/json" \
+		-F 'file=@ranger-hdfs-policies-apply.json' \
+				  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
 
-        ## update zeppelin notebooks
-        curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
-        host=$(hostname -f)
 
-  #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
-  ${ambari_config_get} zeppelin-shiro-ini \
-    | sed -e '1,4d' \
-    -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
-    -e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
-    -e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
-    -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
-    > /tmp/zeppelin-env.json
+		sleep 40
 
-  ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
-  sleep 5
-  sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+
+		## update zeppelin notebooks
+		curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
+		host=$(hostname -f)
+
+	  #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
+	  ${ambari_config_get} zeppelin-shiro-ini \
+		| sed -e '1,4d' \
+		-e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
+		-e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
+		-e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
+		-e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
+		> /tmp/zeppelin-env.json
+
+	  ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
+	  sleep 5
+	  sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
    \"RequestInfo\":{
       \"command\":\"RESTART\",
@@ -323,16 +305,21 @@ EOF
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
-#kill any previous Hive/tez apps to clear queue
-for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-do 
-    yarn application -kill  "$app"
-done
+	#kill any previous Hive/tez apps to clear queue
+	for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+	do 
+		yarn application -kill  "$app"
+	done
 
 
-      #create/load Hive tables
-      ./create-secgovdemo-hortoniabank-tables.sh
-      #beeline -n hive -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -f ~/masterclass/ranger-atlas/Scripts/create-secgovdemo-hortoniabank-tables.ddl
+	cd ~/masterclass/ranger-atlas/HortoniaMunichSetup
+	./01-atlas-import-classification.sh
+	./02-atlas-import-entities.sh
+	./03-update-servicedefs.sh
+	./04-create-os-users.sh
+	./05-create-hdfs-user-folders.sh
+	./06-copy-data-to-hdfs.sh
+	./07-create-hive-schema.sh
 
     fi
 fi
