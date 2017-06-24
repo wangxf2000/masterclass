@@ -144,6 +144,7 @@ cat << EOF > configuration-custom.json
     },
     "hive-site": {
         "hive.server2.enable.doAs" : "true",
+        "hive.server2.transport.mode": "http",
         "hive.exec.compress.output": "true",
         "hive.merge.mapfiles": "true",
         "hive.server2.tez.initialize.default.sessions": "true",
@@ -344,7 +345,8 @@ EOF
     ./04-create-os-users.sh
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
-    ./07-create-hive-schema.sh
+    #./07-create-hive-schema.sh
+    beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
 
     fi
 fi
