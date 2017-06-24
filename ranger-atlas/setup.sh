@@ -252,6 +252,7 @@ EOF
 
 
 		## import ranger Hive policies
+		cd ~/masterclass/ranger-atlas/Scripts/
 		< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
 		${ranger_curl} -X POST \
 		-H "Content-Type: multipart/form-data" \
