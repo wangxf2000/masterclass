@@ -214,10 +214,9 @@ EOF
         source ~/ambari-bootstrap/extras/ambari_functions.sh
         ambari_configs
         ambari_wait_request_complete 1
-        cd ~
         sleep 30
 
-        cd ~/
+        cd /tmp
         git clone https://github.com/abajwa-hw/masterclass
 
 
@@ -252,7 +251,7 @@ EOF
 
 
         ## import ranger Hive policies
-        cd ~/masterclass/ranger-atlas/Scripts/
+        cd /tmp/masterclass/ranger-atlas/Scripts/
         < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
         ${ranger_curl} -X POST \
         -H "Content-Type: multipart/form-data" \
@@ -335,7 +334,7 @@ EOF
 
     sleep 30
 
-    cd ~/masterclass/ranger-atlas/HortoniaMunichSetup
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
     ./02-atlas-import-entities.sh
     ./03-update-servicedefs.sh
