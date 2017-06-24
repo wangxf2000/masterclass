@@ -144,7 +144,6 @@ cat << EOF > configuration-custom.json
     },
     "hive-site": {
         "hive.server2.enable.doAs" : "true",
-        "hive.server2.transport.mode": "http",
         "hive.exec.compress.output": "true",
         "hive.merge.mapfiles": "true",
         "hive.server2.tez.initialize.default.sessions": "true",
