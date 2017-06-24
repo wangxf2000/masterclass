@@ -216,6 +216,25 @@ EOF
         ambari_wait_request_complete 1
         sleep 30
 
+#      sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+#{
+#   \"RequestInfo\":{
+#      \"command\":\"RESTART\",
+#      \"context\":\"Restart Atlas\",
+#      \"operation_level\":{
+#         \"level\":\"HOST\",
+#         \"cluster_name\":\"${cluster_name}\"
+#      }
+#   },
+#   \"Requests/resource_filters\":[
+#      {
+#         \"service_name\":\"ATLAS\",
+#         \"component_name\":\"ATLAS_SERVER\",
+#         \"hosts\":\"${host}\"
+#      }
+#   ]
+#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
         cd /tmp
         git clone https://github.com/abajwa-hw/masterclass
 
@@ -306,24 +325,6 @@ EOF
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 
-      sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-   \"RequestInfo\":{
-      \"command\":\"RESTART\",
-      \"context\":\"Restart Atlas\",
-      \"operation_level\":{
-         \"level\":\"HOST\",
-         \"cluster_name\":\"${cluster_name}\"
-      }
-   },
-   \"Requests/resource_filters\":[
-      {
-         \"service_name\":\"ATLAS\",
-         \"component_name\":\"ATLAS_SERVER\",
-         \"hosts\":\"${host}\"
-      }
-   ]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 
     #kill any previous Hive/tez apps to clear queue
@@ -332,8 +333,10 @@ EOF
         yarn application -kill  "$app"
     done
 
-    sleep 60
+    #sleep 60
 
+    # curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X POST -d '{"RequestInfo": {"context" :"ATLAS Service Check","command":"ATLAS_SERVICE_CHECK"},"Requests/resource_filters":[{"service_name":"ATLAS"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+    
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
     ./02-atlas-import-entities.sh
