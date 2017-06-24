@@ -305,12 +305,34 @@ EOF
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
+
+	  sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+   \"RequestInfo\":{
+      \"command\":\"RESTART\",
+      \"context\":\"Restart Atlas\",
+      \"operation_level\":{
+         \"level\":\"HOST\",
+         \"cluster_name\":\"${cluster_name}\"
+      }
+   },
+   \"Requests/resource_filters\":[
+      {
+         \"service_name\":\"ATLAS\",
+         \"component_name\":\"ATLAS_SERVER\",
+         \"hosts\":\"${host}\"
+      }
+   ]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
+
 	#kill any previous Hive/tez apps to clear queue
 	for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
 	do 
 		yarn application -kill  "$app"
 	done
 
+    sleep 30
 
 	cd ~/masterclass/ranger-atlas/HortoniaMunichSetup
 	./01-atlas-import-classification.sh
