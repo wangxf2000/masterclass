@@ -174,9 +174,9 @@ cat << EOF > configuration-custom.json
     "ranger-env": {
         "ranger_admin_username": "admin",
         "ranger_admin_password": "admin",
-          "ranger-knox-plugin-enabled" : "No",
-          "ranger-storm-plugin-enabled" : "No",
-          "ranger-kafka-plugin-enabled" : "No",
+        "ranger-knox-plugin-enabled" : "No",
+        "ranger-storm-plugin-enabled" : "No",
+        "ranger-kafka-plugin-enabled" : "Yes",
         "ranger-hdfs-plugin-enabled" : "Yes",
         "ranger-hive-plugin-enabled" : "Yes",
         "ranger-hbase-plugin-enabled" : "Yes",
