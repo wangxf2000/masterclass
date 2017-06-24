@@ -215,7 +215,7 @@ EOF
         ambari_configs
         ambari_wait_request_complete 1
         sleep 30
-
+        host=$(hostname -f)
        sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
    \"RequestInfo\":{
@@ -292,7 +292,7 @@ EOF
 
         ## update zeppelin notebooks
         curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
-        host=$(hostname -f)
+
 
       #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
       ${ambari_config_get} zeppelin-shiro-ini \
