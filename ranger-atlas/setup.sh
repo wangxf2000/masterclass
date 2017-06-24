@@ -332,7 +332,7 @@ EOF
         yarn application -kill  "$app"
     done
 
-    sleep 30
+    sleep 60
 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
