@@ -183,7 +183,7 @@ cat << EOF > configuration-custom.json
         "ranger_admin_password": "admin",
         "ranger-knox-plugin-enabled" : "No",
         "ranger-storm-plugin-enabled" : "No",
-        "ranger-kafka-plugin-enabled" : "Yes",
+        "ranger-kafka-plugin-enabled" : "No",
         "ranger-hdfs-plugin-enabled" : "Yes",
         "ranger-hive-plugin-enabled" : "Yes",
         "ranger-hbase-plugin-enabled" : "Yes",
@@ -297,7 +297,7 @@ EOF
     
     cd /tmp
     git clone https://github.com/abajwa-hw/masterclass    
-    cd masterclass/ranger-atlas/HortoniaMunichSetup
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
     ./02-atlas-import-entities.sh
     ./03-update-servicedefs.sh
@@ -354,7 +354,7 @@ EOF
 
         sleep 40
         
-    
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     ./07-create-hive-schema.sh
