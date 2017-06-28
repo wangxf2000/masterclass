@@ -44,7 +44,7 @@ curl -sSL https://raw.githubusercontent.com/seanorama/ambari-bootstrap/master/ex
 ########################################################################
 ########################################################################
 ## tutorial users
-users="kate-hr ivana-eu-hr joe-analyst hadoop-admin compliance-admin hadoopadmin"
+users="kate-hr ivana-eu-hr joe-analyst hadoop-admin compliance-admin hadoopadmin ANONYMOUS"
 for user in ${users}; do
     sudo useradd ${user}
     printf "${ambari_pass}\n${ambari_pass}" | sudo passwd --stdin ${user}
@@ -183,7 +183,7 @@ cat << EOF > configuration-custom.json
         "ranger_admin_password": "admin",
         "ranger-knox-plugin-enabled" : "No",
         "ranger-storm-plugin-enabled" : "No",
-        "ranger-kafka-plugin-enabled" : "No",
+        "ranger-kafka-plugin-enabled" : "Yes",
         "ranger-hdfs-plugin-enabled" : "Yes",
         "ranger-hive-plugin-enabled" : "Yes",
         "ranger-hbase-plugin-enabled" : "Yes",
@@ -295,6 +295,62 @@ EOF
 
     # curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X POST -d '{"RequestInfo": {"context" :"ATLAS Service Check","command":"ATLAS_SERVICE_CHECK"},"Requests/resource_filters":[{"service_name":"ATLAS"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
     
+    ## update ranger to support deny policies
+    ranger_curl="curl -u admin:admin"
+    ranger_url="http://localhost:6080/service"
+
+    ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
+      | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
+      | jq '.policyConditions = [
+    {
+          "itemId": 1,
+          "name": "resources-accessed-together",
+          "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
+          "evaluatorOptions": {},
+          "label": "Resources Accessed Together?",
+          "description": "Resources Accessed Together?"
+    },{
+        "itemId": 2,
+        "name": "not-accessed-together",
+        "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
+        "evaluatorOptions": {},
+        "label": "Resources Not Accessed Together?",
+        "description": "Resources Not Accessed Together?"
+    }
+    ]' > hive.json
+
+    ${ranger_curl} -i \
+      -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
+      -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
+    sleep 10
+
+
+    ## import ranger Hive policies for masking etc - needs to be done before creating HDFS folders
+    cd /tmp/masterclass/ranger-atlas/Scripts/
+    < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+
+    ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
+    < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-hdfs-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
+
+    ## import ranger kafka policies - to give ANONYMOUS access to kafka or Atlas won't work
+    < ranger-kafka-policies.json jq '.policies[].service = "'${cluster_name}'_kafka"' > ranger-kafka-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-hdfs-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
+    sleep 40    
+    
     cd /tmp
     git clone https://github.com/abajwa-hw/masterclass    
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
@@ -302,58 +358,7 @@ EOF
     ./02-atlas-import-entities.sh
     ./03-update-servicedefs.sh
     ./04-create-os-users.sh
-    
-
-        ## update ranger to support deny policies
-        ranger_curl="curl -u admin:admin"
-        ranger_url="http://localhost:6080/service"
-
-        ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
-          | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
-          | jq '.policyConditions = [
-        {
-              "itemId": 1,
-              "name": "resources-accessed-together",
-              "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
-              "evaluatorOptions": {},
-              "label": "Resources Accessed Together?",
-              "description": "Resources Accessed Together?"
-        },{
-            "itemId": 2,
-            "name": "not-accessed-together",
-            "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
-            "evaluatorOptions": {},
-            "label": "Resources Not Accessed Together?",
-            "description": "Resources Not Accessed Together?"
-        }
-        ]' > hive.json
-
-        ${ranger_curl} -i \
-          -X PUT -H "Accept: application/json" -H "Content-Type: application/json" \
-          -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
-        sleep 10
-
-
-        ## import ranger Hive policies - needs to be done before creating HDFS folders
-        cd /tmp/masterclass/ranger-atlas/Scripts/
-        < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
-        ${ranger_curl} -X POST \
-        -H "Content-Type: multipart/form-data" \
-        -H "Content-Type: application/json" \
-        -F 'file=@ranger-policies-apply.json' \
-                  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
-
-        ## import ranger HDFS policies
-        < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
-        ${ranger_curl} -X POST \
-        -H "Content-Type: multipart/form-data" \
-        -H "Content-Type: application/json" \
-        -F 'file=@ranger-hdfs-policies-apply.json' \
-                  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
-
-
-        sleep 40
-        
+            
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
