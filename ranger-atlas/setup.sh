@@ -78,7 +78,7 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     #Create users in Ambari before changing pass
 
-    ambari_curl="curl -iv -u admin:admin -H X-Requested-By: 'Hortoniabank'"
+    ambari_curl="curl -iv -u admin:admin -H 'X-Requested-By: Hortoniabank'"
     ambari_url="http://localhost:8080/api/v1"
     
     for user in ${users}; do
@@ -164,10 +164,7 @@ cat << EOF > configuration-custom.json
     },
     "ams-site": {
       "timeline.metrics.cache.size": "100"
-    },
-    "application-properties": {
-      "atlas.server.bind.address": "localhost"
-    },    
+    },   
     "admin-properties": {
         "policymgr_external_url": "http://localhost:6080",
         "db_root_user": "admin",
@@ -299,6 +296,7 @@ EOF
     ranger_curl="curl -u admin:admin"
     ranger_url="http://localhost:6080/service"
 
+
     ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
       | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
       | jq '.policyConditions = [
@@ -325,6 +323,11 @@ EOF
     sleep 10
 
 
+    #download hortonia scripts
+    cd /tmp
+    git clone https://github.com/abajwa-hw/masterclass    
+
+
     ## import ranger Hive policies for masking etc - needs to be done before creating HDFS folders
     cd /tmp/masterclass/ranger-atlas/Scripts/
     < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
@@ -347,12 +350,10 @@ EOF
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \
     -H "Content-Type: application/json" \
-    -F 'file=@ranger-hdfs-policies-apply.json' \
+    -F 'file=@ranger-kafka-policies-apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
     sleep 40    
     
-    cd /tmp
-    git clone https://github.com/abajwa-hw/masterclass    
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
     ./02-atlas-import-entities.sh
