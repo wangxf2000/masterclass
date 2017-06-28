@@ -335,6 +335,7 @@ EOF
 
     sleep 20
     while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+    sleep 30
 
     # curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X POST -d '{"RequestInfo": {"context" :"ATLAS Service Check","command":"ATLAS_SERVICE_CHECK"},"Requests/resource_filters":[{"service_name":"ATLAS"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
     
