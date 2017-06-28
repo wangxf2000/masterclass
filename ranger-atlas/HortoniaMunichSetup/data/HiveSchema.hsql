@@ -332,7 +332,7 @@ CREATE TEMPORARY EXTERNAL TABLE  finance.tax_2010_temp(
   local_tax double)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
-LOCATION '/hive_data/finance/tax_2010’;
+LOCATION '/hive_data/finance/tax_2010';
 
 
 DROP TABLE IF EXISTS finance.tax_2010;
@@ -361,7 +361,7 @@ CREATE TEMPORARY EXTERNAL TABLE  finance.tax_2009_temp(
   local_tax double)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
-LOCATION '/hive_data/finance/tax_2009’;
+LOCATION '/hive_data/finance/tax_2009';
 
 
 DROP TABLE IF EXISTS finance.tax_2009;
