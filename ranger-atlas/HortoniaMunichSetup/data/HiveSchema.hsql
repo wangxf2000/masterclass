@@ -1,14 +1,14 @@
 drop database if exists hortoniabank cascade;
-Create database hortoniabank LOCATION '/hive_data/hortoniabank';
+Create database hortoniabank;
 
 drop database if exists finance cascade;
-Create database finance LOCATION '/hive_data/finance';
+Create database finance;
 
 drop database if exists claim cascade;
-create database claim LOCATION '/hive_data/claim';
+create database claim;
 
 drop database if exists cost_savings cascade;
-Create database cost_savings LOCATION '/hive_data/cost_savings';
+Create database cost_savings;
 
 ---------
 
