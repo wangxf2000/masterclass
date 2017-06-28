@@ -76,34 +76,38 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     sleep 30
 
-    #Create users in Ambari
+    #Create users in Ambari before changing pass
+
+    ambari_curl="curl -iv -u admin:admin -H X-Requested-By: ranger-atlas'"
+    ambari_url="http://localhost:8080/api/v1"
+    
     for user in ${users}; do
       echo "adding user ${user} to Ambari"
-      curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" http://localhost:8080/api/v1/users 
+      ${ambari_curl} -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" ${ambari_url}/users 
     done 
 
     #create groups in Ambari
     for group in ${groups}; do
-      curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d "{\"Groups/group_name\":\"${group}\"}" http://localhost:8080/api/v1/groups
+      ${ambari_curl} -X POST -d "{\"Groups/group_name\":\"${group}\"}" ${ambari_url}/groups
     done
 
     #HR group membership
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' http://localhost:8080/api/v1/groups/hr/members
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' http://localhost:8080/api/v1/groups/hr/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
 
     #analyst group membership
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' http://localhost:8080/api/v1/groups/analyst/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
 
     #compliance group membership
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' http://localhost:8080/api/v1/groups/compliance/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' ${ambari_url}/groups/compliance/members
 
     #us_employees group membership
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' http://localhost:8080/api/v1/groups/us_employees/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
 
     #eu_employees group membership
-    curl -iv -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' http://localhost:8080/api/v1/groups/eu_employees/members
+    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' ${ambari_url}/groups/eu_employees/members
 
 
 
@@ -144,7 +148,6 @@ cat << EOF > configuration-custom.json
     },
     "hive-site": {
         "hive.server2.enable.doAs" : "true",
-        "hive.server2.transport.mode": "http",
         "hive.exec.compress.output": "true",
         "hive.merge.mapfiles": "true",
         "hive.server2.tez.initialize.default.sessions": "true",
@@ -162,6 +165,9 @@ cat << EOF > configuration-custom.json
     "ams-site": {
       "timeline.metrics.cache.size": "100"
     },
+    "application-properties": {
+      "atlas.server.bind.address": "localhost"
+    },    
     "admin-properties": {
         "policymgr_external_url": "http://localhost:6080",
         "db_root_user": "admin",
@@ -216,6 +222,8 @@ EOF
         ambari_wait_request_complete 1
         sleep 30
         host=$(hostname -f)
+        
+        #restart Atlas
        sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
    \"RequestInfo\":{
@@ -235,9 +243,66 @@ EOF
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
-        cd /tmp
-        git clone https://github.com/abajwa-hw/masterclass
 
+
+
+        ## update zeppelin notebooks
+        curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
+
+
+      #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
+      ${ambari_config_get} zeppelin-shiro-ini \
+        | sed -e '1,4d' \
+        -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
+        -e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
+        -e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
+        -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
+        > /tmp/zeppelin-env.json
+
+      ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
+      sleep 5
+      
+      #restart Zeppelin
+      sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+   \"RequestInfo\":{
+      \"command\":\"RESTART\",
+      \"context\":\"Restart Zeppelin\",
+      \"operation_level\":{
+         \"level\":\"HOST\",
+         \"cluster_name\":\"${cluster_name}\"
+      }
+   },
+   \"Requests/resource_filters\":[
+      {
+         \"service_name\":\"ZEPPELIN\",
+         \"component_name\":\"ZEPPELIN_MASTER\",
+         \"hosts\":\"${host}\"
+      }
+   ]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
+
+    #kill any previous Hive/tez apps to clear queue
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done
+
+
+    while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+    sleep 30
+
+    # curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X POST -d '{"RequestInfo": {"context" :"ATLAS Service Check","command":"ATLAS_SERVICE_CHECK"},"Requests/resource_filters":[{"service_name":"ATLAS"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+    
+    cd /tmp
+    git clone https://github.com/abajwa-hw/masterclass    
+    cd masterclass/ranger-atlas/HortoniaMunichSetup
+    ./01-atlas-import-classification.sh
+    ./02-atlas-import-entities.sh
+    ./03-update-servicedefs.sh
+    ./04-create-os-users.sh
+    
 
         ## update ranger to support deny policies
         ranger_curl="curl -u admin:admin"
@@ -269,7 +334,7 @@ EOF
         sleep 10
 
 
-        ## import ranger Hive policies
+        ## import ranger Hive policies - needs to be done before creating HDFS folders
         cd /tmp/masterclass/ranger-atlas/Scripts/
         < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
         ${ranger_curl} -X POST \
@@ -288,66 +353,12 @@ EOF
 
 
         sleep 40
-
-
-        ## update zeppelin notebooks
-        curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
-
-
-      #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
-      ${ambari_config_get} zeppelin-shiro-ini \
-        | sed -e '1,4d' \
-        -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
-        -e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
-        -e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
-        -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
-        > /tmp/zeppelin-env.json
-
-      ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
-      sleep 5
-      sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-   \"RequestInfo\":{
-      \"command\":\"RESTART\",
-      \"context\":\"Restart Zeppelin\",
-      \"operation_level\":{
-         \"level\":\"HOST\",
-         \"cluster_name\":\"${cluster_name}\"
-      }
-   },
-   \"Requests/resource_filters\":[
-      {
-         \"service_name\":\"ZEPPELIN\",
-         \"component_name\":\"ZEPPELIN_MASTER\",
-         \"hosts\":\"${host}\"
-      }
-   ]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
-
-
-
-
-    #kill any previous Hive/tez apps to clear queue
-    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-    do 
-        yarn application -kill  "$app"
-    done
-
-    sleep 20
-    while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
-    sleep 30
-
-    # curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X POST -d '{"RequestInfo": {"context" :"ATLAS Service Check","command":"ATLAS_SERVICE_CHECK"},"Requests/resource_filters":[{"service_name":"ATLAS"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+        
     
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    ./01-atlas-import-classification.sh
-    ./02-atlas-import-entities.sh
-    ./03-update-servicedefs.sh
-    ./04-create-os-users.sh
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
-    #./07-create-hive-schema.sh
-    beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
+    ./07-create-hive-schema.sh
+    #beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
 
     fi
 fi
