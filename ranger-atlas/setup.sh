@@ -78,36 +78,35 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     #Create users in Ambari before changing pass
 
-    ambari_curl="curl -u admin:admin -H \"X-Requested-By: Hortoniabank\""
     ambari_url="http://localhost:8080/api/v1"
     
     for user in ${users}; do
       echo "adding user ${user} to Ambari"
-      ${ambari_curl} -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" ${ambari_url}/users 
+      curl -u admin:admin -H "X-Requested-By: blah" -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" ${ambari_url}/users 
     done 
 
     #create groups in Ambari
     for group in ${groups}; do
-      ${ambari_curl} -X POST -d "{\"Groups/group_name\":\"${group}\"}" ${ambari_url}/groups
+      curl -u admin:admin -H "X-Requested-By: blah" -X POST -d "{\"Groups/group_name\":\"${group}\"}" ${ambari_url}/groups
     done
 
     #HR group membership
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
 
     #analyst group membership
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
 
     #compliance group membership
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' ${ambari_url}/groups/compliance/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' ${ambari_url}/groups/compliance/members
 
     #us_employees group membership
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
 
     #eu_employees group membership
-    ${ambari_curl} -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' ${ambari_url}/groups/eu_employees/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' ${ambari_url}/groups/eu_employees/members
 
 
 
