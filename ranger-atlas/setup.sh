@@ -363,6 +363,8 @@ EOF
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
+    
+    sleep 20
 
     set -e
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
