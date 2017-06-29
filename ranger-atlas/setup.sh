@@ -330,12 +330,12 @@ EOF
     cd /tmp/masterclass/ranger-atlas/Scripts/
 
     ## import ranger Hive policies for masking etc - needs to be done before creating HDFS folders
-    #< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
-    #${ranger_curl} -X POST \
-    #-H "Content-Type: multipart/form-data" \
-    #-H "Content-Type: application/json" \
-    #-F 'file=@ranger-policies-apply.json' \
-    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+    < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
     ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
     < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
