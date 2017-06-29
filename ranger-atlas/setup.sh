@@ -78,7 +78,7 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     #Create users in Ambari before changing pass
 
-    ambari_curl="curl -iv -u admin:admin -H 'X-Requested-By: Hortoniabank'"
+    ambari_curl="curl -u admin:admin -H \"X-Requested-By: Hortoniabank\""
     ambari_url="http://localhost:8080/api/v1"
     
     for user in ${users}; do
