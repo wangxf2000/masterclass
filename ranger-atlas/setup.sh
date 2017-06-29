@@ -44,26 +44,17 @@ curl -sSL https://raw.githubusercontent.com/seanorama/ambari-bootstrap/master/ex
 ########################################################################
 ########################################################################
 ## tutorial users
-users="kate-hr ivana-eu-hr joe-analyst hadoop-admin compliance-admin hadoopadmin ANONYMOUS"
-for user in ${users}; do
-    sudo useradd ${user}
-    printf "${ambari_pass}\n${ambari_pass}" | sudo passwd --stdin ${user}
-    echo "${user} ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/99-masterclass
-done
-groups="hr analyst compliance us_employees eu_employees hadoop-users hadoop-admins"
-for group in ${groups}; do
-  groupadd ${group}
-done
-usermod -a -G hr kate-hr
-usermod -a -G hr ivana-eu-hr
-usermod -a -G analyst joe-analyst
-usermod -a -G compliance compliance-admin
-usermod -a -G us_employees kate-hr
-usermod -a -G us_employees joe-analyst
-usermod -a -G us_employees compliance-admin
-usermod -a -G eu_employees ivana-eu-hr
-usermod -a -G hadoop-admins hadoopadmin
-usermod -a -G hadoop-admins hadoop-admin
+
+#download hortonia scripts
+cd /tmp
+git clone https://github.com/abajwa-hw/masterclass  
+
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+./04-create-os-users.sh    
+
+#also need anonymous user for kafka Ranger policy
+useradd ANONYMOUS    
+
 
 ########################################################################
 ########################################################################
@@ -77,7 +68,8 @@ if [ "${install_ambari_server}" = "true" ]; then
     sleep 30
 
     #Create users in Ambari before changing pass
-
+    users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jermy_contractor diane_csr log_monitor"
+    groups="hr analyst us_employee eu_employee finance business_dev contractor csr etluser"
     ambari_url="http://localhost:8080/api/v1"
     
     for user in ${users}; do
@@ -91,25 +83,36 @@ if [ "${install_ambari_server}" = "true" ]; then
     done
 
     #HR group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivanna_eu_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"sasha_eu_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
+    
 
     #analyst group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe_analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
 
-    #compliance group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"compliance"}' ${ambari_url}/groups/compliance/members
+    #us_employee group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate_hr", "MemberInfo/group_name":"us_employee"}' ${ambari_url}/groups/us_employee/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe_analyst", "MemberInfo/group_name":"us_employee"}' ${ambari_url}/groups/us_employee/members
 
-    #us_employees group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate-hr", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe-analyst", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"compliance-admin", "MemberInfo/group_name":"us_employees"}' ${ambari_url}/groups/us_employees/members
+    #eu_employee group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivanna_eu_hr", "MemberInfo/group_name":"eu_employee"}' ${ambari_url}/groups/eu_employee/members
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"sasha_eu_hr", "MemberInfo/group_name":"eu_employee"}' ${ambari_url}/groups/eu_employee/members
 
-    #eu_employees group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivana-eu-hr", "MemberInfo/group_name":"eu_employees"}' ${ambari_url}/groups/eu_employees/members
+    #finance group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"john_finance", "MemberInfo/group_name":"finance"}' ${ambari_url}/groups/finance/members
 
+    #bizdev group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"mark_bizdev", "MemberInfo/group_name":"business_dev"}' ${ambari_url}/groups/business_dev/members
 
+    #contractor group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"jermy_contractor", "MemberInfo/group_name":"contractor"}' ${ambari_url}/groups/contractor/members
 
+    #csr group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"diane_csr", "MemberInfo/group_name":"csr"}' ${ambari_url}/groups/csr/members
+
+    #csr group membership
+    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"log_monitor", "MemberInfo/group_name":"etluser"}' ${ambari_url}/groups/etluser/members
     
     ## add admin user to postgres for other services, such as Ranger
     cd /tmp
@@ -250,9 +253,9 @@ EOF
       ${ambari_config_get} zeppelin-shiro-ini \
         | sed -e '1,4d' \
         -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
-        -e "s/user1 = user1, role1, role2/ivana-eu-hr = ${ambari_pass}, admin/" \
-        -e "s/user2 = user2, role3/compliance-admin = ${ambari_pass}, admin/" \
-        -e "s/user3 = user3, role2/joe-analyst = ${ambari_pass}, admin/" \
+        -e "s/user1 = user1, role1, role2/ivanna_eu_hr = ${ambari_pass}, admin/" \
+        -e "s/user2 = user2, role3/diane_csr = ${ambari_pass}, admin/" \
+        -e "s/user3 = user3, role2/joe_analyst = ${ambari_pass}, admin/" \
         > /tmp/zeppelin-env.json
 
       ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
@@ -322,19 +325,17 @@ EOF
     sleep 10
 
 
-    #download hortonia scripts
-    cd /tmp
-    git clone https://github.com/abajwa-hw/masterclass    
+  
 
 
     ## import ranger Hive policies for masking etc - needs to be done before creating HDFS folders
-    cd /tmp/masterclass/ranger-atlas/Scripts/
-    < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
-    ${ranger_curl} -X POST \
-    -H "Content-Type: multipart/form-data" \
-    -H "Content-Type: application/json" \
-    -F 'file=@ranger-policies-apply.json' \
-              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+    #cd /tmp/masterclass/ranger-atlas/Scripts/
+    #< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    #${ranger_curl} -X POST \
+    #-H "Content-Type: multipart/form-data" \
+    #-H "Content-Type: application/json" \
+    #-F 'file=@ranger-policies-apply.json' \
+    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
     ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
     < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
@@ -357,7 +358,7 @@ EOF
     ./01-atlas-import-classification.sh
     ./02-atlas-import-entities.sh
     ./03-update-servicedefs.sh
-    ./04-create-os-users.sh
+
             
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     su hdfs -c ./05-create-hdfs-user-folders.sh
