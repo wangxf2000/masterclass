@@ -362,7 +362,11 @@ EOF
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
+    
+    beeline -u jdbc:hive2://localhost:10000 -n hive -e 'show databases;'
     ./07-create-hive-schema.sh
+    beeline -u jdbc:hive2://localhost:10000 -n hive -e 'show databases;'
+    
     #beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
 
     fi
