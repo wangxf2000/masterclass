@@ -206,7 +206,7 @@
           ],
           "users": [],
           "groups": [
-            "us_employees"
+            "us_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -260,8 +260,8 @@
           ],
           "users": [],
           "groups": [
-            "us_employees",
-            "eu_employees"
+            "us_employee",
+            "eu_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -329,7 +329,7 @@
           ],
           "users": [],
           "groups": [
-            "eu_employees"
+            "eu_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -449,7 +449,7 @@
           ],
           "users": [],
           "groups": [
-            "us_employees"
+            "us_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -599,7 +599,7 @@
           ],
           "users": [],
           "groups": [
-            "us_employees"
+            "us_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -616,7 +616,7 @@
           ],
           "users": [],
           "groups": [
-            "eu_employees"
+            "eu_employee"
           ],
           "conditions": [],
           "delegateAdmin": false
