@@ -332,35 +332,36 @@ EOF
     sleep 10
 
 
-    ## import ranger Hive policies for masking etc 
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
-    < RangerPolicies_cl1_hive.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_hive_apply.json
-    ${ranger_curl} -X POST \
-    -H "Content-Type: multipart/form-data" \
-    -H "Content-Type: application/json" \
-    -F 'file=@RangerPolicies_hive_apply.json' \
-              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+
+    #cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+    #< RangerPolicies_cl1_hive.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_hive_apply.json
+    #${ranger_curl} -X POST \
+    #-H "Content-Type: multipart/form-data" \
+    #-H "Content-Type: application/json" \
+    #-F 'file=@RangerPolicies_hive_apply.json' \
+    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
 
     ## import ranger Tag policies  
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
-    < RangerPolicies_cl1_tag.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_tag_apply.json
-    ${ranger_curl} -X POST \
-    -H "Content-Type: multipart/form-data" \
-    -H "Content-Type: application/json" \
-    -F 'file=@RangerPolicies_tag_apply.json' \
-              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
+    #cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+    #< RangerPolicies_cl1_tag.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_tag_apply.json
+    #${ranger_curl} -X POST \
+    #-H "Content-Type: multipart/form-data" \
+    #-H "Content-Type: application/json" \
+    #-F 'file=@RangerPolicies_tag_apply.json' \
+    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
 
   
 
     cd /tmp/masterclass/ranger-atlas/Scripts/
-                  
-    #< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
-    #${ranger_curl} -X POST \
-    #-H "Content-Type: multipart/form-data" \
-    #-H "Content-Type: application/json" \
-    #-F 'file=@ranger-policies-apply.json' \
-    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+              
+    ## import ranger Hive policies for masking etc     
+    < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
     ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
     < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
