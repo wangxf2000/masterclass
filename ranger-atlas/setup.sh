@@ -222,10 +222,13 @@ EOF
         sleep 30
         host=$(hostname -f)
         
-        #add groups to Hive view
+        #add groups to Hive views
         curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT ${ambari_url}/views/HIVE/versions/1.5.0/instances/AUTO_HIVE_INSTANCE/privileges \
            --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
         
+        curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT ${ambari_url}/views/HIVE/versions/2.0.0/instances/AUTO_HIVE20_INSTANCE/privileges \ 
+           --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
+
         #restart Atlas
        sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
@@ -329,17 +332,35 @@ EOF
     sleep 10
 
 
-  
-
-    cd /tmp/masterclass/ranger-atlas/Scripts/
-
-    ## import ranger Hive policies for masking etc - needs to be done before creating HDFS folders
-    < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    ## import ranger Hive policies for masking etc 
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+    < RangerPolicies_cl1_hive.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_hive_apply.json
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \
     -H "Content-Type: application/json" \
-    -F 'file=@ranger-policies-apply.json' \
+    -F 'file=@RangerPolicies_hive_apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+
+
+    ## import ranger Tag policies  
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+    < RangerPolicies_cl1_tag.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_tag_apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@RangerPolicies_tag_apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
+
+  
+
+    cd /tmp/masterclass/ranger-atlas/Scripts/
+                  
+    #< ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
+    #${ranger_curl} -X POST \
+    #-H "Content-Type: multipart/form-data" \
+    #-H "Content-Type: application/json" \
+    #-F 'file=@ranger-policies-apply.json' \
+    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
     ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
     < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
@@ -368,11 +389,13 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-    sleep 20
+    sleep 30
 
+
+    cd /tmp/masterclass/ranger-atlas/
     set -e
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
-    ./07-create-hive-schema.sh
+    /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/07-create-hive-schema.sh
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     
     #beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
