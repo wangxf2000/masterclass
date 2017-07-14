@@ -16,6 +16,8 @@ export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
 export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
 export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
 export host_count=${host_count:-skip}      #number of nodes, defaults to 1
+export enable_kerberos=${enable_kerberos:-true}      
+export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
 
 #internal vars
 export ambari_password="${ambari_pass}"
@@ -393,14 +395,31 @@ EOF
     sleep 30
 
 
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    set -e
+    set +e
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./07-create-hive-schema.sh
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     
-    #beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
+    if [ "${enable_kerberos}" = true  ]; then
+       cd /tmp
+       git clone https://github.com/crazyadmins/useful-scripts.git
+       cd useful-scripts/ambari/
+       cat << EOF > ambari.props
+CLUSTER_NAME=${cluster_name}
+AMBARI_ADMIN_USER=admin
+AMBARI_ADMIN_PASSWORD=${ambari_pass}
+AMBARI_HOST=$(hostname -f)
+KDC_HOST=$(hostname -f)
+REALM=${kdc_realm}
+KERBEROS_CLIENTS=$(hostname -f)
+EOF
 
+       cat ambari.props
+       chmod +x setup_kerberos.sh 
+       ./setup_kerberos.sh 
+       fi
+    
     fi
 fi
 
