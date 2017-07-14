@@ -392,10 +392,10 @@ EOF
     sleep 30
 
 
-    cd /tmp/masterclass/ranger-atlas/
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     set -e
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
-    /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/07-create-hive-schema.sh
+    ./07-create-hive-schema.sh
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     
     #beeline -u "jdbc:hive2://$(hostname -f):2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2" -n hive -f data/HiveSchema.hsql
