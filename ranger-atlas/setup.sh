@@ -211,7 +211,7 @@ cat << EOF > configuration-custom.json
 }
 EOF
 
-    sleep 20
+    sleep 40
     ./deploy-recommended-cluster.bash
 
     if [ "${deploy}" = "true" ]; then
