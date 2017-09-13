@@ -121,7 +121,8 @@ if [ "${install_ambari_server}" = "true" ]; then
     sudo -u postgres createuser -U postgres -d -e -E -l -r -s admin
     sudo -u postgres psql -c "ALTER USER admin PASSWORD 'BadPass#1'";
     printf "\nhost\tall\tall\t0.0.0.0/0\tmd5\n" >> /var/lib/pgsql/data/pg_hba.conf
-    systemctl restart postgresql
+    #systemctl restart postgresql
+    service postgresql restart
 
     ## bug workaround:
     sed -i "s/\(^    total_sinks_count = \)0$/\11/" /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/stack_advisor.py
