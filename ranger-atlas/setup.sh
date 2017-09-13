@@ -213,6 +213,8 @@ cat << EOF > configuration-custom.json
 EOF
 
     sleep 40
+    service ambari-server status
+    curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X GET ${ambari_url}/hosts
     ./deploy-recommended-cluster.bash
 
     if [ "${deploy}" = "true" ]; then
