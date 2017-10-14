@@ -347,20 +347,21 @@ EOF
     #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
 
-    ## import ranger Tag policies  
-    #cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
-    #< RangerPolicies_cl1_tag.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_tag_apply.json
-    #${ranger_curl} -X POST \
-    #-H "Content-Type: multipart/form-data" \
-    #-H "Content-Type: application/json" \
-    #-F 'file=@RangerPolicies_tag_apply.json' \
-    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
+
 
   
 
     cd /tmp/masterclass/ranger-atlas/Scripts/
               
-    ## import ranger Hive policies for masking etc     
+    echo "importing ranger Tag policies.."
+    < ranger-policies-tags.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-tags_apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-policies-tags_apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
+                  
+    echo "import ranger Hive policies..."
     < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \
@@ -368,7 +369,7 @@ EOF
     -F 'file=@ranger-policies-apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
-    ## import ranger HDFS policies - to give hive access to /hive_data HDFS dir
+    echo "import ranger HDFS policies..." #to give hive access to /hive_data HDFS dir
     < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \
@@ -376,7 +377,7 @@ EOF
     -F 'file=@ranger-hdfs-policies-apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
 
-    ## import ranger kafka policies - to give ANONYMOUS access to kafka or Atlas won't work
+    echo "import ranger kafka policies..." #  to give ANONYMOUS access to kafka or Atlas won't work
     < ranger-kafka-policies.json jq '.policies[].service = "'${cluster_name}'_kafka"' > ranger-kafka-policies-apply.json
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \

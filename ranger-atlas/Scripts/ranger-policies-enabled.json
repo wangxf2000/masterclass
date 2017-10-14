@@ -1,13 +1,13 @@
 {
   "metaDataInfo": {
-    "Host name": "ip-172-31-25-190.eu-central-1.compute.internal",
+    "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 4, 2017 6:45:27 AM",
-    "Ranger apache version": "0.7.0.2.6.0.3-8"
+    "Export time": "Oct 14, 2017 3:18:25 AM",
+    "Ranger apache version": "0.7.0.2.6.2.0-205"
   },
   "policies": [
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "all - database, table, column",
       "policyType": 0,
       "description": "Policy for all - database, table, column",
@@ -86,12 +86,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 10,
+      "id": 16,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "all - database, udf",
       "policyType": 0,
       "description": "Policy for all - database, udf",
@@ -163,12 +163,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 11,
+      "id": 17,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "access_us_customers_table",
       "policyType": 0,
       "description": "",
@@ -217,12 +217,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 12,
+      "id": 18,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "access_ww_customers_table",
       "policyType": 0,
       "description": "",
@@ -272,12 +272,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 13,
+      "id": 19,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "access_eu_countries_ref_table",
       "policyType": 0,
       "description": "",
@@ -340,12 +340,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 14,
+      "id": 20,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "prohibit_zipcode_mrn_bloodtype",
       "policyType": 0,
       "description": "",
@@ -382,7 +382,9 @@
               "isAllowed": true
             }
           ],
-          "users": [],
+          "users": [
+            "joe_analyst"
+          ],
           "groups": [
             "analyst"
           ],
@@ -393,12 +395,6 @@
                 "hortoniabank.ww_customers.mrn",
                 "hortoniabank.ww_customers.bloodtype"
               ]
-            },
-            {
-              "type": "not-accessed-together",
-              "values": [
-                ""
-              ]
             }
           ],
           "delegateAdmin": false
@@ -408,12 +404,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 15,
+      "id": 21,
       "isEnabled": true,
-      "version": 1
+      "version": 6
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "prevent_udf_creation_drop",
       "policyType": 0,
       "description": "",
@@ -459,12 +455,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 16,
+      "id": 22,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "access_finance",
       "policyType": 0,
       "description": "",
@@ -555,12 +551,12 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 17,
+      "id": 23,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "filter_ww_customers_table",
       "policyType": 2,
       "description": "",
@@ -622,12 +618,12 @@
           "delegateAdmin": false
         }
       ],
-      "id": 18,
+      "id": 24,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_creditcardnum_first4",
       "policyType": 1,
       "description": "",
@@ -662,7 +658,7 @@
       "dataMaskPolicyItems": [
         {
           "dataMaskInfo": {
-            "dataMaskType": "MASK_SHOW_LAST_4"
+            "dataMaskType": "MASK_SHOW_FIRST_4"
           },
           "accesses": [
             {
@@ -679,12 +675,12 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 19,
+      "id": 25,
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_streetaddress_redact",
       "policyType": 1,
       "description": "",
@@ -736,12 +732,12 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 20,
+      "id": 26,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_password_hash",
       "policyType": 1,
       "description": "",
@@ -793,12 +789,12 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 21,
+      "id": 27,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_mrn_nullify",
       "policyType": 1,
       "description": "",
@@ -850,12 +846,12 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 22,
+      "id": 28,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_dob_custom",
       "policyType": 1,
       "description": "",
@@ -909,12 +905,12 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 23,
+      "id": 29,
       "isEnabled": true,
       "version": 1
     },
     {
-      "service": "hive",
+      "service": "hdp_hive",
       "name": "mask_age_custom",
       "policyType": 1,
       "description": "",
@@ -968,14 +964,73 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 24,
+      "id": 30,
       "isEnabled": true,
       "version": 1
+    },
+    {
+      "service": "hdp_hive",
+      "name": "mask_nationalid_last4",
+      "policyType": 1,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hortoniabank"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "nationalid"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "us_customers"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [
+        {
+          "dataMaskInfo": {
+            "dataMaskType": "MASK_SHOW_LAST_4",
+            "conditionExpr": "",
+            "valueExpr": ""
+          },
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "analyst"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "rowFilterPolicyItems": [],
+      "id": 42,
+      "isEnabled": true,
+      "version": 2
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1491288327505
+  "queryTimeMS": 1507951105674
 }
