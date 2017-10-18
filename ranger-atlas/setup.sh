@@ -26,6 +26,7 @@ export recommendation_strategy="ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"
 export install_ambari_server=true
 export deploy=true
 
+export host=$(hostname -f)
 ## overrides
 #export ambari_stack_version=2.6
 #export ambari_repo=https://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
@@ -200,13 +201,13 @@ cat << EOF > configuration-custom.json
     "ranger-admin-site": {
         "ranger.jpa.jdbc.driver": "org.postgresql.Driver",
         "ranger.jpa.jdbc.url": "jdbc:postgresql://localhost:5432/ranger",
-    "ranger.servicedef.enableDenyAndExceptionsInPolicies": "true"
+        "ranger.audit.solr.zookeepers": "${host}:2181/infra-solr",
+        "ranger.servicedef.enableDenyAndExceptionsInPolicies": "true"
     },
     "ranger-hive-audit" : {
         "xasecure.audit.is.enabled" : "true",
         "xasecure.audit.destination.hdfs" : "true",
-        "xasecure.audit.destination.solr" : "true",
-        "xasecure.audit.destination.solr.zookeepers" : "localhost:2181/infra-solr"
+        "xasecure.audit.destination.solr" : "true"
     }
   }
 }
@@ -225,7 +226,7 @@ EOF
         ambari_configs
         ambari_wait_request_complete 1
         sleep 30
-        host=$(hostname -f)
+
         
         #add groups to Hive views
         curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT ${ambari_url}/views/HIVE/versions/1.5.0/instances/AUTO_HIVE_INSTANCE/privileges \
