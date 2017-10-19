@@ -397,8 +397,10 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-    sleep 30
+    while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+    while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
 
+    sleep 30
 
     set +e
     beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
