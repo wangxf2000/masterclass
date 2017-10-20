@@ -39,7 +39,7 @@ export ambari_password cluster_name recommendation_strategy
 ## 
 cd
 
-yum makecache
+yum makecache fast
 yum -y -q install git epel-release ntp screen mysql-connector-java postgresql-jdbc jq python-argparse python-configobj ack
 curl -sSL https://raw.githubusercontent.com/seanorama/ambari-bootstrap/master/extras/deploy/install-ambari-bootstrap.sh | bash
 
