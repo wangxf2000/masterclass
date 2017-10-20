@@ -337,30 +337,17 @@ EOF
       -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
     sleep 10
 
-
-
-    #cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
-    #< RangerPolicies_cl1_hive.json jq '.policies[].service = "'${cluster_name}'_hive"' > RangerPolicies_hive_apply.json
-    #${ranger_curl} -X POST \
-    #-H "Content-Type: multipart/form-data" \
-    #-H "Content-Type: application/json" \
-    #-F 'file=@RangerPolicies_hive_apply.json' \
-    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
-
-
-
-
   
 
     cd /tmp/masterclass/ranger-atlas/Scripts/
-              
-    echo "importing ranger Tag policies.."
-    < ranger-policies-tags.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-tags_apply.json
-    ${ranger_curl} -X POST \
-    -H "Content-Type: multipart/form-data" \
-    -H "Content-Type: application/json" \
-    -F 'file=@ranger-policies-tags_apply.json' \
-              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
+    # Needs to be done manually afterwards because Tag repo has to be manually created first          
+    #echo "importing ranger Tag policies.."
+    #< ranger-policies-tags.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-tags_apply.json
+    #${ranger_curl} -X POST \
+    #-H "Content-Type: multipart/form-data" \
+    #-H "Content-Type: application/json" \
+    #-F 'file=@ranger-policies-tags_apply.json' \
+    #          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
                   
     echo "import ranger Hive policies..."
     < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
