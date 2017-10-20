@@ -390,10 +390,10 @@ EOF
     sleep 30
 
     set +e
-    beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
+    #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./07-create-hive-schema.sh
-    beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
+    #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     set -e
     
     if [ "${enable_kerberos}" = true  ]; then
