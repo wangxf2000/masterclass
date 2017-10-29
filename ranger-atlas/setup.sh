@@ -156,7 +156,6 @@ cat << EOF > configuration-custom.json
         "hive.server2.enable.doAs" : "true",
         "hive.exec.compress.output": "true",
         "hive.merge.mapfiles": "true",
-        "hive.server2.tez.initialize.default.sessions": "true",
         "hive.exec.post.hooks" : "org.apache.hadoop.hive.ql.hooks.ATSHook,org.apache.atlas.hive.hook.HiveHook",
         "hive.server2.tez.initialize.default.sessions": "true"
     },
