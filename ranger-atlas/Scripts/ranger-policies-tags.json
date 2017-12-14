@@ -1,1120 +1,1142 @@
 {
-  "metaDataInfo": {
-    "Host name": "demo.hortonworks.com",
-    "Exported by": "admin",
-    "Export time": "Oct 14, 2017 3:19:05 AM",
-    "Ranger apache version": "0.7.0.2.6.2.0-205"
-  },
-  "policies": [
-    {
-      "service": "cl1_tag",
-      "name": "access: EXPIRES_ON",
-      "policyType": 0,
-      "description": "Policy for data with EXPIRES_ON tag",
-      "isAuditEnabled": true,
-      "resources": {
-        "tag": {
-          "values": [
-            "EXPIRES_ON"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
+   "metaDataInfo":{
+      "Host name":"demo.hortonworks.com",
+      "Exported by":"admin",
+      "Export time":"Dec 14, 2017 12:27:17 AM",
+      "Ranger apache version":"0.7.0.2.6.3.0-235"
+   },
+   "policies":[
+      {
+         "service":"tags",
+         "name":"access: EXPIRES_ON",
+         "policyType":0,
+         "description":"Policy for data with EXPIRES_ON tag",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "EXPIRES_ON"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
+            }
+         },
+         "policyItems":[
+
+         ],
+         "denyPolicyItems":[
+            {
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "public"
+               ],
+               "conditions":[
+                  {
+                     "type":"accessed-after-expiry",
+                     "values":[
+                        "yes"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+            {
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "etluser"
+               ],
+               "conditions":[
+                  {
+                     "type":"accessed-after-expiry",
+                     "values":[
+                        "yes"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":38,
+         "guid":"30d630c7-436b-4f80-9847-80ac60d0b01a",
+         "isEnabled":true,
+         "version":3
       },
-      "policyItems": [],
-      "denyPolicyItems": [
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:create",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:delete",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:rollover",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:setkeymaterial",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:get",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:getkeys",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:getmetadata",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:generateeek",
-              "isAllowed": true
-            },
-            {
-              "type": "kms:decrypteek",
-              "isAllowed": true
-            },
-            {
-              "type": "knox:allow",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:submitTopology",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:fileUpload",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:fileDownload",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:killTopology",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:rebalance",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:activate",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:deactivate",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:getTopologyConf",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:getTopology",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:getUserTopology",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:getTopologyInfo",
-              "isAllowed": true
-            },
-            {
-              "type": "storm:uploadNewCredentials",
-              "isAllowed": true
-            },
-            {
-              "type": "yarn:submit-app",
-              "isAllowed": true
-            },
-            {
-              "type": "yarn:admin-queue",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:publish",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:consume",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:configure",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:describe",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:create",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:delete",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka:kafka_admin",
-              "isAllowed": true
-            },
-            {
-              "type": "solr:query",
-              "isAllowed": true
-            },
-            {
-              "type": "solr:update",
-              "isAllowed": true
-            },
-            {
-              "type": "solr:others",
-              "isAllowed": true
-            },
-            {
-              "type": "solr:solr_admin",
-              "isAllowed": true
-            },
-            {
-              "type": "atlas:read",
-              "isAllowed": true
-            },
-            {
-              "type": "atlas:create",
-              "isAllowed": true
-            },
-            {
-              "type": "atlas:update",
-              "isAllowed": true
-            },
-            {
-              "type": "atlas:delete",
-              "isAllowed": true
-            },
-            {
-              "type": "atlas:all",
-              "isAllowed": true
+      {
+         "service":"tags",
+         "name":"access: DATA_QUALITY",
+         "policyType":0,
+         "description":"Prevent analyst from accessing data with low data-quality score",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "DATA_QUALITY"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "public"
-          ],
-          "conditions": [
+         },
+         "policyItems":[
+
+         ],
+         "denyPolicyItems":[
             {
-              "type": "accessed-after-expiry",
-              "values": [
-                "yes"
-              ]
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "analyst"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.score \u003c 0.6"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "delegateAdmin": false
-        }
-      ],
-      "allowExceptions": [],
-      "denyExceptions": [],
-      "dataMaskPolicyItems": [],
-      "rowFilterPolicyItems": [],
-      "id": 37,
-      "isEnabled": true,
-      "version": 1
-    },
-    {
-      "service": "cl1_tag",
-      "name": "access: DATA_QUALITY",
-      "policyType": 0,
-      "description": "Prevent analyst from accessing data with low data-quality score",
-      "isAuditEnabled": true,
-      "resources": {
-        "tag": {
-          "values": [
-            "DATA_QUALITY"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":53,
+         "guid":"95710adb-f564-446d-b929-cb80e9027cf7",
+         "isEnabled":true,
+         "version":4
       },
-      "policyItems": [],
-      "denyPolicyItems": [
-        {
-          "accesses": [
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+      {
+         "service":"tags",
+         "name":"access: PII",
+         "policyType":0,
+         "description":"Restrict access to Personally Identifiable Information",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "PII"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "analyst"
-          ],
-          "conditions": [
+         },
+         "policyItems":[
             {
-              "type": "expression",
-              "values": [
-                "tagAttr.score < 0.4"
-              ]
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "hr"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "csr"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.type\u003d\u003d\u0027Email\u0027"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "delegateAdmin": false
-        }
-      ],
-      "allowExceptions": [],
-      "denyExceptions": [],
-      "dataMaskPolicyItems": [],
-      "rowFilterPolicyItems": [],
-      "id": 38,
-      "isEnabled": true,
-      "version": 1
-    },
-    {
-      "service": "cl1_tag",
-      "name": "access: PII",
-      "policyType": 0,
-      "description": "Restrict access to Personally Identifiable Information",
-      "isAuditEnabled": true,
-      "resources": {
-        "tag": {
-          "values": [
-            "PII"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
+         ],
+         "denyPolicyItems":[
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "contractor"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.type in [\u0027SSN\u0027 \u0027CCN\u0027 \u0027Email\u0027]"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "public"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "hr",
+                  "analyst"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "csr"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.type\u003d\u003d\u0027Email\u0027"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":54,
+         "guid":"88a7bc87-97ff-40c1-9252-3a5b8e49aa95",
+         "isEnabled":true,
+         "version":1
       },
-      "policyItems": [
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+      {
+         "service":"tags",
+         "name":"access: FINANCE_PII",
+         "policyType":0,
+         "description":"",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "FINANCE_PII"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "hr"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        },
-        {
-          "accesses": [
+         },
+         "policyItems":[
             {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "finance"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "csr"
-          ],
-          "conditions": [
+         ],
+         "denyPolicyItems":[
             {
-              "type": "expression",
-              "values": [
-                "tagAttr.type=='Email'"
-              ]
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "public"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "delegateAdmin": false
-        }
-      ],
-      "denyPolicyItems": [
-        {
-          "accesses": [
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
             {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:index",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:lock",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:all",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "finance"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "contractor"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        },
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
-            }
-          ],
-          "users": [],
-          "groups": [
-            "public"
-          ],
-          "conditions": [
-            {
-              "type": "expression",
-              "values": [
-                "tagAttr.type in ['SSN','CCN','Email']"
-              ]
-            }
-          ],
-          "delegateAdmin": false
-        }
-      ],
-      "allowExceptions": [],
-      "denyExceptions": [
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
-            }
-          ],
-          "users": [],
-          "groups": [
-            "hr"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        },
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
-            }
-          ],
-          "users": [],
-          "groups": [
-            "csr"
-          ],
-          "conditions": [
-            {
-              "type": "expression",
-              "values": [
-                "tagAttr.type=='Email'"
-              ]
-            }
-          ],
-          "delegateAdmin": false
-        }
-      ],
-      "dataMaskPolicyItems": [],
-      "rowFilterPolicyItems": [],
-      "id": 39,
-      "isEnabled": true,
-      "version": 1
-    },
-    {
-      "service": "cl1_tag",
-      "name": "access: FINANCE_PII",
-      "policyType": 0,
-      "description": "Data tagged as FINANCE_PII should only be accessible by users in finance group",
-      "isAuditEnabled": true,
-      "resources": {
-        "tag": {
-          "values": [
-            "FINANCE_PII"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":55,
+         "guid":"88220be7-baea-4283-8be0-2ff46d8ab4e7",
+         "isEnabled":true,
+         "version":1
       },
-      "policyItems": [
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+      {
+         "service":"tags",
+         "name":"mask: PII",
+         "policyType":1,
+         "description":"Mask policy for data classified as \u0027Personally Identifiable Information",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "PII"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "finance"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        }
-      ],
-      "denyPolicyItems": [
-        {
-          "accesses": [
+         },
+         "policyItems":[
+
+         ],
+         "denyPolicyItems":[
+
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+
+         ],
+         "dataMaskPolicyItems":[
             {
-              "type": "hdfs:read",
-              "isAllowed": true
+               "dataMaskInfo":{
+                  "dataMaskType":"hive:MASK_NONE"
+               },
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "hr"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
             },
             {
-              "type": "hdfs:write",
-              "isAllowed": true
+               "dataMaskInfo":{
+                  "dataMaskType":"hive:MASK_NULL"
+               },
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "analyst"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.type\u003d\u003d\u0027MRN\u0027"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
             },
             {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
+               "dataMaskInfo":{
+                  "dataMaskType":"hive:MASK_HASH"
+               },
+               "accesses":[
+                  {
+                     "type":"hive:select",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "analyst"
+               ],
+               "conditions":[
+                  {
+                     "type":"expression",
+                     "values":[
+                        "tagAttr.type\u003d\u003d\u0027Password\u0027"
+                     ]
+                  }
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "public"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        }
-      ],
-      "allowExceptions": [],
-      "denyExceptions": [
-        {
-          "accesses": [
-            {
-              "type": "hdfs:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hdfs:execute",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:read",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:write",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hbase:admin",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:select",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:update",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:create",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:drop",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:alter",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:index",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:lock",
-              "isAllowed": true
-            },
-            {
-              "type": "hive:all",
-              "isAllowed": true
-            }
-          ],
-          "users": [],
-          "groups": [
-            "finance"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        }
-      ],
-      "dataMaskPolicyItems": [],
-      "rowFilterPolicyItems": [],
-      "id": 40,
-      "isEnabled": true,
-      "version": 1
-    },
-    {
-      "service": "cl1_tag",
-      "name": "mask: PII",
-      "policyType": 1,
-      "description": "Mask policy for data classified as 'Personally Identifiable Information'",
-      "isAuditEnabled": true,
-      "resources": {
-        "tag": {
-          "values": [
-            "PII"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":56,
+         "guid":"bbe231ce-dfa1-4565-a40f-16fbd10bef16",
+         "isEnabled":true,
+         "version":1
       },
-      "policyItems": [],
-      "denyPolicyItems": [],
-      "allowExceptions": [],
-      "denyExceptions": [],
-      "dataMaskPolicyItems": [
-        {
-          "dataMaskInfo": {
-            "dataMaskType": "MASK_NULL"
-          },
-          "accesses": [
-            {
-              "type": "hive:select",
-              "isAllowed": true
+      {
+         "service":"tags",
+         "name":"access: REFERENCE_DATA",
+         "policyType":0,
+         "description":"Access policy for data classified as REFERENCE_DATA",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "REFERENCE_DATA"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
             }
-          ],
-          "users": [],
-          "groups": [
-            "public"
-          ],
-          "conditions": [],
-          "delegateAdmin": false
-        },
-        {
-          "dataMaskInfo": {
-            "dataMaskType": "MASK_NONE"
-          },
-          "accesses": [
+         },
+         "policyItems":[
+
+         ],
+         "denyPolicyItems":[
             {
-              "type": "hive:select",
-              "isAllowed": true
+               "accesses":[
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:update",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:drop",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hive:alter",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "public"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
             }
-          ],
-          "users": [
-            "hive"
-          ],
-          "groups": [],
-          "conditions": [],
-          "delegateAdmin": false
-        }
-      ],
-      "rowFilterPolicyItems": [],
-      "id": 41,
-      "isEnabled": true,
-      "version": 1
-    }
-  ],
-  "startIndex": 0,
-  "pageSize": 0,
-  "totalCount": 0,
-  "resultSize": 0,
-  "queryTimeMS": 1507951145384
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":57,
+         "guid":"474d2dbb-ca9e-444a-b843-b77a0cb28a6f",
+         "isEnabled":true,
+         "version":2
+      }
+   ],
+   "startIndex":0,
+   "pageSize":0,
+   "totalCount":0,
+   "resultSize":0,
+   "queryTimeMS":1513211237371
 }
