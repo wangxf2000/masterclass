@@ -281,16 +281,17 @@ EOF
         curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
 
 
-      #update zeppelin configs by uncommenting admin user, enabling sessionManager/securityManager, switching from anon to authc
-      ${ambari_config_get} zeppelin-shiro-ini \
-        | sed -e '1,4d' \
+      #update zeppelin configs to include ivanna/joe/diane users
+      /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c zeppelin-shiro-ini \
+        | sed -e '1,2d' \
         -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
         -e "s/user1 = user1, role1, role2/ivanna_eu_hr = ${ambari_pass}, admin/" \
         -e "s/user2 = user2, role3/diane_csr = ${ambari_pass}, admin/" \
         -e "s/user3 = user3, role2/joe_analyst = ${ambari_pass}, admin/" \
         > /tmp/zeppelin-env.json
 
-      ${ambari_config_set}  zeppelin-shiro-ini /tmp/zeppelin-env.json
+
+      /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c zeppelin-shiro-ini -f /tmp/zeppelin-env.json
       sleep 5
       
       #restart Zeppelin
