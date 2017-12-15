@@ -240,6 +240,8 @@ EOF
            curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT -d  '{"RequestInfo":{"context":"_PARSE_.START.ALL_SERVICES","operation_level":{"level":"CLUSTER","cluster_name":"'"${cluster_name}"'"}},"Body":{"ServiceInfo":{"state":"STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services
 
            while ! echo exit | nc localhost 21000; do echo "waiting for services to start...."; sleep 10; done
+           while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+           while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done           
         fi
 
         sleep 30
