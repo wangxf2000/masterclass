@@ -227,6 +227,21 @@ EOF
         source ~/ambari-bootstrap/extras/ambari_functions.sh
         ambari_configs
         ambari_wait_request_complete 1
+        sleep 5
+        
+        #Blueprint bug in HDP 2.6.3
+        if ! nc localhost 6080 ; then
+           echo "Ranger did not start. Restarting..."
+   
+           curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
+           sleep 5
+   
+           echo "Starting all services..."
+           curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT -d  '{"RequestInfo":{"context":"_PARSE_.START.ALL_SERVICES","operation_level":{"level":"CLUSTER","cluster_name":"'"${cluster_name}"'"}},"Body":{"ServiceInfo":{"state":"STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services
+
+           while ! echo exit | nc localhost 21000; do echo "waiting for services to start...."; sleep 10; done
+        fi
+
         sleep 30
 
         
