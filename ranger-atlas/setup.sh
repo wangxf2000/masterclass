@@ -433,15 +433,11 @@ EOF
     #import Hive data
     
     set +e
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     if [ "${enable_kerberos}" = true  ]; then
-        kinit -kVt /etc/security/keytabs/hive.service.keytab hive/$(hostname -f)@${kdc_realm}
-        beeline -u "jdbc:hive2://localhost:10000/default;principal=hive/$(hostname -f)@${kdc_realm}" -f /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/HiveSchema.hsql
-        kdestroy
+       ./07-create-hive-schema-kerberos.sh
     else
-       #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
-       cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
        ./07-create-hive-schema.sh
-       #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
     fi
     set -e
     
