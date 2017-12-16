@@ -429,6 +429,16 @@ EOF
 
     sleep 30
 
+    if [ "${enable_kerberos}" = true  ]; then
+       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+    fi
+
+    #kill any previous Hive/tez apps to clear queue
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done
+
 
     #import Hive data
     
@@ -445,6 +455,7 @@ EOF
     fi
 fi
 
-echo "Done!"
-
+echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
+echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
+echo "Once complete, see here for walk through of demo: https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html"
         
