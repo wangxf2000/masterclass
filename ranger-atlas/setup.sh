@@ -404,18 +404,6 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-    while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
-    while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
-
-    sleep 30
-
-    set +e
-    #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    ./07-create-hive-schema.sh
-    #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
-    set -e
-    
     if [ "${enable_kerberos}" = true  ]; then
        cd /tmp
        git clone https://github.com/crazyadmins/useful-scripts.git
@@ -434,6 +422,29 @@ EOF
        chmod +x setup_kerberos.sh 
        ./setup_kerberos.sh 
        fi
+    
+    #make sure Hive is up
+    while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+    while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
+
+    sleep 30
+
+
+    #import Hive data
+    
+    set +e
+    if [ "${enable_kerberos}" = true  ]; then
+        kinit -kVt /etc/security/keytabs/hive.service.keytab hive/$(hostname -f)@${kdc_realm}
+        beeline -u "jdbc:hive2://localhost:10000/default;principal=hive/$(hostname -f)@${kdc_realm}" -f /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/HiveSchema.hsql
+        kdestroy
+    else
+       #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
+       cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+       ./07-create-hive-schema.sh
+       #beeline -u "jdbc:hive2://$(hostname -f):10000" -n hive -e "show databases"
+    fi
+    set -e
+    
     
     fi
 fi
