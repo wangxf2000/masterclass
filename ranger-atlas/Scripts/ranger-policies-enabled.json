@@ -339,7 +339,7 @@
             },
             "table":{
                "values":[
-                  "ww_customer"
+                  "ww_customers"
                ],
                "isExcludes":false,
                "isRecursive":false
