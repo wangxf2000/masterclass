@@ -396,7 +396,7 @@ EOF
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
-    ./02-atlas-import-entities.sh
+    #./02-atlas-import-entities.sh
     ./03-update-servicedefs.sh
 
             
@@ -450,8 +450,11 @@ EOF
        ./07-create-hive-schema.sh
     fi
     set -e
-    
-    
+
+    #moving import atlas entities to end
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    ./02-atlas-import-entities.sh
+                
     fi
 fi
 
