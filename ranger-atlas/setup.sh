@@ -396,7 +396,7 @@ EOF
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
-    #./02-atlas-import-entities.sh      ## seems this needs to be run after post-script manual steps (creating tag repo in Ranger etc)
+    #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
     ./03-update-servicedefs.sh
 
             
@@ -451,9 +451,13 @@ EOF
     fi
     set -e
 
+    #import Atlas entities 
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    ./02-atlas-import-entities.sh
+    # Need to do this twice due to RANGER-1897 
+    # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
+    ./02-atlas-import-entities.sh
     
-    #cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    #./02-atlas-import-entities.sh
                 
     fi
 fi
