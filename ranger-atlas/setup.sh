@@ -454,7 +454,7 @@ EOF
     #import Atlas entities 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./02-atlas-import-entities.sh
-    # Need to do this twice due to RANGER-1897 
+    # Need to do this twice due to bug: RANGER-1897 
     # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
     ./02-atlas-import-entities.sh
     
