@@ -2,7 +2,8 @@
 
 ## Setup - part 1
 
-- Launch vanilla Centos/RHEL 7.x VM and run setup.sh
+- Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or cloud provider of choice or...) and run setup.sh
+  - This should not already have any Ambari or HDP components installed (e.g. do NOT run on HDP sandbox)
 ```
 sudo su
 nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
