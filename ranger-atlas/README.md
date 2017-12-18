@@ -30,6 +30,7 @@ tail -f /var/log/hdp_setup.log
   - Open Ranger
   - Access Manager -> Tag based Policies
   - Click the import icon to import policies
+  - Make sure to select the 'Override Policy' checkbox
   
 - [ ] Import hdfs/hive entities into Atlas
 ```
