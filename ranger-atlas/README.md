@@ -9,6 +9,20 @@ sudo su
 nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
 tail -f /var/log/hdp_setup.log
 ```
+
+#### Troubleshooting 
+- In case script exits after enabling kerberos but before creating Hive DBs and tables, just run below scripts to complete the setup manually.
+```
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+./07-create-hive-schema-kerberos.sh
+
+#import atlas entities
+./02-atlas-import-entities.sh
+# Need to do this twice due to bug: RANGER-1897
+# second time, the notification is of type ENTITY_UPDATE which gets processed correctly
+./02-atlas-import-entities.sh
+```
+
 ## Setup - part 2
 
 - Once script is complete, there are manual steps required to create tag service, associate with Hive service and import tag based policies 
@@ -32,13 +46,11 @@ tail -f /var/log/hdp_setup.log
   - Access Manager -> Tag based Policies
   - Click the import icon to import policies
   - Make sure to select the 'Override Policy' checkbox
+  - Wait 30s
   
-- [ ] Import hdfs/hive entities into Atlas
-```
-cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/
-./02-atlas-import-entities.sh
-```
 
-  ## Demo walk through
+- [ ] Login to Zeppelin as end users and run demo Hive queries
+
+  ## Demo walkthrough
   
   - Detailed walkthrough of demo steps available [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html)
