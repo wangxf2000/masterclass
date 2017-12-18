@@ -31,6 +31,12 @@ tail -f /var/log/hdp_setup.log
   - Access Manager -> Tag based Policies
   - Click the import icon to import policies
   
+- [ ] Import hdfs/hive entities into Atlas
+```
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/
+./02-atlas-import-entities.sh
+```
+
   ## Demo walk through
   
   - Detailed walkthrough of demo steps available [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html)
