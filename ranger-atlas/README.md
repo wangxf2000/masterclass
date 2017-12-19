@@ -3,7 +3,7 @@
 ## Setup - part 1
 
 - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or cloud provider of choice or...) and run setup.sh
-  - This should not already have any Ambari or HDP components installed (e.g. do NOT run on HDP sandbox)
+  - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run on HDP sandbox)
 ```
 sudo su
 nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
@@ -11,8 +11,9 @@ tail -f /var/log/hdp_setup.log
 ```
 
 #### Troubleshooting 
-- In case script exits after enabling kerberos but before creating Hive DBs and tables, just run below scripts to complete the setup manually.
+- In case the script exits pre-maturely (after enabling kerberos but before creating Hive DBs and tables), just manually run below scripts to complete the setup.
 ```
+sudo su
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./07-create-hive-schema-kerberos.sh
 
