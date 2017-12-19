@@ -1,9 +1,16 @@
 # Ranger Atlas (Hortonia Bank)
 
+## Demo overview
+
+Demo overview can be found [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html) 
+
 ## Setup - part 1
 
-- Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or cloud provider of choice or...) and run setup.sh
-  - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run on HDP sandbox)
+- Pre-reqs:
+  - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run script on HDP sandbox)
+  - The VM requires 4 vcpus and ~17-18 GB RAM once all services are running and you execute a query, so m3.2xlarge size is recommended
+  
+- Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) and run setup.sh as below:
 ```
 sudo su
 nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
@@ -11,6 +18,7 @@ tail -f /var/log/hdp_setup.log
 ```
 
 #### Troubleshooting 
+
 - In case the script exits pre-maturely (after enabling kerberos but before creating Hive DBs and tables), just manually run below scripts to complete the setup.
 ```
 sudo su
@@ -24,12 +32,18 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./02-atlas-import-entities.sh
 ```
 
+Login details 
+- Ambari port: 8080 login: admin/BadPass#1
+- Ranger port: 6080 login: admin/admin
+- Atlas port: 21000 login: admin/admin
+- Zeppelin port: 9995 login: joe_analyst/BadPass#1 
+
 ## Setup - part 2
 
 - Once script is complete, there are manual steps required to create tag service, associate with Hive service and import tag based policies 
 
 - [ ] Create Tag Service
-  - Open Ranger
+  - Open Ranger 
   - Click Access Manager -> Tag Based Policies
   - Click the + icon and create a service named 'tags'
     - ![](./media/screenshot-ranger-add-tag-service.png)
