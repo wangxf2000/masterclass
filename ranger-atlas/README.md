@@ -64,7 +64,7 @@ Login details
   - Wait 30s
   
 
-- [ ] Login to Zeppelin as end users and run demo Hive queries
+- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst) and run through demo Hive queries one by one in the prebuilt notebooks
 
   ## Demo walkthrough
   
