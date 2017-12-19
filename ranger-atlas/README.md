@@ -36,7 +36,7 @@ Login details
 - Ambari port: 8080 login: admin/BadPass#1
 - Ranger port: 6080 login: admin/admin
 - Atlas port: 21000 login: admin/admin
-- Zeppelin port: 9995 login: joe_analyst/BadPass#1 
+- Zeppelin port: 9995 login: ivanna_eu_hr/BadPass#1 OR joe_analyst/BadPass#1 
 
 ## Setup - part 2
 
