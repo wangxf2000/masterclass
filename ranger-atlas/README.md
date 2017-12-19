@@ -42,7 +42,7 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     - ![](./media/screenshot-ranger-configure-hive-tag-service.png)
 
 - [ ] Import tag based policies in Ranger
-  - Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json)
+  - Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json) (Make sure to download the 'Raw' file)
   - Open Ranger
   - Access Manager -> Tag based Policies
   - Click the import icon to import policies
