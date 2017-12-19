@@ -7,10 +7,11 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 ## Setup - part 1
 
 - Pre-reqs:
+  - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) 
   - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run script on HDP sandbox)
   - The VM requires 4 vcpus and ~17-18 GB RAM once all services are running and you execute a query, so m3.2xlarge size is recommended
   
-- Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) and run setup.sh as below:
+- Login as root and run setup.sh as below:
 ```
 sudo su
 nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
