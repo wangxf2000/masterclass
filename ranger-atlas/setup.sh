@@ -203,7 +203,7 @@ cat << EOF > configuration-custom.json
     "ranger-admin-site": {
         "ranger.jpa.jdbc.driver": "org.postgresql.Driver",
         "ranger.jpa.jdbc.url": "jdbc:postgresql://localhost:5432/ranger",
-        "ranger.audit.solr.zookeepers": "${host}:2181/infra-solr",
+        "ranger.audit.solr.zookeepers": "$(hostname -f):2181/infra-solr",
         "ranger.servicedef.enableDenyAndExceptionsInPolicies": "true"
     },
     "ranger-hive-audit" : {
