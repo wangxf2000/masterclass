@@ -14,26 +14,13 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 - Login as root and run setup.sh as below:
 ```
 sudo su
-nohup curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  >/var/log/hdp_setup.log 2>&1 &
-tail -f /var/log/hdp_setup.log
+curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
-#### Troubleshooting 
+- This will run for about 30min. Once complete, proceed to part 2 below and complete the manual steps
 
-- In case the script exits pre-maturely (after enabling kerberos but before creating Hive DBs and tables), just manually run below scripts to complete the setup.
-```
-sudo su
-cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-./07-create-hive-schema-kerberos.sh
+#### Login details 
 
-#import atlas entities
-./02-atlas-import-entities.sh
-# Need to do this twice due to bug: RANGER-1897
-# second time, the notification is of type ENTITY_UPDATE which gets processed correctly
-./02-atlas-import-entities.sh
-```
-
-Login details 
 - Ambari port: 8080 login: admin/BadPass#1
 - Ranger port: 6080 login: admin/admin
 - Atlas port: 21000 login: admin/admin
