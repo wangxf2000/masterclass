@@ -14,6 +14,7 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 - Login as root and run setup.sh as below:
 ```
 sudo su
+cd
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
