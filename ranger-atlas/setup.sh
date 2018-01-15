@@ -282,9 +282,10 @@ EOF
 
 
 
-        ## update zeppelin notebooks
+        ## update zeppelin notebooks and upload to HDFS
         curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
-
+        sudo -u zeppelin hdfs dfs -rmr /user/zeppelin/notebook/*
+        sudo -u zeppelin hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/* /user/zeppelin/notebook/
 
       #update zeppelin configs to include ivanna/joe/diane users
       /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c zeppelin-shiro-ini \
@@ -298,7 +299,9 @@ EOF
 
       /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c zeppelin-shiro-ini -f /tmp/zeppelin-env.json
       sleep 5
-      
+
+
+
       #restart Zeppelin
       sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
