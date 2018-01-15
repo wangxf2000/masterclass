@@ -4,6 +4,12 @@
 
 Demo overview can be found [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html) 
 
+## Versions tested
+
+Tested with:
+- [x] HDP 2.6.3 / Ambari 2.6.0
+- [x] HDP 2.6.4 / Ambari 2.6.1
+
 ## Setup - part 1
 
 - Pre-reqs:
