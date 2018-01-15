@@ -18,7 +18,7 @@ export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
 export host_count=${host_count:-skip}      #number of nodes, defaults to 1
 export enable_kerberos=${enable_kerberos:-true}      
 export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
-export ambari_version="${ambari_version:-2.6.0.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
+export ambari_version="${ambari_version:-2.6.1.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
 
 
 
