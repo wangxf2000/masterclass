@@ -65,6 +65,11 @@ useradd ANONYMOUS
 ########################################################################
 ########################################################################
 ## 
+
+#install MySql community rpm
+sudo rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+
+#install Ambari
 ~/ambari-bootstrap/extras/deploy/prep-hosts.sh
 ~/ambari-bootstrap/ambari-bootstrap.sh
 
