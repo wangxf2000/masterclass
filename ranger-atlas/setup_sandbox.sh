@@ -1,4 +1,6 @@
 # Setup Hortoniabank demo on HDP 2.6.4 sandbox
+# Reset Ambari admin password, SSH in as root and run below:
+# curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
 
 #Ambari admin password - replace with your own
 export ambari_pass=BadPass#1
