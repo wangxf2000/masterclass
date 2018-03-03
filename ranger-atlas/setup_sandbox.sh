@@ -104,6 +104,8 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
+#wait untill hive come up
+while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
 #TODO: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
@@ -203,24 +205,24 @@ sleep 5
 
 
 #restart Zeppelin
-sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-	\"RequestInfo\":{
-	\"command\":\"RESTART\",
-	\"context\":\"Restart Zeppelin\",
-	\"operation_level\":{
-	 \"level\":\"HOST\",
-	 \"cluster_name\":\"${cluster_name}\"
-}
-},
-\"Requests/resource_filters\":[
-	{
-	 \"service_name\":\"ZEPPELIN\",
-	 \"component_name\":\"ZEPPELIN_MASTER\",
-	 \"hosts\":\"${host}\"
-	}
-]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+#sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+#{
+#	\"RequestInfo\":{
+#	\"command\":\"RESTART\",
+#	\"context\":\"Restart Zeppelin\",
+#	\"operation_level\":{
+#	 \"level\":\"HOST\",
+#	 \"cluster_name\":\"${cluster_name}\"
+#}
+#},
+#\"Requests/resource_filters\":[
+#	{
+#	 \"service_name\":\"ZEPPELIN\",
+#	 \"component_name\":\"ZEPPELIN_MASTER\",
+#	 \"hosts\":\"${host}\"
+#	}
+#]
+#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 
 
