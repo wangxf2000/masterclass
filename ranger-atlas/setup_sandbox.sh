@@ -21,11 +21,13 @@ cluster_name=`echo $output | sed -n 's/.*"cluster_name" : "\([^\"]*\)".*/\1/p'`
 
 ####### Configure cluster for demo
 
-#stop Flume, oozie and put in maintenance mode
+#stop Flume, oozie, spark2 and put in maintenance mode
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop FALCON via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/FLUME
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop OOZIE via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/OOZIE
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop SPARK2 via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/SPARK2
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Flume maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "ON"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/FLUME
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"OOZIE maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "ON"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/OOZIE
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"SPARK2 maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "ON"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/SPARK2
 
 
 #make sure kafka, hbase, ambari infra, atlas, HDFS are out of maintenance mode
@@ -35,6 +37,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Remove Atlas from maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "OFF"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/ATLAS
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Remove HDFS from maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "OFF"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HDFS
 
+## Ranger config changes
 
 #Enable kafka plugin for Ranger 
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k ranger-kafka-plugin-enabled -v Yes
@@ -43,15 +46,48 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 #enable Audits for Ranger
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k xasecure.audit.destination.solr -v true
 
-
 #enable other plugin audits
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hdfs-audit -k xasecure.audit.destination.solr -v true
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-atlas-audit -k xasecure.audit.destination.solr -v true
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-audit -k xasecure.audit.destination.solr -v true
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hbase-audit -k xasecure.audit.destination.solr -v true
 
+#Ranger tagsync mappings
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hdfs.instance.hdp.ranger.service -v ${cluster_name}_hadoop
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hive.instance.hdp.ranger.service -v ${cluster_name}_hive
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hbase.instance.hdp.ranger.service -v ${cluster_name}_hbase
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.kafka.instance.hdp.ranger.service -v ${cluster_name}_kafka
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.atlas.instance.hdp.ranger.service -v ${cluster_name}_atlas
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.knox.instance.hdp.ranger.service -v ${cluster_name}_knox
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.yarn.instance.hdp.ranger.service -v ${cluster_name}_yarn
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.tag.instance.hdp.ranger.service -v tags
 
-sleep 5
+
+#restart all required
+curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+sleep 20
+
+#curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+#{
+#	\"RequestInfo\":{
+#	\"command\":\"RESTART\",
+#	\"context\":\"Restart Ranger\",
+#	\"operation_level\":{
+#	 \"level\":\"HOST\",
+#	 \"cluster_name\":\"${cluster_name}\"
+#}
+#},
+#\"Requests/resource_filters\":[
+#	{
+#	 \"service_name\":\"RANGER\",
+#	 \"component_name\":\"RANGER_ADMIN\",
+#	 \"hosts\":\"${host}\"
+#	}
+#]
+#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
+#wait until ranger comes up
+while ! echo exit | nc localhost 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
 
 
 #Start Kafka, HBase, Ambari infra, Atlas
@@ -60,26 +96,6 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start Ambari infra via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/AMBARI_INFRA
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start Atlas via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/ATLAS
 
-
-#restart Ranger
-sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-	\"RequestInfo\":{
-	\"command\":\"RESTART\",
-	\"context\":\"Restart Ranger\",
-	\"operation_level\":{
-	 \"level\":\"HOST\",
-	 \"cluster_name\":\"${cluster_name}\"
-}
-},
-\"Requests/resource_filters\":[
-	{
-	 \"service_name\":\"RANGER\",
-	 \"component_name\":\"RANGER_ADMIN\",
-	 \"hosts\":\"${host}\"
-	}
-]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 
 #Change Hive doAs setting and enable audits
@@ -106,7 +122,7 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
-#wait untill hive come up
+#wait until hive come up
 while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
