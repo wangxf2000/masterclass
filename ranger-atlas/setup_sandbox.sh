@@ -179,6 +179,10 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT ${ambari_url}/v
 
 #pull latest notebooks
 curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
+
+#make sure HDFS is up
+while ! echo exit | nc localhost 50070; do echo "waiting for HDFS to come up..."; sleep 10; done
+
 sudo -u zeppelin hdfs dfs -rmr /user/zeppelin/notebook/*
 sudo -u zeppelin hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/* /user/zeppelin/notebook/
 
@@ -195,7 +199,8 @@ EOF
 sleep 5
 
 
-
+#make sure YARN up
+while ! echo exit | nc localhost 8088; do echo "waiting for YARN to come up..."; sleep 10; done
 
 #kill any previous Hive/tez apps to clear queue
 for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
@@ -204,7 +209,7 @@ do
 done
 
 
-
+#make sure Ranger up
 while ! echo exit | nc localhost 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
 
 ## update ranger to support deny policies
@@ -280,6 +285,9 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 su hdfs -c ./05-create-hdfs-user-folders.sh
 su hdfs -c ./06-copy-data-to-hdfs.sh
 
+#make sure hive is up
+while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+
 ./07-create-hive-schema.sh
  		  
 
@@ -303,8 +311,9 @@ chmod +x setup_kerberos.sh
 ./setup_kerberos.sh 
 
 
-#make sure Atlas is up
+#make sure Atlas/Hive are up
 while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
 #Now that we enabled Kafka Ranger plugin (by enabling kerberos), import Atlas entities
