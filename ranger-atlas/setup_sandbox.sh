@@ -101,7 +101,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 sleep 30
 
 #wait until hive come up
-while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
+#while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
 #note needed: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
