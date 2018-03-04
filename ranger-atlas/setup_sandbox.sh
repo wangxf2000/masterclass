@@ -103,30 +103,34 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hive-audit -k xasecure.audit.destination.solr -v true
 
 #restart Hive
-sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-	\"RequestInfo\":{
-	\"command\":\"RESTART\",
-	\"context\":\"Restart Hive\",
-	\"operation_level\":{
-	 \"level\":\"HOST\",
-	 \"cluster_name\":\"${cluster_name}\"
-}
-},
-\"Requests/resource_filters\":[
-	{
-	 \"service_name\":\"HIVE\",
-	 \"component_name\":\"HIVE_SERVER\",
-	 \"hosts\":\"${host}\"
-	}
-]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+#sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+#{
+#	\"RequestInfo\":{
+#	\"command\":\"RESTART\",
+#	\"context\":\"Restart Hive\",
+#	\"operation_level\":{
+#	 \"level\":\"HOST\",
+#	 \"cluster_name\":\"${cluster_name}\"
+#}
+#},
+#\"Requests/resource_filters\":[
+#	{
+#	 \"service_name\":\"HIVE\",
+#	 \"component_name\":\"HIVE_SERVER\",
+#	 \"hosts\":\"${host}\"
+#	}
+#]
+#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
+#restart all required
+curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+sleep 20
 
 #wait until hive come up
 while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
-#TODO: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
+#note needed: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
 #/usr/lib/ambari-infra-solr-client/solrCloudCli.sh --zookeeper-connect-string ${host}:2181/infra-solr --check-config --config-set ranger_audits
 #/usr/lib/ambari-infra-solr-client/solrCloudCli.sh --zookeeper-connect-string  ${host}:2181/infra-solr --upload-config --config-dir /usr/hdp/current/ranger-admin/contrib/solr_for_audit_setup/conf --config-set ranger_audits 
 #/usr/lib/ambari-infra-solr-client/solrCloudCli.sh --zookeeper-connect-string ${host}:2181/infra-solr --create-collection --collection ranger_audits --config-set ranger_audits --shards 1 --replication 1 --max-shards 1 --retry 5 --interval 10
@@ -220,27 +224,6 @@ EOF
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c zeppelin-shiro-ini -f /tmp/zeppelin-env.json
 sleep 5
 
-
-
-#restart Zeppelin
-#sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-#{
-#	\"RequestInfo\":{
-#	\"command\":\"RESTART\",
-#	\"context\":\"Restart Zeppelin\",
-#	\"operation_level\":{
-#	 \"level\":\"HOST\",
-#	 \"cluster_name\":\"${cluster_name}\"
-#}
-#},
-#\"Requests/resource_filters\":[
-#	{
-#	 \"service_name\":\"ZEPPELIN\",
-#	 \"component_name\":\"ZEPPELIN_MASTER\",
-#	 \"hosts\":\"${host}\"
-#	}
-#]
-#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 
 
