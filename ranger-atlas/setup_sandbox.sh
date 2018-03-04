@@ -14,6 +14,10 @@ export kdc_realm=HWX.COM
 export host=$(hostname -f)
 
 
+#make sure Ambari is up
+while ! echo exit | nc localhost 8080; do echo "waiting for Ambari to come up..."; sleep 10; done
+
+
 #detect name of cluster
 output=`curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari'  http://${host}:8080/api/v1/clusters`
 cluster_name=`echo $output | sed -n 's/.*"cluster_name" : "\([^\"]*\)".*/\1/p'`
