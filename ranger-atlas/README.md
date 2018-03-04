@@ -31,9 +31,12 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 ## Option #2: Setup demo on HDP Sandbox 
 
 - Pre-reqs:
-  - Download HDP 2.6.4 Sandbox  
+  - Download HDP 2.6.4 Sandbox from [here](http://hortonworks.com/sandbox) 
   - Allocate 4 vcpus and 12+ GB RAM 
-  - Reset the Ambari admin password to BadPass#1
+  - Start Sandbox
+  - Login via SSH as root/hadoop (you will be required to change the passord)
+  - Run `ambari-admin-password-reset` to reset the Ambari admin password to BadPass#1
+  - Refer to [guide](https://hortonworks.com/tutorial/sandbox-deployment-and-install-guide) for more details 
   
 - Connect via SSH to sandbox as root and run setup_sandbox.sh:
 ```
