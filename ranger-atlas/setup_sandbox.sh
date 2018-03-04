@@ -69,7 +69,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 
 #restart Ranger
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
-sleep 10
+sleep 30
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
 sleep 30
 
@@ -96,7 +96,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 #restart Hive
 
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop HIVE via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
-sleep 10
+sleep 30
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start HIVE via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
 sleep 30
 
