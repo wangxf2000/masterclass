@@ -63,28 +63,15 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.tag.instance.hdp.ranger.service -v tags
 
 
-#restart all required
-curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
-sleep 20
+#restart Ranger
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
+sleep 10
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
+sleep 30
 
-#curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-#{
-#	\"RequestInfo\":{
-#	\"command\":\"RESTART\",
-#	\"context\":\"Restart Ranger\",
-#	\"operation_level\":{
-#	 \"level\":\"HOST\",
-#	 \"cluster_name\":\"${cluster_name}\"
-#}
-#},
-#\"Requests/resource_filters\":[
-#	{
-#	 \"service_name\":\"RANGER\",
-#	 \"component_name\":\"RANGER_ADMIN\",
-#	 \"hosts\":\"${host}\"
-#	}
-#]
-#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+#curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+#sleep 20
+
 
 #wait until ranger comes up
 while ! echo exit | nc localhost 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
@@ -103,28 +90,11 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hive-audit -k xasecure.audit.destination.solr -v true
 
 #restart Hive
-#sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-#{
-#	\"RequestInfo\":{
-#	\"command\":\"RESTART\",
-#	\"context\":\"Restart Hive\",
-#	\"operation_level\":{
-#	 \"level\":\"HOST\",
-#	 \"cluster_name\":\"${cluster_name}\"
-#}
-#},
-#\"Requests/resource_filters\":[
-#	{
-#	 \"service_name\":\"HIVE\",
-#	 \"component_name\":\"HIVE_SERVER\",
-#	 \"hosts\":\"${host}\"
-#	}
-#]
-#}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
-#restart all required
-curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
-sleep 20
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop HIVE via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
+sleep 10
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start HIVE via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
+sleep 30
 
 #wait until hive come up
 while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
