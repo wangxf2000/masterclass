@@ -15,7 +15,7 @@ export host=$(hostname -f)
 
 
 #make sure Ambari is up
-while ! echo exit | nc localhost 8080; do echo "waiting for Ambari to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 8080; do echo "waiting for Ambari to come up..."; sleep 10; done
 
 
 #detect name of cluster
@@ -44,27 +44,27 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 ## Ranger config changes
 
 #Enable kafka plugin for Ranger 
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k ranger-kafka-plugin-enabled -v Yes
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-plugin-properties -k ranger-kafka-plugin-enabled -v Yes
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k ranger-kafka-plugin-enabled -v Yes
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-plugin-properties -k ranger-kafka-plugin-enabled -v Yes
 
 #enable Audits for Ranger
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k xasecure.audit.destination.solr -v true
 
 #enable other plugin audits
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hdfs-audit -k xasecure.audit.destination.solr -v true
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-atlas-audit -k xasecure.audit.destination.solr -v true
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-audit -k xasecure.audit.destination.solr -v true
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hbase-audit -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-hdfs-audit -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-atlas-audit -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-audit -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-hbase-audit -k xasecure.audit.destination.solr -v true
 
 #Ranger tagsync mappings
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hdfs.instance.hdp.ranger.service -v ${cluster_name}_hadoop
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hive.instance.hdp.ranger.service -v ${cluster_name}_hive
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hbase.instance.hdp.ranger.service -v ${cluster_name}_hbase
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.kafka.instance.hdp.ranger.service -v ${cluster_name}_kafka
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.atlas.instance.hdp.ranger.service -v ${cluster_name}_atlas
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.knox.instance.hdp.ranger.service -v ${cluster_name}_knox
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.yarn.instance.hdp.ranger.service -v ${cluster_name}_yarn
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.tag.instance.hdp.ranger.service -v tags
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hdfs.instance.hdp.ranger.service -v ${cluster_name}_hadoop
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hive.instance.hdp.ranger.service -v ${cluster_name}_hive
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hbase.instance.hdp.ranger.service -v ${cluster_name}_hbase
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.kafka.instance.hdp.ranger.service -v ${cluster_name}_kafka
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.atlas.instance.hdp.ranger.service -v ${cluster_name}_atlas
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.knox.instance.hdp.ranger.service -v ${cluster_name}_knox
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.yarn.instance.hdp.ranger.service -v ${cluster_name}_yarn
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.tag.instance.hdp.ranger.service -v tags
 
 
 #restart Ranger
@@ -73,12 +73,12 @@ sleep 30
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
 sleep 30
 
-#curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://localhost:8080/api/v1/clusters/${cluster_name}/requests
+#curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://${host}:8080/api/v1/clusters/${cluster_name}/requests
 #sleep 20
 
 
 #wait until ranger comes up
-while ! echo exit | nc localhost 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
 
 
 #Start Kafka, HBase, Ambari infra, Atlas
@@ -90,8 +90,8 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 
 
 #Change Hive doAs setting and enable audits
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c hive-site -k hive.server2.enable.doAs  -v true
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c ranger-hive-audit -k xasecure.audit.destination.solr -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c hive-site -k hive.server2.enable.doAs  -v true
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-hive-audit -k xasecure.audit.destination.solr -v true
 
 #restart Hive
 
@@ -101,7 +101,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 sleep 30
 
 #wait until hive come up
-while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
 #note needed: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
@@ -185,7 +185,7 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT ${ambari_url}/v
 curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
 
 #make sure HDFS is up
-while ! echo exit | nc localhost 50070; do echo "waiting for HDFS to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 50070; do echo "waiting for HDFS to come up..."; sleep 10; done
 
 sudo -u zeppelin hdfs dfs -rmr /user/zeppelin/notebook/*
 sudo -u zeppelin hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/* /user/zeppelin/notebook/
@@ -204,7 +204,7 @@ sleep 5
 
 
 #make sure YARN up
-while ! echo exit | nc localhost 8088; do echo "waiting for YARN to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 8088; do echo "waiting for YARN to come up..."; sleep 10; done
 
 #kill any previous Hive/tez apps to clear queue
 for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
@@ -214,7 +214,7 @@ done
 
 
 #make sure Ranger up
-while ! echo exit | nc localhost 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 6080; do echo "waiting for Ranger to come up..."; sleep 10; done
 
 ## update ranger to support deny policies
 ranger_curl="curl -u admin:admin"
@@ -290,7 +290,7 @@ su hdfs -c ./05-create-hdfs-user-folders.sh
 su hdfs -c ./06-copy-data-to-hdfs.sh
 
 #make sure hive is up
-while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 ./07-create-hive-schema.sh
  		  
@@ -316,8 +316,8 @@ chmod +x setup_kerberos.sh
 
 
 #make sure Atlas/Hive are up
-while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
-while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
 #Now that we enabled Kafka Ranger plugin (by enabling kerberos), import Atlas entities
