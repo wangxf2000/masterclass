@@ -42,7 +42,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
 
-#### Login details 
+## Login details 
 
 - Ambari port: 8080 login: admin/BadPass#1
 - Ranger port: 6080 login: admin/admin
