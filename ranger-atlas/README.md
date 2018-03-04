@@ -9,8 +9,9 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 Tested with:
 - [x] HDP 2.6.3 / Ambari 2.6.0
 - [x] HDP 2.6.4 / Ambari 2.6.1
+- [x] HDP 2.6.4 Sandbox
 
-## Setup - part 1
+## Option #1: Fresh install of HDP plus demo
 
 - Pre-reqs:
   - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) 
@@ -26,6 +27,21 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - This will run for about 30min. Once complete, proceed to part 2 below and complete the manual steps
 
+
+## Option #2: Setup demo on HDP Sandbox 
+
+- Pre-reqs:
+  - Download HDP 2.6.4 Sandbox  
+  - Allocate 4 vcpus and 12+ GB RAM 
+  - Reset the Ambari admin password to BadPass#1
+  
+- Connect via SSH to sandbox as root and run setup_sandbox.sh:
+```
+curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
+```
+
+- This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
+
 #### Login details 
 
 - Ambari port: 8080 login: admin/BadPass#1
@@ -33,7 +49,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 - Atlas port: 21000 login: admin/admin
 - Zeppelin port: 9995 login: ivanna_eu_hr/BadPass#1 OR joe_analyst/BadPass#1 
 
-## Setup - part 2
+## Manual steps
 
 - Once script is complete, there are manual steps required to create tag service, associate with Hive service and import tag based policies 
 
