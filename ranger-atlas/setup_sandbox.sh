@@ -33,6 +33,9 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"OOZIE maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "ON"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/OOZIE
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"SPARK2 maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "ON"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/SPARK2
 
+while echo exit | nc ${host} 18081; do echo "waiting for Spark2 to go down..."; sleep 10; done
+
+
 
 #make sure kafka, hbase, ambari infra, atlas, HDFS are out of maintenance mode
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Remove Kafka from maintenance mode"}, "Body": {"ServiceInfo": {"maintenance_state": "OFF"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/KAFKA
@@ -67,11 +70,13 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.tag.instance.hdp.ranger.service -v tags
 
 
-#restart Ranger
+#stop Ranger
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
-sleep 30
+while echo exit | nc ${host} 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
+sleep 10
+
+#start Ranger
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
-sleep 30
 
 #curl  -u admin:${ambari_pass} -H "X-Requested-By: ambari" -X POST  -d '{"RequestInfo":{"command":"RESTART","context":"Restart all required services","operation_level":"host_component"},"Requests/resource_filters":[{"hosts_predicate":"HostRoles/stale_configs=true"}]}' http://${host}:8080/api/v1/clusters/${cluster_name}/requests
 #sleep 20
@@ -88,7 +93,7 @@ while ! echo exit | nc ${host} 6080; do echo "waiting for Ranger to come up...";
 #restart Hive
 
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop HIVE via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
-sleep 30
+while echo exit | nc ${host} 10000; do echo "waiting for Hive to go down..."; sleep 10; done
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start HIVE via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
 sleep 30
 
@@ -101,6 +106,8 @@ curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"Request
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start Ambari infra via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/AMBARI_INFRA
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start Atlas via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/ATLAS
 
+#wait until atlas come up
+while ! echo exit | nc ${host} 21000; do echo "waiting for atlas to come up..."; sleep 10; done
 
 
 #note needed: if collection missing, create it: https://community.hortonworks.com/articles/90168/modifying-ranger-audit-solr-config.html
