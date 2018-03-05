@@ -94,11 +94,10 @@ while ! echo exit | nc ${host} 6080; do echo "waiting for Ranger to come up...";
 
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop HIVE via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
 while echo exit | nc ${host} 10000; do echo "waiting for Hive to go down..."; sleep 10; done
+while echo exit | nc ${host} 50111; do echo "waiting for Hcat to go down..."; sleep 10; done
+sleep 15
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start HIVE via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/HIVE
-sleep 30
 
-#wait until hive come up
-#while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 #Start Kafka, HBase, Ambari infra, Atlas
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start KAFKA via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/KAFKA
