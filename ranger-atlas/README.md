@@ -35,11 +35,12 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Allocate 4 vcpus and 12+ GB RAM 
   - Start Sandbox
   - Login via SSH as root/hadoop (you will be required to change the passord)
-  - Run `ambari-admin-password-reset` to reset the Ambari admin password to BadPass#1
+  - Run `ambari-admin-password-reset` to reset the Ambari admin password to one of your choosing e.g. BadPass#1
 
   
-- Connect via SSH to sandbox as root and run setup_sandbox.sh (requires access to internet):
+- Connect via SSH to sandbox as root, set your Ambari admin password and run setup_sandbox.sh (note this requires VM has access to internet):
 ```
+export ambari_pass=BadPass#1
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
 ```
 
