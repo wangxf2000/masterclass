@@ -38,10 +38,11 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Run `ambari-admin-password-reset` to reset the Ambari admin password to BadPass#1
 
   
-- Connect via SSH to sandbox as root and run setup_sandbox.sh:
+- Connect via SSH to sandbox as root and run setup_sandbox.sh (requires access to internet):
 ```
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
 ```
+
 
 - This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
 
