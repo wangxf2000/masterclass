@@ -3,7 +3,7 @@
 # curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
 
 #Ambari admin password - replace with your own
-export ambari_pass=BadPass#1
+export ambari_pass=${ambari_pass:-BadPass#1} 
 
 #Choose password for Zeppelin users
 export zeppelin_pass=BadPass#1
