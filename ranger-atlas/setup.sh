@@ -400,6 +400,18 @@ EOF
     -H "Content-Type: application/json" \
     -F 'file=@ranger-kafka-policies-apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
+
+
+    echo "import ranger hbase policies..."
+    < ranger-hbase-policies.json jq '.policies[].service = "'${cluster_name}'_kafka"' > ranger-hbase-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-hbase-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hbase"
+
+
+
     sleep 40    
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
