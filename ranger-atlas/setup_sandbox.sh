@@ -339,7 +339,31 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 # Need to do this twice due to bug: RANGER-1897 
 # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
 ./02-atlas-import-entities.sh
-         
+
+
+echo "Creating users in KDC..."
+kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey kate_hr/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey log_monitor/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey diane_csr/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey jermy_contractor/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey mark_bizdev/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey john_finance/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "addprinc -randkey ivanna_eu_hr/$(hostname -f)@${kdc_realm}"
+
+
+echo "Creating user keytabs..."
+kadmin.local -q "xst -k joe_analyst.keytab joe_analyst/$(hostname -f)@${kdc_realm}"    
+kadmin.local -q "xst -k log_monitor.keytab log_monitor/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k diane_csr.keytab diane_csr/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k jermy_contractor.keytab jermy_contractor/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k mark_bizdev.keytab mark_bizdev/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k john_finance.keytab john_finance/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k ivanna_eu_hr.keytab ivanna_eu_hr/$(hostname -f)@${kdc_realm}"
+kadmin.local -q "xst -k kate_hr.keytab kate_hr/$(hostname -f)@${kdc_realm}"
+
+mv *.keytab /etc/security/keytabs
+    
 
 echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
