@@ -403,7 +403,7 @@ EOF
 
 
     echo "import ranger hbase policies..."
-    < ranger-hbase-policies.json jq '.policies[].service = "'${cluster_name}'_kafka"' > ranger-hbase-policies-apply.json
+    < ranger-hbase-policies.json jq '.policies[].service = "'${cluster_name}'_hbase"' > ranger-hbase-policies-apply.json
     ${ranger_curl} -X POST \
     -H "Content-Type: multipart/form-data" \
     -H "Content-Type: application/json" \
