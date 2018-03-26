@@ -2,8 +2,8 @@
    "metaDataInfo":{
       "Host name":"abajwa-hortonia0.field.hortonworks.com",
       "Exported by":"admin",
-      "Export time":"Dec 16, 2017 6:07:32 AM",
-      "Ranger apache version":"0.7.0.2.6.3.0-235"
+      "Export time":"Mar 26, 2018 6:41:57 AM",
+      "Ranger apache version":"0.7.0.2.6.4.0-91"
    },
    "policies":[
       {
@@ -85,7 +85,7 @@
          "id":35,
          "guid":"d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
          "isEnabled":true,
-         "version":2
+         "version":1
       },
       {
          "service":"hdp_kafka",
@@ -159,10 +159,10 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":50,
+         "id":36,
          "guid":"95c0718a-bd93-4b97-95f1-4931d5429345",
          "isEnabled":true,
-         "version":3
+         "version":1
       },
       {
          "service":"hdp_kafka",
@@ -218,8 +218,82 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":51,
+         "id":37,
          "guid":"2cc20bfc-be26-45e1-939f-59076756ab86",
+         "isEnabled":true,
+         "version":1
+      },
+      {
+         "service":"hdp_kafka",
+         "name":"access: hr publish consume FOREX",
+         "policyType":0,
+         "description":"",
+         "isAuditEnabled":true,
+         "resources":{
+            "topic":{
+               "values":[
+                  "FOREX"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
+            }
+         },
+         "policyItems":[
+            {
+               "accesses":[
+                  {
+                     "type":"publish",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "etluser"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"consume",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "analyst",
+                  "hr"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "denyPolicyItems":[
+
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":46,
+         "guid":"4df11955-20f4-4652-bf31-a466fe834d50",
          "isEnabled":true,
          "version":1
       }
@@ -228,5 +302,5 @@
    "pageSize":0,
    "totalCount":0,
    "resultSize":0,
-   "queryTimeMS":1513404452630
+   "queryTimeMS":1522046517513
 }
