@@ -21,9 +21,9 @@ hdfs dfs -chown -R hive:hive /hive_data/
 
 
 echo "Creating Hbase tables..."
-echo "create 'T_PRIVATE','cf1','cf2'" | hbase shell
-echo "create 'T_FOREX','cf1','cf2'" | hbase shell
-echo "list" | hbase shell
+sudo -u hbase echo "create 'T_PRIVATE','cf1','cf2'" | hbase shell
+sudo -u hbase echo "create 'T_FOREX','cf1','cf2'" | hbase shell
+sudo -u hbase echo "list" | hbase shell
 
 echo "Creating Kafka topics..."
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic FOREX
