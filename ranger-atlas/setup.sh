@@ -415,6 +415,7 @@ EOF
     sleep 40    
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    chmod +x *.sh
     ./01-atlas-import-classification.sh
     #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
     ./03-update-servicedefs.sh
@@ -501,7 +502,8 @@ EOF
 
     mv *.keytab /etc/security/keytabs
 
-
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    ./08-create-hbase-kafka.sh
 
     fi
 fi
