@@ -20,10 +20,14 @@ hdfs dfs -put data/ww_customers_data.csv            /hive_data/hortoniabank/ww_c
 hdfs dfs -chown -R hive:hive /hive_data/
 
 
+cat << EOF > /tmp/hbase.sh
+create 'T_PRIVATE','cf1','cf2'
+create 'T_FOREX','cf1','cf2'
+list
+EOF
+
 echo "Creating Hbase tables..."
-sudo -u hbase echo "create 'T_PRIVATE','cf1','cf2'" | hbase shell
-sudo -u hbase echo "create 'T_FOREX','cf1','cf2'" | hbase shell
-sudo -u hbase echo "list" | hbase shell
+sudo -u hbase hbase shell /tmp/hbase.sh
 
 echo "Creating Kafka topics..."
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic FOREX
@@ -57,7 +61,7 @@ EOF
 echo "Publishing test data to Kafka topics..."
 sleep 5
 
-/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --broker-list localhost:6667 --topic PRIVATE < /tmp/forex.csv
-/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --broker-list localhost:6667 --topic FOREX < /tmp/private.csv
+/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --broker-list $(hostname -f):6667 --topic PRIVATE < /tmp/forex.csv
+/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --broker-list $(hostname -f):6667 --topic FOREX < /tmp/private.csv
 
 
