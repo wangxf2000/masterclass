@@ -45,8 +45,8 @@ EOF
 echo "Publishing test data to Kafka topics..."
 sleep 5
 
-/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol SASL_PLAINTEXT --broker-list $(hostname -f):6667 --topic PRIVATE < test.txt
-/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol SASL_PLAINTEXT --broker-list $(hostname -f):6667 --topic FOREX < test.txt
+/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol SASL_PLAINTEXT --broker-list $(hostname -f):6667 --topic PRIVATE < /tmp/private.csv
+/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol SASL_PLAINTEXT --broker-list $(hostname -f):6667 --topic FOREX <  /tmp/forex.csv
 
 
 echo "Allowing Zeppelin to kinit as joe/ivanna.."
