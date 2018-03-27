@@ -1,5 +1,5 @@
-
-kinit -kt /etc/security/keytabs/log_monitor.keytab log_monitor/$(hostname -f)@HWX.COM
+echo "Creating Hbase tables..."
+kinit -kt /etc/security/keytabs/hbase.service.keytab hbase/$(hostname -f)@HWX.COM
 
 cat << EOF > /tmp/hbase.sh
 create 'T_PRIVATE','cf1','cf2'
@@ -7,10 +7,14 @@ create 'T_FOREX','cf1','cf2'
 list
 EOF
 
-echo "Creating Hbase tables..."
+
 hbase shell /tmp/hbase.sh
 
 echo "Creating Kafka topics..."
+
+kinit -kt /etc/security/keytabs/log_monitor.keytab log_monitor/$(hostname -f)@HWX.COM
+
+
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic FOREX
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic PRIVATE
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --zookeeper $(hostname -f):2181 --list
