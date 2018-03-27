@@ -211,6 +211,16 @@ cat << EOF > configuration-custom.json
         "ranger.audit.solr.zookeepers": "$(hostname -f):2181/infra-solr",
         "ranger.servicedef.enableDenyAndExceptionsInPolicies": "true"
     },
+    "ranger-tagsync-site": {
+        "ranger.tagsync.atlas.hdfs.instance.hdp.ranger.service": "${cluster_name}_hadoop",
+        "ranger.tagsync.atlas.hive.instance.hdp.ranger.service": "${cluster_name}_hive",
+        "ranger.tagsync.atlas.hbase.instance.hdp.ranger.service": "${cluster_name}_hbase",
+        "ranger.tagsync.atlas.kafka.instance.hdp.ranger.service": "${cluster_name}_kafka",
+        "ranger.tagsync.atlas.atlas.instance.hdp.ranger.service": "${cluster_name}_atlas",
+        "ranger.tagsync.atlas.knox.instance.hdp.ranger.service": "${cluster_name}_knox",
+        "ranger.tagsync.atlas.yarn.instance.hdp.ranger.service": "${cluster_name}_yarn",
+        "ranger.tagsync.atlas.tag.instance.hdp.ranger.service": "tags"        
+    },    
     "ranger-hive-audit" : {
         "xasecure.audit.is.enabled" : "true",
         "xasecure.audit.destination.hdfs" : "true",
