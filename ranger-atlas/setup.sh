@@ -217,7 +217,6 @@ cat << EOF > configuration-custom.json
         "ranger.tagsync.atlas.hbase.instance.hdp.ranger.service": "${cluster_name}_hbase",
         "ranger.tagsync.atlas.kafka.instance.hdp.ranger.service": "${cluster_name}_kafka",
         "ranger.tagsync.atlas.atlas.instance.hdp.ranger.service": "${cluster_name}_atlas",
-        "ranger.tagsync.atlas.knox.instance.hdp.ranger.service": "${cluster_name}_knox",
         "ranger.tagsync.atlas.yarn.instance.hdp.ranger.service": "${cluster_name}_yarn",
         "ranger.tagsync.atlas.tag.instance.hdp.ranger.service": "tags"        
     },    
