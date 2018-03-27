@@ -293,6 +293,7 @@ ${ranger_curl} -X POST \
 
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+chmod +x *.sh
 ./01-atlas-import-classification.sh
 #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
 ./03-update-servicedefs.sh
@@ -363,7 +364,9 @@ kadmin.local -q "xst -k ivanna_eu_hr.keytab ivanna_eu_hr/$(hostname -f)@${kdc_re
 kadmin.local -q "xst -k kate_hr.keytab kate_hr/$(hostname -f)@${kdc_realm}"
 
 mv *.keytab /etc/security/keytabs
-    
+
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+./08-create-hbase-kafka.sh
 
 echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
