@@ -334,7 +334,7 @@ while ! echo exit | nc ${host} 21000; do echo "waiting for atlas to come up...";
 while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 
-echo Now that we enabled Kafka Ranger plugin (by enabling kerberos), import Atlas entities
+echo "Now that we enabled Kafka Ranger plugin (by enabling kerberos), import Atlas entities"
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./02-atlas-import-entities.sh
 # Need to do this twice due to bug: RANGER-1897 
