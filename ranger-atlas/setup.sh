@@ -11,7 +11,7 @@ export HOME=${HOME:-/root}
 export TERM=xterm
 
 #overridable vars
-export stack=${stack:-cl1}    #cluster name
+export stack=${stack:-hdp}    #cluster name
 export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
 export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
 export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
@@ -212,13 +212,13 @@ cat << EOF > configuration-custom.json
         "ranger.servicedef.enableDenyAndExceptionsInPolicies": "true"
     },
     "ranger-tagsync-site": {
-        "ranger.tagsync.atlas.hdfs.instance.hdp.ranger.service": "${cluster_name}_hadoop",
-        "ranger.tagsync.atlas.hive.instance.hdp.ranger.service": "${cluster_name}_hive",
-        "ranger.tagsync.atlas.hbase.instance.hdp.ranger.service": "${cluster_name}_hbase",
-        "ranger.tagsync.atlas.kafka.instance.hdp.ranger.service": "${cluster_name}_kafka",
-        "ranger.tagsync.atlas.atlas.instance.hdp.ranger.service": "${cluster_name}_atlas",
-        "ranger.tagsync.atlas.yarn.instance.hdp.ranger.service": "${cluster_name}_yarn",
-        "ranger.tagsync.atlas.tag.instance.hdp.ranger.service": "tags"        
+        "ranger.tagsync.atlas.hdfs.instance.cl1.ranger.service": "${cluster_name}_hadoop",
+        "ranger.tagsync.atlas.hive.instance.cl1.ranger.service": "${cluster_name}_hive",
+        "ranger.tagsync.atlas.hbase.instance.cl1.ranger.service": "${cluster_name}_hbase",
+        "ranger.tagsync.atlas.kafka.instance.cl1.ranger.service": "${cluster_name}_kafka",
+        "ranger.tagsync.atlas.atlas.instance.cl1.ranger.service": "${cluster_name}_atlas",
+        "ranger.tagsync.atlas.yarn.instance.cl1.ranger.service": "${cluster_name}_yarn",
+        "ranger.tagsync.atlas.tag.instance.cl1.ranger.service": "tags"        
     },    
     "ranger-hive-audit" : {
         "xasecure.audit.is.enabled" : "true",
