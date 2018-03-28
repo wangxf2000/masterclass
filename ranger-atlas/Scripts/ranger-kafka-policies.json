@@ -1,8 +1,8 @@
 {
    "metaDataInfo":{
-      "Host name":"abajwa-dws50.field.hortonworks.com",
+      "Host name":"abajwa-dws70.field.hortonworks.com",
       "Exported by":"admin",
-      "Export time":"Mar 27, 2018 11:55:13 PM",
+      "Export time":"Mar 28, 2018 1:21:37 AM",
       "Ranger apache version":"0.7.0.2.6.4.0-91"
    },
    "policies":[
@@ -299,7 +299,7 @@
       },
       {
          "service":"hdp_kafka",
-         "name":"access: etluser describe PRIVATE",
+         "name":"access: etluser describe/publish PRIVATE",
          "policyType":0,
          "description":"",
          "isAuditEnabled":true,
@@ -315,6 +315,10 @@
          "policyItems":[
             {
                "accesses":[
+                  {
+                     "type":"publish",
+                     "isAllowed":true
+                  },
                   {
                      "type":"describe",
                      "isAllowed":true
@@ -347,15 +351,15 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":43,
+         "id":39,
          "guid":"c8218587-5955-46e1-a300-fc0c7f4c97ba",
          "isEnabled":true,
-         "version":2
+         "version":3
       }
    ],
    "startIndex":0,
    "pageSize":0,
    "totalCount":0,
    "resultSize":0,
-   "queryTimeMS":1522194913646
+   "queryTimeMS":1522200097733
 }
