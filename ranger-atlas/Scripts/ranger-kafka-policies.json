@@ -2,7 +2,7 @@
    "metaDataInfo":{
       "Host name":"abajwa-dws70.field.hortonworks.com",
       "Exported by":"admin",
-      "Export time":"Mar 28, 2018 1:21:37 AM",
+      "Export time":"Mar 28, 2018 1:25:11 AM",
       "Ranger apache version":"0.7.0.2.6.4.0-91"
    },
    "policies":[
@@ -106,6 +106,10 @@
             {
                "accesses":[
                   {
+                     "type":"publish",
+                     "isAllowed":true
+                  },
+                  {
                      "type":"describe",
                      "isAllowed":true
                   }
@@ -162,7 +166,7 @@
          "id":36,
          "guid":"95c0718a-bd93-4b97-95f1-4931d5429345",
          "isEnabled":true,
-         "version":1
+         "version":2
       },
       {
          "service":"hdp_kafka",
@@ -361,5 +365,5 @@
    "pageSize":0,
    "totalCount":0,
    "resultSize":0,
-   "queryTimeMS":1522200097733
+   "queryTimeMS":1522200311105
 }
