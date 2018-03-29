@@ -5,6 +5,7 @@ cat << EOF > /tmp/hbase.sh
 create 'T_PRIVATE','cf1','cf2'
 create 'T_FOREX','cf1','cf2'
 list
+exit
 EOF
 
 
