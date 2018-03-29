@@ -8,6 +8,7 @@ hdfs dfs -mkdir -p /hive_data/hortoniabank/eu_countries/
 hdfs dfs -mkdir -p /hive_data/hortoniabank/us_customers/
 hdfs dfs -mkdir -p /hive_data/hortoniabank/ww_customers/
 hdfs dfs -mkdir -p /hive_data/consent/
+hdfs dfs -mkdir -p /hive_data/eu_countries/
 
 
 
@@ -20,6 +21,7 @@ hdfs dfs -put data/eu_countries.csv                 /hive_data/hortoniabank/eu_c
 hdfs dfs -put data/us_customers_data.csv            /hive_data/hortoniabank/us_customers/
 hdfs dfs -put data/ww_customers_data.csv            /hive_data/hortoniabank/ww_customers/
 hdfs dfs -put data/consent_master_data_cleaned.csv	/hive_data/consent/
+hdfs dfs -put data/eu_countries.csv	                /hive_data/eu_countries/
 
 
 hdfs dfs -chown -R hive:hive /hive_data/
