@@ -22,6 +22,14 @@ while ! echo exit | nc ${host} 8080; do echo "waiting for Ambari to come up...";
 output=`curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari'  http://${host}:8080/api/v1/clusters`
 cluster_name=`echo $output | sed -n 's/.*"cluster_name" : "\([^\"]*\)".*/\1/p'`
 
+echo "####### Download demo script and create local users ..."
+cd /tmp
+git clone https://github.com/abajwa-hw/masterclass  
+
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+./04-create-os-users.sh    
+useradd ANONYMOUS    
+
 
 echo "####### Configure cluster for demo..."
 
@@ -115,15 +123,6 @@ while ! echo exit | nc ${host} 21000; do echo "waiting for atlas to come up...";
 echo ###### Start HortoniaBank demo setup
 
 
-echo download hortonia scripts
-cd /tmp
-git clone https://github.com/abajwa-hw/masterclass  
-
-cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-./04-create-os-users.sh    
-
-echo also need anonymous user for kafka Ranger policy
-useradd ANONYMOUS    
 
 users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jermy_contractor diane_csr log_monitor"
 groups="hr analyst us_employee eu_employee finance business_dev contractor csr etluser"
