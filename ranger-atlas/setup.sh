@@ -513,10 +513,12 @@ EOF
 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./08-create-hbase-kafka.sh
-
+    echo "Done!"
     fi
 fi
 
+echo "--------------------------"
+echo "--------------------------"
 echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
 echo "Once complete, see here for walk through of demo: https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html"
