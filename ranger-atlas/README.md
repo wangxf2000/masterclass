@@ -64,12 +64,6 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Click the + icon and create a service named 'tags'
     - ![](./media/screenshot-ranger-add-tag-service.png)
 
-- [ ] Configure Hive for Tag based Policies
-  - Open Ranger
-  - Click Access Manager -> Resources Based Policies
-  - Click ‘edit/pen’ icon next to the service’
-  - [ ] Set ‘Select Tag Service’ to ‘tags’
-    - ![](./media/screenshot-ranger-configure-hive-tag-service.png)
 
 - [ ] Import tag based policies in Ranger
   - Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json) (Make sure to download the 'Raw' file)
@@ -79,7 +73,25 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Make sure to select the 'Override Policy' checkbox
   - Wait 30s
   
+- [ ] Configure Hive for Tag based Policies
+  - Open Ranger
+  - Click Access Manager -> Resources Based Policies
+  - Click ‘edit/pen’ icon next to the Hive service
+  - [ ] Set ‘Select Tag Service’ to ‘tags’
+    - ![](./media/screenshot-ranger-configure-hive-tag-service.png)
 
+- [ ] Configure Hbase for Tag based Policies
+  - Open Ranger
+  - Click Access Manager -> Resources Based Policies
+  - Click ‘edit/pen’ icon next to the Hbase service
+  - [ ] Set ‘Select Tag Service’ to ‘tags’
+  
+- [ ] Configure Kafka for Tag based Policies
+  - Open Ranger
+  - Click Access Manager -> Resources Based Policies
+  - Click ‘edit/pen’ icon next to the Kafka service
+  - [ ] Set ‘Select Tag Service’ to ‘tags’
+  
 - [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst) and run through demo Hive queries one by one in the prebuilt notebooks
 
   ## Demo walkthrough
