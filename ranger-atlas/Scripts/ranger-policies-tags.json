@@ -1,9 +1,9 @@
 {
    "metaDataInfo":{
-      "Host name":"demo.hortonworks.com",
+      "Host name":"abajwa-hortoniatest0.field.hortonworks.com",
       "Exported by":"admin",
-      "Export time":"Dec 14, 2017 12:27:17 AM",
-      "Ranger apache version":"0.7.0.2.6.3.0-235"
+      "Export time":"Mar 26, 2018 6:58:45 PM",
+      "Ranger apache version":"0.7.0.2.6.4.0-91"
    },
    "policies":[
       {
@@ -139,10 +139,10 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":38,
+         "id":44,
          "guid":"30d630c7-436b-4f80-9847-80ac60d0b01a",
          "isEnabled":true,
-         "version":3
+         "version":1
       },
       {
          "service":"tags",
@@ -199,10 +199,10 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":53,
+         "id":45,
          "guid":"95710adb-f564-446d-b929-cb80e9027cf7",
          "isEnabled":true,
-         "version":4
+         "version":1
       },
       {
          "service":"tags",
@@ -694,7 +694,7 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":54,
+         "id":46,
          "guid":"88a7bc87-97ff-40c1-9252-3a5b8e49aa95",
          "isEnabled":true,
          "version":1
@@ -951,7 +951,7 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":55,
+         "id":47,
          "guid":"88220be7-baea-4283-8be0-2ff46d8ab4e7",
          "isEnabled":true,
          "version":1
@@ -1061,7 +1061,7 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":56,
+         "id":48,
          "guid":"bbe231ce-dfa1-4565-a40f-16fbd10bef16",
          "isEnabled":true,
          "version":1
@@ -1128,15 +1128,336 @@
          "rowFilterPolicyItems":[
 
          ],
-         "id":57,
+         "id":49,
          "guid":"474d2dbb-ca9e-444a-b843-b77a0cb28a6f",
          "isEnabled":true,
-         "version":2
+         "version":1
+      },
+      {
+         "service":"tags",
+         "name":"access: SENSITIVE Tag",
+         "policyType":0,
+         "description":"",
+         "isAuditEnabled":true,
+         "resources":{
+            "tag":{
+               "values":[
+                  "SENSITIVE"
+               ],
+               "isExcludes":false,
+               "isRecursive":false
+            }
+         },
+         "policyItems":[
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:consume",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "hr"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:publish",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:consume",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:configure",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:describe",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:delete",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:kafka_admin",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "etluser"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "denyPolicyItems":[
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:publish",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:consume",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:configure",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:describe",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:delete",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:kafka_admin",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "public"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "allowExceptions":[
+
+         ],
+         "denyExceptions":[
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:consume",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "hr"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            },
+            {
+               "accesses":[
+                  {
+                     "type":"hdfs:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hdfs:execute",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:read",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:write",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"hbase:admin",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:publish",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:consume",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:configure",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:describe",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:create",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:delete",
+                     "isAllowed":true
+                  },
+                  {
+                     "type":"kafka:kafka_admin",
+                     "isAllowed":true
+                  }
+               ],
+               "users":[
+
+               ],
+               "groups":[
+                  "etluser"
+               ],
+               "conditions":[
+
+               ],
+               "delegateAdmin":false
+            }
+         ],
+         "dataMaskPolicyItems":[
+
+         ],
+         "rowFilterPolicyItems":[
+
+         ],
+         "id":50,
+         "guid":"8185ec57-2d6a-4bd1-a032-9594992c0051",
+         "isEnabled":true,
+         "version":1
       }
    ],
    "startIndex":0,
    "pageSize":0,
    "totalCount":0,
    "resultSize":0,
-   "queryTimeMS":1513211237371
+   "queryTimeMS":1522090725665
 }
