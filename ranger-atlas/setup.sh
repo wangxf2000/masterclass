@@ -301,7 +301,7 @@ EOF
         | sed -e '1,2d' \
         -e "s/admin = admin, admin/admin = ${ambari_pass},admin/"  \
         -e "s/user1 = user1, role1, role2/ivanna_eu_hr = ${ambari_pass}, admin/" \
-        -e "s/user2 = user2, role3/diane_csr = ${ambari_pass}, admin/" \
+        -e "s/user2 = user2, role3/log_monitor = ${ambari_pass}, admin/" \
         -e "s/user3 = user3, role2/joe_analyst = ${ambari_pass}, admin/" \
         > /tmp/zeppelin-env.json
 
