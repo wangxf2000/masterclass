@@ -29,8 +29,7 @@ git clone https://github.com/abajwa-hw/masterclass
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./04-create-os-users.sh    
 useradd ANONYMOUS    
-
-
+    
 echo "####### Configure cluster for demo..."
 
 echo stop Flume, oozie, spark2 and put in maintenance mode
@@ -169,7 +168,7 @@ curl -u admin:${ambari_pass} -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/
 
 echo csr group membership
 curl -u admin:${ambari_pass} -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"log_monitor", "MemberInfo/group_name":"etluser"}' ${ambari_url}/groups/etluser/members
-	
+    
 
 
 echo add groups to Hive views
@@ -210,7 +209,7 @@ while ! echo exit | nc ${host} 8088; do echo "waiting for YARN to come up..."; s
 echo kill any previous Hive/tez apps to clear queue
 for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
 do 
-	yarn application -kill  "$app"
+    yarn application -kill  "$app"
 done
 
 
@@ -226,19 +225,19 @@ ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
   | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
   | jq '.policyConditions = [
 {
-	  "itemId": 1,
-	  "name": "resources-accessed-together",
-	  "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
-	  "evaluatorOptions": {},
-	  "label": "Resources Accessed Together?",
-	  "description": "Resources Accessed Together?"
+      "itemId": 1,
+      "name": "resources-accessed-together",
+      "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesAccessedTogetherCondition",
+      "evaluatorOptions": {},
+      "label": "Resources Accessed Together?",
+      "description": "Resources Accessed Together?"
 },{
-	"itemId": 2,
-	"name": "not-accessed-together",
-	"evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
-	"evaluatorOptions": {},
-	"label": "Resources Not Accessed Together?",
-	"description": "Resources Not Accessed Together?"
+    "itemId": 2,
+    "name": "not-accessed-together",
+    "evaluator": "org.apache.ranger.plugin.conditionevaluator.RangerHiveResourcesNotAccessedTogetherCondition",
+    "evaluatorOptions": {},
+    "label": "Resources Not Accessed Together?",
+    "description": "Resources Not Accessed Together?"
 }
 ]' > hive.json
 
@@ -252,14 +251,14 @@ sleep 10
 
 cd /tmp/masterclass/ranger-atlas/Scripts/
 
-			  
+              
 echo "import ranger Hive policies..."
 < ranger-policies-enabled.json jq '.policies[].service = "'${cluster_name}'_hive"' > ranger-policies-apply.json
 ${ranger_curl} -X POST \
 -H "Content-Type: multipart/form-data" \
 -H "Content-Type: application/json" \
 -F 'file=@ranger-policies-apply.json' \
-		  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
+          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hive"
 
 echo "import ranger HDFS policies..." #to give hive access to /hive_data HDFS dir
 < ranger-hdfs-policies.json jq '.policies[].service = "'${cluster_name}'_hadoop"' > ranger-hdfs-policies-apply.json
@@ -267,7 +266,7 @@ ${ranger_curl} -X POST \
 -H "Content-Type: multipart/form-data" \
 -H "Content-Type: application/json" \
 -F 'file=@ranger-hdfs-policies-apply.json' \
-		  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
+          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs"
 
 echo "import ranger kafka policies..." #  to give ANONYMOUS access to kafka or Atlas won't work
 < ranger-kafka-policies.json jq '.policies[].service = "'${cluster_name}'_kafka"' > ranger-kafka-policies-apply.json
@@ -275,8 +274,8 @@ ${ranger_curl} -X POST \
 -H "Content-Type: multipart/form-data" \
 -H "Content-Type: application/json" \
 -F 'file=@ranger-kafka-policies-apply.json' \
-		  "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
-		  
+          "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
+          
 echo "import ranger hbase policies..."
 < ranger-hbase-policies.json jq '.policies[].service = "'${cluster_name}'_hbase"' > ranger-hbase-policies-apply.json
 ${ranger_curl} -X POST \
@@ -294,7 +293,7 @@ chmod +x *.sh
 #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
 ./03-update-servicedefs.sh
 
-		
+        
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 su hdfs -c ./05-create-hdfs-user-folders.sh
 su hdfs -c ./06-copy-data-to-hdfs.sh
@@ -303,7 +302,7 @@ echo make sure hive is up
 while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 ./07-create-hive-schema.sh
- 		  
+           
 
 echo enable kerberos
 
