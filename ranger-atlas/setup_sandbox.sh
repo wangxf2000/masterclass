@@ -317,6 +317,9 @@ echo make sure hive is up
 while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 ./07-create-hive-schema.sh
+if [ "${enable_hive_acid}" = true  ]; then
+  beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
+fi
            
 
 if [ "${enable_kerberos}" = true  ]; then           
