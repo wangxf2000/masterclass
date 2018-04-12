@@ -345,6 +345,10 @@ while ! echo exit | nc ${hiveserver_host} ${hiveserver_port}; do echo "waiting f
 #./07-create-hive-schema.sh
 beeline -u ${hiveserver_url} -n hive -f data/HiveSchema.hsql
 
+if [ "${enable_hive_acid}" = true  ]; then
+  beeline -u ${hiveserver_url} -n hive -f data/TransSchema.hsql
+fi
+
 #untested on DPS
 if [ "${enable_kerberos}" = true  ]; then           
 	echo "Enabling kerberos..."
