@@ -16,6 +16,7 @@ export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
 export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN}   #HDP services
 export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
 export host_count=${host_count:-skip}      #number of nodes, defaults to 1
+export enable_hive_acid=${enable_hive_acid:-true}   #enable Hive ACID? 
 export enable_kerberos=${enable_kerberos:-true}      
 export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
 export ambari_version="${ambari_version:-2.6.1.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
@@ -149,6 +150,18 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     cd ~/ambari-bootstrap/deploy
 
+
+	if [ "${enable_hive_acid}" = true  ]; then
+		acid_hive_env="\"hive-env\": { \"hive_txn_acid\": \"on\" }"
+	
+		acid_hive_site="\"hive.support.concurrency\": \"true\","
+		acid_hive_site+="\"hive.compactor.initiator.on\": \"true\","
+		acid_hive_site+="\"hive.compactor.worker.threads\": \"1\","
+		acid_hive_site+="\"hive.enforce.bucketing\": \"true\","
+		acid_hive_site+="\"hive.exec.dynamic.partition.mode\": \"nonstrict\","
+		acid_hive_site+="\"hive.txn.manager\": \"org.apache.hadoop.hive.ql.lockmgr.DbTxnManager\","
+	fi
+
         ## various configuration changes for demo environments, and fixes to defaults
 cat << EOF > configuration-custom.json
 {
@@ -160,7 +173,9 @@ cat << EOF > configuration-custom.json
     "hdfs-site": {
       "dfs.namenode.safemode.threshold-pct": "0.99"
     },
+    ${acid_hive_env},
     "hive-site": {
+        ${acid_hive_site}
         "hive.server2.enable.doAs" : "true",
         "hive.exec.compress.output": "true",
         "hive.merge.mapfiles": "true",
@@ -451,43 +466,7 @@ EOF
        cat ambari.props
        chmod +x setup_kerberos.sh 
        ./setup_kerberos.sh 
-       fi
-    
-    #make sure Hive is up
-    while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
-    while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
-
-    sleep 30
-
-    if [ "${enable_kerberos}" = true  ]; then
-       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
-    fi
-
-    #kill any previous Hive/tez apps to clear queue
-    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-    do 
-        yarn application -kill  "$app"
-    done
-
-
-    #import Hive data
-    
-    set +e
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    if [ "${enable_kerberos}" = true  ]; then
-       ./07-create-hive-schema-kerberos.sh
-    else
-       ./07-create-hive-schema.sh
-    fi
-    set -e
-
-    #import Atlas entities 
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    ./02-atlas-import-entities.sh
-    # Need to do this twice due to bug: RANGER-1897 
-    # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
-    ./02-atlas-import-entities.sh
-    
+       
     echo "Creating users in KDC..."
     kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
     kadmin.local -q "addprinc -randkey kate_hr/$(hostname -f)@${kdc_realm}"
@@ -511,6 +490,48 @@ EOF
 
     mv *.keytab /etc/security/keytabs
 
+       
+    fi
+    
+    #make sure Hive is up
+    while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
+    while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
+
+    sleep 30
+
+    if [ "${enable_kerberos}" = true  ]; then
+       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+    fi
+
+    #kill any previous Hive/tez apps to clear queue
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done
+
+
+    #import Hive data
+    
+
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    if [ "${enable_kerberos}" = true  ]; then
+       ./07-create-hive-schema-kerberos.sh
+    else
+       ./07-create-hive-schema.sh
+    fi
+
+    #create transaction tables from text tables
+    if [ "${enable_hive_acid}" = true  ]; then
+       beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
+    fi
+    
+    #import Atlas entities 
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    ./02-atlas-import-entities.sh
+    # Need to do this twice due to bug: RANGER-1897 
+    # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
+    ./02-atlas-import-entities.sh
+    
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./08-create-hbase-kafka.sh
     echo "Done!"
