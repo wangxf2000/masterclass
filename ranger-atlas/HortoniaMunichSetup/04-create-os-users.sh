@@ -16,9 +16,11 @@ groupadd business_dev
 groupadd contractor
 groupadd csr
 groupadd etl
+groupadd dpo
 useradd -g finance john_finance
 useradd -g business_dev mark_bizdev
 useradd -g contractor jermy_contractor
 useradd -g csr diane_csr
 useradd -g etl log_monitor
 useradd -g etl etl_user
+useradd -g dpo michelle_dpo
