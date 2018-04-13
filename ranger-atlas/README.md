@@ -94,7 +94,8 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 
 - [ ] (Optional) In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
-  - From Ambari: enable/start Interactive Hive 
+  - From Ambari: enable/start Interactive Hive (the consent queries require Hive 2.x+)
+  - From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
   - From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent'
 
 - [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks
