@@ -21,3 +21,4 @@ useradd -g business_dev mark_bizdev
 useradd -g contractor jermy_contractor
 useradd -g csr diane_csr
 useradd -g etluser log_monitor
+useradd -g etluser etl_user
