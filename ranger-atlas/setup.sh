@@ -406,13 +406,7 @@ EOF
         yarn application -kill  "$app"
     done
     
-    ./07-create-hive-schema.sh    
-    
-    #create transaction tables from text tables
-    if [ "${enable_hive_acid}" = true  ]; then
-       beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
-    fi
-    
+        
     if [ "${enable_kerberos}" = true  ]; then
        ./08-enable-kerberos.sh
     fi
@@ -431,6 +425,12 @@ EOF
     do 
         yarn application -kill  "$app"
     done    
+    
+    if [ "${enable_kerberos}" = true  ]; then
+       ./07-create-hive-schema-kerberos.sh
+    else
+       ./07-create-hive-schema.sh        
+    fi    
     
     #import Atlas entities 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
