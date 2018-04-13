@@ -254,7 +254,7 @@
 
                ],
                "groups":[
-                  "etluser"
+                  "etl"
                ],
                "conditions":[
 
@@ -303,7 +303,7 @@
       },
       {
          "service":"hdp_kafka",
-         "name":"access: etluser describe/publish PRIVATE",
+         "name":"access: etl describe/publish PRIVATE",
          "policyType":0,
          "description":"",
          "isAuditEnabled":true,
@@ -332,7 +332,7 @@
 
                ],
                "groups":[
-                  "etluser"
+                  "etl"
                ],
                "conditions":[
 
