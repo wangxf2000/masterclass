@@ -31,6 +31,7 @@ export install_ambari_server=true
 export deploy=true
 
 export host=$(hostname -f)
+export ambari_host=$(hostname -f)
 ## overrides
 #export ambari_stack_version=2.6
 #export ambari_repo=https://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
