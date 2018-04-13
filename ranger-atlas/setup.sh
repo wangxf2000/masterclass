@@ -400,6 +400,19 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
+    #kill any previous Hive/tez apps to clear queue
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done
+    
+    ./07-create-hive-schema.sh    
+    
+    #create transaction tables from text tables
+    if [ "${enable_hive_acid}" = true  ]; then
+       beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
+    fi
+    
     if [ "${enable_kerberos}" = true  ]; then
        ./08-enable-kerberos.sh
     fi
@@ -410,31 +423,6 @@ EOF
 
     sleep 30
 
-    if [ "${enable_kerberos}" = true  ]; then
-       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
-    fi
-
-    #kill any previous Hive/tez apps to clear queue
-    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-    do 
-        yarn application -kill  "$app"
-    done
-
-
-    #import Hive data
-    
-
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    if [ "${enable_kerberos}" = true  ]; then
-       ./07-create-hive-schema-kerberos.sh
-    else
-       ./07-create-hive-schema.sh
-    fi
-
-    #create transaction tables from text tables
-    if [ "${enable_hive_acid}" = true  ]; then
-       beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
-    fi
     
     #import Atlas entities 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
@@ -447,7 +435,7 @@ EOF
     ./08-create-hbase-kafka.sh
     echo "Done!"
     fi
-fi
+
 
 echo "--------------------------"
 echo "--------------------------"
@@ -455,3 +443,4 @@ echo "Automated portion of setup is complete, next please create the tag repo in
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
 echo "Once complete, see here for walk through of demo: https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html"
         
+fi
