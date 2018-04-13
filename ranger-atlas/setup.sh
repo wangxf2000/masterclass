@@ -427,6 +427,9 @@ EOF
        ./07-create-hive-schema.sh        
     fi    
     
+    if [ "${enable_kerberos}" = true  ]; then
+      kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+    fi    
     #kill any previous Hive/tez apps to clear queue before hading cluster to end user
     for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
     do 
