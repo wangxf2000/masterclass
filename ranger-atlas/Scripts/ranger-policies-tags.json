@@ -1,8 +1,8 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-dws-hortonia30.field.hortonworks.com",
+    "Host name": "abajwa-dws-hortonia40.field.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 13, 2018 8:40:11 AM",
+    "Export time": "Apr 13, 2018 7:21:26 PM",
     "Ranger apache version": "0.7.0.2.6.4.0-91"
   },
   "policies": [
@@ -112,7 +112,8 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [
             {
@@ -130,7 +131,7 @@
       "id": 46,
       "guid": "30d630c7-436b-4f80-9847-80ac60d0b01a",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
       "service": "tags",
@@ -262,7 +263,8 @@
           "users": [],
           "groups": [
             "hr",
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -563,7 +565,8 @@
           "groups": [
             "hr",
             "analyst",
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -1037,7 +1040,8 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -1110,7 +1114,8 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -1234,7 +1239,8 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -1405,7 +1411,8 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -1416,12 +1423,12 @@
       "id": 52,
       "guid": "8185ec57-2d6a-4bd1-a032-9594992c0051",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1523608811065
+  "queryTimeMS": 1523647286882
 }
