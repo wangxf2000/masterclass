@@ -139,7 +139,7 @@ echo ###### Start HortoniaBank demo setup
 
 
 users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jermy_contractor diane_csr log_monitor"
-groups="hr analyst us_employee eu_employee finance business_dev contractor csr etluser"
+groups="hr analyst us_employee eu_employee finance business_dev contractor csr etl"
 ambari_url="http://${host}:8080/api/v1"
 
 for user in ${users}; do
@@ -182,7 +182,7 @@ echo csr group membership
 curl -u admin:${ambari_pass} -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"diane_csr", "MemberInfo/group_name":"csr"}' ${ambari_url}/groups/csr/members
 
 echo csr group membership
-curl -u admin:${ambari_pass} -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"log_monitor", "MemberInfo/group_name":"etluser"}' ${ambari_url}/groups/etluser/members
+curl -u admin:${ambari_pass} -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"log_monitor", "MemberInfo/group_name":"etl"}' ${ambari_url}/groups/etl/members
     
 
 
