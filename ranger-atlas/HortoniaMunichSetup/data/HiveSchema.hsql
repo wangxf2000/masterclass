@@ -44,7 +44,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hortoniabank.ww_customers(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hortoniabank/ww_customers';
+                                  LOCATION '/hive_data/hortoniabank/ww_customers'
+				  tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS hortoniabank.us_customers(
                                     Number               STRING
@@ -89,7 +90,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hortoniabank.us_customers(
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/hortoniabank/us_customers';
+                                   LOCATION '/hive_data/hortoniabank/us_customers'
+				   tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS hortoniabank.eu_countries (
                                     CountryName STRING
@@ -191,7 +193,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.consent_data(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/consent';
+                                  LOCATION '/hive_data/consent'
+				  tblproperties("skip.header.line.count"="1");
 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.eu_countries(
