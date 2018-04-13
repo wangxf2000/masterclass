@@ -5,7 +5,7 @@ kinit -kVt /etc/security/keytabs/hive.service.keytab hive/$(hostname -f)@${kdc_r
 beeline -u ${beeline_url} -f ./data/HiveSchema.hsql
 
 if [ "${enable_hive_acid}" = true  ]; then
-  beeline -u ${beeline_url -n hive -f data/TransSchema.hsql
+  beeline -u ${beeline_url} -n hive -f data/TransSchema.hsql
 fi
 
 kdestroy
