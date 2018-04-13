@@ -91,9 +91,26 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Click Access Manager -> Resources Based Policies
   - Click ‘edit/pen’ icon next to the Kafka service
   - [ ] Set ‘Select Tag Service’ to ‘tags’
-  
-- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst) and run through demo Hive queries one by one in the prebuilt notebooks
+
+
+- [ ] (Optional) In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
+  - From Ambari: enable/start Interactive Hive 
+  - From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent'
+
+- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks
 
   ## Demo walkthrough
   
   - Detailed walkthrough of demo steps available [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html)
+
+  ## Troubleshooting
+
+- Ranger audits not picking up tags?
+  - Restart Ranger tagsync process via Ambari
+
+- Interactive Hive/LLAP not starting with Ambari showing below?
+```
+The cluster is not started yet (InvalidACL); will retry
+```
+  - Regenrate keytabs via Ambari and restart services. See [here](https://community.hortonworks.com/articles/125751/iop-v-425-to-hdp-v-26x-hsi-start-fails-with-error.html) for more info
+  
