@@ -113,3 +113,5 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Ambari shows `The cluster is not started yet (InvalidACL); will retry`
   - Regenrate keytabs via Ambari and restart services. See [here](https://community.hortonworks.com/articles/125751/iop-v-425-to-hdp-v-26x-hsi-start-fails-with-error.html) for more info
   
+- Zeppelin complains of `Prefix not found.`?
+  - Zeppelin service was not restarted after enabled Interactive Hive. Restart Zeppelin via Ambari
