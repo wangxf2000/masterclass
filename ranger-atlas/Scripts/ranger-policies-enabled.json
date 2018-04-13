@@ -1,8 +1,8 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-dws-hortonia0.field.hortonworks.com",
+    "Host name": "abajwa-dws-hortonia40.field.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 13, 2018 1:14:25 AM",
+    "Export time": "Apr 13, 2018 7:24:03 PM",
     "Ranger apache version": "0.7.0.2.6.4.0-91"
   },
   "policies": [
@@ -208,7 +208,8 @@
           ],
           "users": [],
           "groups": [
-            "us_employee"
+            "us_employee",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -241,7 +242,8 @@
           ],
           "users": [],
           "groups": [
-            "us_employee"
+            "us_employee",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -266,7 +268,7 @@
       "id": 19,
       "guid": "63a8e206-ca69-48ed-b405-98cc5abff782",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
       "service": "hdp_hive",
@@ -324,7 +326,7 @@
       "id": 20,
       "guid": "5f725ac5-38fd-4b78-a901-e153d48306d1",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_hive",
@@ -577,8 +579,8 @@
       ],
       "id": 24,
       "guid": "a72c1ce8-0ec2-48b1-a7f3-57fc2d56bc81",
-      "isEnabled": true,
-      "version": 1
+      "isEnabled": false,
+      "version": 2
     },
     {
       "service": "hdp_hive",
@@ -1014,21 +1016,22 @@
           ],
           "users": [],
           "groups": [
-            "etl"
+            "etl",
+            "dpo"
           ],
           "conditions": [],
           "delegateAdmin": false
         }
       ],
-      "id": 44,
+      "id": 31,
       "guid": "31ffdfa2-5ef7-48f1-b745-8c8569f67fc3",
-      "isEnabled": false,
-      "version": 1
+      "isEnabled": true,
+      "version": 3
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1523582065617
+  "queryTimeMS": 1523647443952
 }
