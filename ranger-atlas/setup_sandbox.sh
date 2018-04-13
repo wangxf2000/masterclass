@@ -15,7 +15,7 @@ export enable_kerberos=${enable_kerberos:-true}
 export enable_hive_acid=${enable_hive_acid:-false} 
 
 export host=$(hostname -f)
-
+export ambari_host=$(hostname -f)
 
 #make sure Ambari is up
 while ! echo exit | nc ${host} 8080; do echo "waiting for Ambari to come up..."; sleep 10; done
