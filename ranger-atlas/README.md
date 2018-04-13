@@ -106,11 +106,9 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   ## Troubleshooting
 
 - Ranger audits not picking up tags?
-  - Restart Ranger tagsync process via Ambari
+  - Restart Ranger tagsync process via Ambari and re-try
 
-- Interactive Hive/LLAP not starting with Ambari showing below?
-```
-The cluster is not started yet (InvalidACL); will retry
-```
+- Interactive Hive/LLAP not starting? 
+  - Ambari shows `The cluster is not started yet (InvalidACL); will retry`
   - Regenrate keytabs via Ambari and restart services. See [here](https://community.hortonworks.com/articles/125751/iop-v-425-to-hdp-v-26x-hsi-start-fails-with-error.html) for more info
   
