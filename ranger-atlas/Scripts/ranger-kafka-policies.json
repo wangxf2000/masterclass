@@ -1,369 +1,292 @@
 {
-   "metaDataInfo":{
-      "Host name":"abajwa-dws70.field.hortonworks.com",
-      "Exported by":"admin",
-      "Export time":"Mar 28, 2018 1:25:11 AM",
-      "Ranger apache version":"0.7.0.2.6.4.0-91"
-   },
-   "policies":[
-      {
-         "service":"hdp_kafka",
-         "name":"all - topic",
-         "policyType":0,
-         "description":"Policy for all - topic",
-         "isAuditEnabled":true,
-         "resources":{
-            "topic":{
-               "values":[
-                  "*"
-               ],
-               "isExcludes":false,
-               "isRecursive":false
-            }
-         },
-         "policyItems":[
-            {
-               "accesses":[
-                  {
-                     "type":"publish",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"consume",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"configure",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"describe",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"create",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"delete",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"kafka_admin",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-                  "kafka",
-                  "atlas",
-                  "rangertagsync"
-               ],
-               "groups":[
-
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":true
-            }
-         ],
-         "denyPolicyItems":[
-
-         ],
-         "allowExceptions":[
-
-         ],
-         "denyExceptions":[
-
-         ],
-         "dataMaskPolicyItems":[
-
-         ],
-         "rowFilterPolicyItems":[
-
-         ],
-         "id":35,
-         "guid":"d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
-         "isEnabled":true,
-         "version":1
+  "metaDataInfo": {
+    "Host name": "abajwa-dws-hortonia40.field.hortonworks.com",
+    "Exported by": "admin",
+    "Export time": "Apr 13, 2018 7:23:04 PM",
+    "Ranger apache version": "0.7.0.2.6.4.0-91"
+  },
+  "policies": [
+    {
+      "service": "hdp_kafka",
+      "name": "all - topic",
+      "policyType": 0,
+      "description": "Policy for all - topic",
+      "isAuditEnabled": true,
+      "resources": {
+        "topic": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
       },
-      {
-         "service":"hdp_kafka",
-         "name":"ATLAS_HOOK",
-         "policyType":0,
-         "description":"",
-         "isAuditEnabled":true,
-         "resources":{
-            "topic":{
-               "values":[
-                  "ATLAS_HOOK"
-               ],
-               "isExcludes":false,
-               "isRecursive":false
-            }
-         },
-         "policyItems":[
+      "policyItems": [
+        {
+          "accesses": [
             {
-               "accesses":[
-                  {
-                     "type":"publish",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"describe",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-                  "hive"
-               ],
-               "groups":[
-
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
+              "type": "publish",
+              "isAllowed": true
             },
             {
-               "accesses":[
-                  {
-                     "type":"consume",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"describe",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-                  "ANONYMOUS"
-               ],
-               "groups":[
-
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
-            }
-         ],
-         "denyPolicyItems":[
-
-         ],
-         "allowExceptions":[
-
-         ],
-         "denyExceptions":[
-
-         ],
-         "dataMaskPolicyItems":[
-
-         ],
-         "rowFilterPolicyItems":[
-
-         ],
-         "id":36,
-         "guid":"95c0718a-bd93-4b97-95f1-4931d5429345",
-         "isEnabled":true,
-         "version":2
-      },
-      {
-         "service":"hdp_kafka",
-         "name":"ATLAS_ENTITIES",
-         "policyType":0,
-         "description":"",
-         "isAuditEnabled":true,
-         "resources":{
-            "topic":{
-               "values":[
-                  "ATLAS_ENTITIES"
-               ],
-               "isExcludes":false,
-               "isRecursive":false
-            }
-         },
-         "policyItems":[
-            {
-               "accesses":[
-                  {
-                     "type":"consume",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"describe",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-                  "ANONYMOUS"
-               ],
-               "groups":[
-
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
-            }
-         ],
-         "denyPolicyItems":[
-
-         ],
-         "allowExceptions":[
-
-         ],
-         "denyExceptions":[
-
-         ],
-         "dataMaskPolicyItems":[
-
-         ],
-         "rowFilterPolicyItems":[
-
-         ],
-         "id":37,
-         "guid":"2cc20bfc-be26-45e1-939f-59076756ab86",
-         "isEnabled":true,
-         "version":1
-      },
-      {
-         "service":"hdp_kafka",
-         "name":"access: hr publish consume FOREX",
-         "policyType":0,
-         "description":"",
-         "isAuditEnabled":true,
-         "resources":{
-            "topic":{
-               "values":[
-                  "FOREX"
-               ],
-               "isExcludes":false,
-               "isRecursive":false
-            }
-         },
-         "policyItems":[
-            {
-               "accesses":[
-                  {
-                     "type":"publish",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-
-               ],
-               "groups":[
-                  "etl"
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
+              "type": "consume",
+              "isAllowed": true
             },
             {
-               "accesses":[
-                  {
-                     "type":"consume",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-
-               ],
-               "groups":[
-                  "analyst",
-                  "hr"
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
-            }
-         ],
-         "denyPolicyItems":[
-
-         ],
-         "allowExceptions":[
-
-         ],
-         "denyExceptions":[
-
-         ],
-         "dataMaskPolicyItems":[
-
-         ],
-         "rowFilterPolicyItems":[
-
-         ],
-         "id":38,
-         "guid":"4df11955-20f4-4652-bf31-a466fe834d50",
-         "isEnabled":true,
-         "version":1
-      },
-      {
-         "service":"hdp_kafka",
-         "name":"access: etl describe/publish PRIVATE",
-         "policyType":0,
-         "description":"",
-         "isAuditEnabled":true,
-         "resources":{
-            "topic":{
-               "values":[
-                  "PRIVATE"
-               ],
-               "isExcludes":false,
-               "isRecursive":false
-            }
-         },
-         "policyItems":[
+              "type": "configure",
+              "isAllowed": true
+            },
             {
-               "accesses":[
-                  {
-                     "type":"publish",
-                     "isAllowed":true
-                  },
-                  {
-                     "type":"describe",
-                     "isAllowed":true
-                  }
-               ],
-               "users":[
-
-               ],
-               "groups":[
-                  "etl"
-               ],
-               "conditions":[
-
-               ],
-               "delegateAdmin":false
+              "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "kafka_admin",
+              "isAllowed": true
             }
-         ],
-         "denyPolicyItems":[
-
-         ],
-         "allowExceptions":[
-
-         ],
-         "denyExceptions":[
-
-         ],
-         "dataMaskPolicyItems":[
-
-         ],
-         "rowFilterPolicyItems":[
-
-         ],
-         "id":39,
-         "guid":"c8218587-5955-46e1-a300-fc0c7f4c97ba",
-         "isEnabled":true,
-         "version":3
-      }
-   ],
-   "startIndex":0,
-   "pageSize":0,
-   "totalCount":0,
-   "resultSize":0,
-   "queryTimeMS":1522200311105
+          ],
+          "users": [
+            "kafka",
+            "atlas",
+            "rangertagsync"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 36,
+      "guid": "d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_kafka",
+      "name": "ATLAS_HOOK",
+      "policyType": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "topic": {
+          "values": [
+            "ATLAS_HOOK"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "publish",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "hive"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "ANONYMOUS"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 37,
+      "guid": "95c0718a-bd93-4b97-95f1-4931d5429345",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_kafka",
+      "name": "ATLAS_ENTITIES",
+      "policyType": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "topic": {
+          "values": [
+            "ATLAS_ENTITIES"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "ANONYMOUS"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 38,
+      "guid": "2cc20bfc-be26-45e1-939f-59076756ab86",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_kafka",
+      "name": "access: hr publish consume FOREX",
+      "policyType": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "topic": {
+          "values": [
+            "FOREX"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "publish",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "etl"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "analyst",
+            "hr",
+            "dpo"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 39,
+      "guid": "4df11955-20f4-4652-bf31-a466fe834d50",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "hdp_kafka",
+      "name": "access: etl describe/publish PRIVATE",
+      "policyType": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "topic": {
+          "values": [
+            "PRIVATE"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "publish",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "etl"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 40,
+      "guid": "c8218587-5955-46e1-a300-fc0c7f4c97ba",
+      "isEnabled": true,
+      "version": 1
+    }
+  ],
+  "startIndex": 0,
+  "pageSize": 0,
+  "totalCount": 0,
+  "resultSize": 0,
+  "queryTimeMS": 1523647384133
 }
