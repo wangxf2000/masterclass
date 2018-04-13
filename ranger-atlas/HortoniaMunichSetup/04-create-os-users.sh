@@ -15,7 +15,7 @@ groupadd finance
 groupadd business_dev
 groupadd contractor
 groupadd csr
-groupadd etluser
+groupadd etl
 useradd -g finance john_finance
 useradd -g business_dev mark_bizdev
 useradd -g contractor jermy_contractor
