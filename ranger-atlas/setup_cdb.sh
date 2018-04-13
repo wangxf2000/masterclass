@@ -11,11 +11,11 @@
 # curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_cdb.sh | sudo -E sh
 
 #Ambari admin password - replace with your own
-export ambari_pass=${ambari_pass:-BadPass#1} 
+export ambari_pass=${ambari_pass:-admin-Password!} 
 
 #Ranger admin user credentials - replace with your own
-export ranger_admin_user=ali
-export ranger_admin_password=Hadoop123
+export ranger_admin_user=admin
+export ranger_admin_password=rangerpassword123
 
 
 #Choose password for Zeppelin users
