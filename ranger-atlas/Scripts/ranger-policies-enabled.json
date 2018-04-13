@@ -1014,7 +1014,7 @@
           ],
           "users": [],
           "groups": [
-            "etluser"
+            "etl"
           ],
           "conditions": [],
           "delegateAdmin": false
