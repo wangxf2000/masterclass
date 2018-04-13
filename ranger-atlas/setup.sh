@@ -422,7 +422,15 @@ EOF
     while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
 
     sleep 30
-
+    if [ "${enable_kerberos}" = true  ]; then
+      kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+    fi
+    
+    #kill any previous Hive/tez apps to clear queue
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done    
     
     #import Atlas entities 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
