@@ -57,6 +57,7 @@ cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+chmod +x *.sh
 ./04-create-os-users.sh    
 
 #also need anonymous user for kafka Ranger policy
@@ -78,53 +79,6 @@ sudo rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 if [ "${install_ambari_server}" = "true" ]; then
 
     sleep 30
-
-    #Create users in Ambari before changing pass
-    users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jermy_contractor diane_csr log_monitor"
-    groups="hr analyst us_employee eu_employee finance business_dev contractor csr etl"
-    ambari_url="http://localhost:8080/api/v1"
-    
-    for user in ${users}; do
-      echo "adding user ${user} to Ambari"
-      curl -u admin:admin -H "X-Requested-By: blah" -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" ${ambari_url}/users 
-    done 
-
-    #create groups in Ambari
-    for group in ${groups}; do
-      curl -u admin:admin -H "X-Requested-By: blah" -X POST -d "{\"Groups/group_name\":\"${group}\"}" ${ambari_url}/groups
-    done
-
-    #HR group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivanna_eu_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"sasha_eu_hr", "MemberInfo/group_name":"hr"}' ${ambari_url}/groups/hr/members
-    
-
-    #analyst group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe_analyst", "MemberInfo/group_name":"analyst"}' ${ambari_url}/groups/analyst/members
-
-    #us_employee group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"kate_hr", "MemberInfo/group_name":"us_employee"}' ${ambari_url}/groups/us_employee/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"joe_analyst", "MemberInfo/group_name":"us_employee"}' ${ambari_url}/groups/us_employee/members
-
-    #eu_employee group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"ivanna_eu_hr", "MemberInfo/group_name":"eu_employee"}' ${ambari_url}/groups/eu_employee/members
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"sasha_eu_hr", "MemberInfo/group_name":"eu_employee"}' ${ambari_url}/groups/eu_employee/members
-
-    #finance group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"john_finance", "MemberInfo/group_name":"finance"}' ${ambari_url}/groups/finance/members
-
-    #bizdev group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"mark_bizdev", "MemberInfo/group_name":"business_dev"}' ${ambari_url}/groups/business_dev/members
-
-    #contractor group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"jermy_contractor", "MemberInfo/group_name":"contractor"}' ${ambari_url}/groups/contractor/members
-
-    #csr group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"diane_csr", "MemberInfo/group_name":"csr"}' ${ambari_url}/groups/csr/members
-
-    #csr group membership
-    curl -u admin:admin -H "X-Requested-By: blah" -X POST -d '{"MemberInfo/user_name":"log_monitor", "MemberInfo/group_name":"etl"}' ${ambari_url}/groups/etl/members
         
     ## add admin user to postgres for other services, such as Ranger
     cd /tmp
@@ -148,6 +102,9 @@ if [ "${install_ambari_server}" = "true" ]; then
     ambari-server setup --jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc.jar
     ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
 
+    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    ./04-create-ambari-users.sh
+    
     cd ~/ambari-bootstrap/deploy
 
 
@@ -439,7 +396,6 @@ EOF
     sleep 40    
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    chmod +x *.sh
     ./01-atlas-import-classification.sh
     #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
     ./03-update-servicedefs.sh
@@ -450,51 +406,7 @@ EOF
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
     if [ "${enable_kerberos}" = true  ]; then
-       cd /tmp
-       git clone https://github.com/crazyadmins/useful-scripts.git
-       cd useful-scripts/ambari/
-       cat << EOF > ambari.props
-CLUSTER_NAME=${cluster_name}
-AMBARI_ADMIN_USER=admin
-AMBARI_ADMIN_PASSWORD=${ambari_pass}
-AMBARI_HOST=$(hostname -f)
-KDC_HOST=$(hostname -f)
-REALM=${kdc_realm}
-KERBEROS_CLIENTS=$(hostname -f)
-EOF
-
-       cat ambari.props
-       chmod +x setup_kerberos.sh 
-       ./setup_kerberos.sh 
-       
-    echo "Creating users in KDC..."
-    kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey kate_hr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey log_monitor/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey diane_csr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey jermy_contractor/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey mark_bizdev/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey john_finance/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey ivanna_eu_hr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "addprinc -randkey etl_user/$(hostname -f)@${kdc_realm}"
-
-
-
-
-    echo "Creating user keytabs..."
-    kadmin.local -q "xst -k joe_analyst.keytab joe_analyst/$(hostname -f)@${kdc_realm}"    
-    kadmin.local -q "xst -k log_monitor.keytab log_monitor/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k diane_csr.keytab diane_csr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k jermy_contractor.keytab jermy_contractor/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k mark_bizdev.keytab mark_bizdev/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k john_finance.keytab john_finance/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k ivanna_eu_hr.keytab ivanna_eu_hr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k kate_hr.keytab kate_hr/$(hostname -f)@${kdc_realm}"
-    kadmin.local -q "xst -k etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}"    
-
-    mv *.keytab /etc/security/keytabs
-
-       
+       ./08-enable-kerberos.sh
     fi
     
     #make sure Hive is up
