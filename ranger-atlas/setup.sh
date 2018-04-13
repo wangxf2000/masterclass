@@ -445,7 +445,7 @@ EOF
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./08-create-hbase-kafka.sh
-    echo "Done!"
+    echo "Done."
     fi
 
 
