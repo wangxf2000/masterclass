@@ -2,7 +2,7 @@
   "metaDataInfo": {
     "Host name": "abajwa-dws-hortonia30.field.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 13, 2018 7:53:38 AM",
+    "Export time": "Apr 13, 2018 8:40:11 AM",
     "Ranger apache version": "0.7.0.2.6.4.0-91"
   },
   "policies": [
@@ -261,7 +261,8 @@
           ],
           "users": [],
           "groups": [
-            "hr"
+            "hr",
+            "etl"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -561,7 +562,8 @@
           "users": [],
           "groups": [
             "hr",
-            "analyst"
+            "analyst",
+            "etl"
           ],
           "conditions": [],
           "delegateAdmin": false
@@ -649,7 +651,7 @@
       "id": 48,
       "guid": "88a7bc87-97ff-40c1-9252-3a5b8e49aa95",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
       "service": "tags",
@@ -1421,5 +1423,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1523606018106
+  "queryTimeMS": 1523608811065
 }
