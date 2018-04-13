@@ -73,11 +73,15 @@ fi
 
 
 if [ "${enable_kerberos}" = true  ]; then 
-   echo "Allowing Zeppelin to kinit as joe/ivanna.."
+   echo "Allowing Zeppelin to kinit as joe/ivanna/etluser.."
    chown joe_analyst:hadoop /etc/security/keytabs/joe_analyst.keytab
    chmod g+r /etc/security/keytabs/joe_analyst.keytab
 
    chown ivanna_eu_hr:hadoop /etc/security/keytabs/ivanna_eu_hr.keytab
    chmod g+r /etc/security/keytabs/ivanna_eu_hr.keytab
+
+   chown etl_user:hadoop /etc/security/keytabs/etl_user.keytab
+   chmod g+r /etc/security/keytabs/etl_user.keytab
+
 fi
 
