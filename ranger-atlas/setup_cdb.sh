@@ -89,23 +89,27 @@ git clone https://github.com/abajwa-hw/masterclass
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 chmod +x *.sh
-./04-create-os-users.sh    
-useradd ANONYMOUS    
+
+#Disabling creating local users as these will come from LDAP
+#./04-create-os-users.sh    
+#useradd ANONYMOUS    
     
 echo "####### Configure cluster for demo..."
 
 
 
+
 echo # Ranger config changes
 
-echo Enable kafka plugin for Ranger 
+#echo Enable kafka plugin for Ranger 
 #/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k ranger-kafka-plugin-enabled -v Yes
 #/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-kafka-plugin-properties -k ranger-kafka-plugin-enabled -v Yes
 
-#echo Enable kafka plugin for Ranger 
+#echo Enable Hbase plugin for Ranger 
 #/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-env -k ranger-hbase-plugin-enabled -v Yes
 #/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-hbase-plugin-properties -k ranger-hbase-plugin-enabled -v Yes
 
+#disabling above as seems on CB envs the above plugins are already setup
 
 echo Ranger tagsync mappings
 /var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.hdfs.instance.cl1.ranger.service -v ${cluster_name}_hadoop
@@ -115,8 +119,8 @@ echo Ranger tagsync mappings
 /var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.kafka.instance.cl1.ranger.service -v ${cluster_name}_kafka
 
 
-echo Ranger setup Unix sync
-/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-ugsync-site -k ranger.usersync.source.impl.class -v org.apache.ranger.unixusersync.process.UnixUserGroupBuilder
+#echo Ranger setup Unix sync
+#/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c ranger-ugsync-site -k ranger.usersync.source.impl.class -v org.apache.ranger.unixusersync.process.UnixUserGroupBuilder
 
 
 echo stop Ranger
@@ -187,11 +191,13 @@ EOF
 sleep 5
 
 
-echo kill any previous Hive/tez apps to clear queue
-for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-do 
-    yarn application -kill  "$app"
-done
+#disabling below as CB now has LLAP and below steps will kill LLAP
+
+#echo kill any previous Hive/tez apps to clear queue
+#for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+#do 
+#    yarn application -kill  "$app"
+#done
 
 
 echo make sure Ranger up
@@ -298,10 +304,10 @@ if [ "${enable_hive_acid}" = true  ]; then
   beeline -u ${hiveserver_url} -n hive -f data/TransSchema.hsql
 fi
 
-#untested on DPS
-if [ "${enable_kerberos}" = true  ]; then           
-  ./08-enable-kerberos.sh
-fi
+#disabling kerberos on DPS
+#if [ "${enable_kerberos}" = true  ]; then           
+#  ./08-enable-kerberos.sh
+#fi
 
 
 echo make sure Atlas/Hive are up
