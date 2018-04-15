@@ -233,12 +233,12 @@ EOF
 
         sleep 30
 
-        #add groups to Hive views
-        curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT http://localhost:8080/api/v1/views/HIVE/versions/1.5.0/instances/AUTO_HIVE_INSTANCE/privileges \
-           --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
+        #TODO: fix adding groups to Hive views
+        #curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT http://localhost:8080/api/v1/views/HIVE/versions/1.5.0/instances/AUTO_HIVE_INSTANCE/privileges \
+        #   --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
         
-        curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT http://localhost:8080/api/v1/views/HIVE/versions/2.0.0/instances/AUTO_HIVE20_INSTANCE/privileges \
-           --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
+        #curl -u admin:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT http://localhost:8080/api/v1/views/HIVE/versions/2.0.0/instances/AUTO_HIVE20_INSTANCE/privileges \
+        #   --data '[{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"us_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"business_dev","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"eu_employee","principal_type":"GROUP"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.OPERATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"SERVICE.ADMINISTRATOR","principal_type":"ROLE"}},{"PrivilegeInfo":{"permission_name":"VIEW.USER","principal_name":"CLUSTER.USER","principal_type":"ROLE"}}]'
 
 
         #restart Atlas
@@ -400,39 +400,33 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-    #kill any previous Hive/tez apps to clear queue
+    #kill any previous Hive/tez apps to clear queue before creating tables
     for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
     do 
         yarn application -kill  "$app"
     done
-   
+    
+    #create tables
+    ./07-create-hive-schema.sh   
+    
+    #if [ "${enable_kerberos}" = true  ]; then
+    #   ./07-create-hive-schema-kerberos.sh
+    #else
+    #   ./07-create-hive-schema.sh        
+    #fi     
         
+    #Enable kerberos	
     if [ "${enable_kerberos}" = true  ]; then
        ./08-enable-kerberos.sh
     fi
     
-    #make sure Hive is up
+    #wait until Hive is up
     while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
     while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
 
     sleep 30
     
-    if [ "${enable_kerberos}" = true  ]; then
-      kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
-    fi
-    
-    #kill any previous Hive/tez apps to clear queue before creating tables
-    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-    do 
-        yarn application -kill  "$app"
-    done    
-    
-    if [ "${enable_kerberos}" = true  ]; then
-       ./07-create-hive-schema-kerberos.sh
-    else
-       ./07-create-hive-schema.sh        
-    fi    
-    
+
     if [ "${enable_kerberos}" = true  ]; then
       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
     fi    
@@ -450,6 +444,8 @@ EOF
     ./02-atlas-import-entities.sh
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+    
+    #create kafka topics and populate data - do it after kerberos to ensure Kafka Ranger plugin enabled
     ./08-create-hbase-kafka.sh
     echo "Done."
     fi
