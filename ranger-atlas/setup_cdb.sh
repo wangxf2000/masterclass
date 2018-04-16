@@ -315,7 +315,7 @@ while ! echo exit | nc ${atlas_host} 21000; do echo "waiting for atlas to come u
 
 
 echo "import Atlas entities"
-
+yum install -y zip
 if [ "${cluster_name}" != "hdp" ]; then
    echo "Creating new entities zip based on cluster name ${cluster_name} ..."
    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
