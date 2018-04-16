@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Script to setup vanilla HDP inclu Atlas/Ranger - without demo components
-
+# curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_vanilla.sh | sudo -E bash  
 #set -o xtrace
 
 ########################################################################
