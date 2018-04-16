@@ -264,8 +264,7 @@ ${ranger_curl} -X POST \
 -F 'file=@ranger-kafka-policies-apply.json' \
           "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=kafka"
 
-
-#TODO: Hbase repo not present even though plugin enabled          
+         
 echo "import ranger hbase policies..."
 < ranger-hbase-policies.json jq '.policies[].service = "'${cluster_name}'_hbase"' > ranger-hbase-policies-apply.json
 ${ranger_curl} -X POST \
@@ -316,6 +315,20 @@ while ! echo exit | nc ${atlas_host} 21000; do echo "waiting for atlas to come u
 
 
 echo "import Atlas entities"
+
+if [ "${cluster_name}" != "hdp" ]
+   echo "Creating new entities zip based on cluster name ${cluster_name} ..."
+   cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+   mkdir tmp
+   mv export-hive_db-name.zip export-hive_db-name.orig.zip
+   unzip export-hive_db-name.orig.zip -d ./tmp
+   cd ./tmp
+   find . -name '*' -type f -exec sed -i "s/hdp/${cluster_name}/g" {} \;
+   zip -r export-hive_db-name.zip .
+   mv export-hive_db-name.zip ..
+fi
+
+echo "Importing entities ..."
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./02-atlas-import-entities.sh
 # Need to do this twice due to bug: RANGER-1897 
