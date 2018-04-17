@@ -57,10 +57,6 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"DATA_QUALITY", "values":{"score": "0.51"}}'
 
 
-#${atlas_curl} -H 'Accept: application/json' -H 'Content-Type: application/json' ${atlas_url}/v2/entity/guid/$guid | python -m json.tool | grep score
-
-${atlas_curl} -H 'Accept: application/json' -H 'Content-Type: application/json' ${atlas_url}/v2/entity/uniqueAttribute/type/hive_column?attr:qualifiedName=hortoniabank.us_customers.mrn@h11223344 | jq '.entity.guid
-"95848ce4-2c15-49da-a04e-24d3a1dcac58"
 
 ## Tagging Hive columns
 
