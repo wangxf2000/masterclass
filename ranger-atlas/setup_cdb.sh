@@ -314,32 +314,34 @@ while ! echo exit | nc ${atlas_host} 21000; do echo "waiting for atlas to come u
 
 
 
-echo "import Atlas entities"
-yum install -y zip
-if [ "${cluster_name}" != "hdp" ]; then
-   echo "Creating new entities zip based on cluster name ${cluster_name} ..."
-   cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
-   mkdir tmp
-   mv export-hive_db-name.zip export-hive_db-name.orig.zip
-   unzip export-hive_db-name.orig.zip -d ./tmp
-   cd ./tmp
-   find . -name '*' -type f -exec sed -i "s/hdp/${cluster_name}/g" {} \;
-   zip -r export-hive_db-name.zip .
-   mv export-hive_db-name.zip ..
-fi
+#echo "import Atlas entities"
+#yum install -y zip
+#if [ "${cluster_name}" != "hdp" ]; then
+#   echo "Creating new entities zip based on cluster name ${cluster_name} ..."
+#   cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data
+#   mkdir tmp
+#   mv export-hive_db-name.zip export-hive_db-name.orig.zip
+#   unzip export-hive_db-name.orig.zip -d ./tmp
+#   cd ./tmp
+#   find . -name '*' -type f -exec sed -i "s/hdp/${cluster_name}/g" {} \;
+#   zip -r export-hive_db-name.zip .
+#   mv export-hive_db-name.zip ..
+#fi
 
-echo "Importing entities ..."
-cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-./02-atlas-import-entities.sh
+#echo "Importing entities ..."
+#cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+#./02-atlas-import-entities.sh
 # Need to do this twice due to bug: RANGER-1897 
 # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
-./02-atlas-import-entities.sh
-
-
+#./02-atlas-import-entities.sh
 
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./08-create-hbase-kafka.sh
+
+./09-associate-entities-with-tags.sh
+
+
 
 echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
