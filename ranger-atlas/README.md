@@ -93,7 +93,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - [ ] Set ‘Select Tag Service’ to ‘tags’
 
 
-- [ ] (Optional) In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
+- [ ] In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
   - From Ambari: enable/start Interactive Hive (the consent queries require Hive 2.x+)
   - From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
   - From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent'
