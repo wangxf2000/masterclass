@@ -7,7 +7,7 @@ atlas_url="http://${atlas_host}:21000/api/atlas"
 ##Tagging Hive Tables
 
 #fetch guid for table hortoniabank.eu_countries@${cluster_name}
-guid=$(curl  -u admin:admin  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=hortoniabank.eu_countries@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl} ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=hortoniabank.eu_countries@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 #add REFERENCE_DATA tag
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
@@ -16,7 +16,7 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 
 
 #fetch guid for table consent_master.eu_countries@${cluster_name}
-guid=$(curl  -u admin:admin  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.eu_countries@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.eu_countries@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 #add REFERENCE_DATA tag
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
@@ -26,7 +26,7 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 
 
 #fetch guid for table consent_master.consent_data
-guid=$(curl  -u admin:admin  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.consent_data@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.consent_data@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 #add REFERENCE_DATA tag
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
@@ -35,7 +35,7 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 
 
 #fetch guid for table consent_master.consent_data_trans
-guid=$(curl  -u admin:admin  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.consent_data_trans@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=consent_master.consent_data_trans@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 #add REFERENCE_DATA tag
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
@@ -49,7 +49,7 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 
 
 #fetch guid for table cost_savings.claim_savings@${cluster_name}
-guid=$(curl  -u admin:admin  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=cost_savings.claim_savings@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_table?attr:qualifiedName=cost_savings.claim_savings@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 #add DATA_QUALITY tag with score=0.51
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
