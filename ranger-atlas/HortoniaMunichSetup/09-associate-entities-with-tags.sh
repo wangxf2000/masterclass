@@ -178,5 +178,52 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 -X POST -H 'Content-Type: application/json' \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
 
+#create entities for Hbase table T_FOREX 
+${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
+{  
+   "entity":{  
+      "typeName":"hbase_table",
+      "attributes":{  
+         "description":"T_FOREX table",
+         "name":"T_FOREX",
+         "owner":"hbase",
+         "qualifiedName":"default.T_FOREX@${cluster_name}",
+         "column_families":[  
+         ],
+         "uri":"none"
+      },
+      "guid":-1
+   },
+   "referredEntities":{  
+   }
+}
+EOF
+
+#create entities for Hbase table T_PRIVATE and associate with SENSITIVE tag
+${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
+{  
+   "entity":{  
+      "typeName":"hbase_table",
+      "attributes":{  
+         "description":"T_PRIVATE table",
+         "name":"T_PRIVATE",
+         "owner":"hbase",
+         "qualifiedName":"default.T_PRIVATE@${cluster_name}",
+         "column_families":[  
+         ],
+         "uri":"none"
+      },
+      "guid":-1
+   },
+   "referredEntities":{  
+   }
+}
+EOF
+
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hbase_table?attr:qualifiedName=default.T_PRIVATE@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+
+${atlas_curl} ${atlas_url}/entities/${guid}/traits \
+-X POST -H 'Content-Type: application/json' \
+--data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
 
 
