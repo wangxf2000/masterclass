@@ -208,6 +208,20 @@
         {
             "attributeDefs": [],
             "category": "CLASSIFICATION",
+            "createTime": 1490762500725,
+            "createdBy": "admin",
+            "description": "SENSITIVE",
+            "guid": "38aba6e0-5f96-45a7-9721-d0da3463f1d5",
+            "name": "SENSITIVE",
+            "superTypes": [],
+            "typeVersion": "1.0",
+            "updateTime": 1490762500725,
+            "updatedBy": "admin",
+            "version": 1
+        },        
+        {
+            "attributeDefs": [],
+            "category": "CLASSIFICATION",
             "createTime": 1490762500705,
             "description": "REFERENCE_DATA",
             "guid": "68333b92-c305-41df-b325-1fd63cf2007a",
