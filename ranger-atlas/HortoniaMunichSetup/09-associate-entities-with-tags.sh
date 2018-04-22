@@ -187,7 +187,7 @@ ${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json
          "description":"T_FOREX table",
          "name":"T_FOREX",
          "owner":"hbase",
-         "qualifiedName":"default.T_FOREX@${cluster_name}",
+         "qualifiedName":"T_FOREX@${cluster_name}",
          "column_families":[  
          ],
          "uri":"none"
@@ -208,7 +208,7 @@ ${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json
          "description":"T_PRIVATE table",
          "name":"T_PRIVATE",
          "owner":"hbase",
-         "qualifiedName":"default.T_PRIVATE@${cluster_name}",
+         "qualifiedName":"T_PRIVATE@${cluster_name}",
          "column_families":[  
          ],
          "uri":"none"
