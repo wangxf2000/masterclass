@@ -132,3 +132,51 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 -X POST -H 'Content-Type: application/json' \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"PII", "values":{"type": "Email"}}'
 
+#create entities for kafka topic FOREX
+${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
+{  
+   "entity":{  
+      "typeName":"kafka_topic",
+      "attributes":{  
+         "description":null,
+         "name":"FOREX",
+         "owner":null,
+         "qualifiedName":"FOREX@${cluster_name}",
+         "topic":"FOREX",
+         "uri":"none"
+      },
+      "guid":-1
+   },
+   "referredEntities":{  
+   }
+}
+EOF
+
+#create entities for kafka topics PRIVATE and associte with SENSITIVE tag
+${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
+{  
+   "entity":{  
+      "typeName":"kafka_topic",
+      "attributes":{  
+         "description":null,
+         "name":"PRIVATE",
+         "owner":null,
+         "qualifiedName":"PRIVATE@${cluster_name}",
+         "topic":"PRIVATE",
+         "uri":"none"
+      },
+      "guid":-1
+   },
+   "referredEntities":{  
+   }
+}
+EOF
+
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/kafka_topic?attr:qualifiedName=PRIVATE@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+
+${atlas_curl} ${atlas_url}/entities/${guid}/traits \
+-X POST -H 'Content-Type: application/json' \
+--data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
+
+
+
