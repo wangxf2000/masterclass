@@ -220,7 +220,7 @@ ${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json
 }
 EOF
 
-guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hbase_table?attr:qualifiedName=default.T_PRIVATE@${cluster_name} | jq '.entity.guid'  | tr -d '"')
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hbase_table?attr:qualifiedName=T_PRIVATE@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 -X POST -H 'Content-Type: application/json' \
