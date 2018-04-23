@@ -392,7 +392,7 @@ EOF
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
-    #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
+    #./02-atlas-import-entities.sh      ## replaced with 09-associate-entities-with-tags.sh
     ./03-update-servicedefs.sh
 
             
@@ -400,20 +400,8 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-    #kill any previous Hive/tez apps to clear queue before creating tables
-    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
-    do 
-        yarn application -kill  "$app"
-    done
+
     
-    #create tables
-    ./07-create-hive-schema.sh   
-    
-    #if [ "${enable_kerberos}" = true  ]; then
-    #   ./07-create-hive-schema-kerberos.sh
-    #else
-    #   ./07-create-hive-schema.sh        
-    #fi     
         
     #Enable kerberos	
     if [ "${enable_kerberos}" = true  ]; then
@@ -426,6 +414,27 @@ EOF
 
     sleep 30
     
+    
+    #kill any previous Hive/tez apps to clear queue before creating tables
+    
+    if [ "${enable_kerberos}" = true  ]; then
+      kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+    fi    
+    #kill any previous Hive/tez apps to clear queue before hading cluster to end user
+    for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+    do 
+        yarn application -kill  "$app"
+    done    
+
+        
+    #create tables
+        
+    if [ "${enable_kerberos}" = true  ]; then
+       ./07-create-hive-schema-kerberos.sh
+    else
+       ./07-create-hive-schema.sh        
+    fi     
+    
 
     if [ "${enable_kerberos}" = true  ]; then
       kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
@@ -436,17 +445,15 @@ EOF
         yarn application -kill  "$app"
     done
     
-    #import Atlas entities 
-    cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-    ./02-atlas-import-entities.sh
-    # Need to do this twice due to bug: RANGER-1897 
-    # second time, the notification is of type ENTITY_UPDATE which gets processed correctly
-    ./02-atlas-import-entities.sh
-    
+
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     
     #create kafka topics and populate data - do it after kerberos to ensure Kafka Ranger plugin enabled
     ./08-create-hbase-kafka.sh
+    
+     #import Atlas entities 
+     ./09-associate-entities-with-tags.sh
+    
     echo "Done."
     fi
 
