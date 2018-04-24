@@ -1,6 +1,6 @@
 # Setup Hortoniabank demo on HDP 2.6.4 Cloudbreak
 # Pre-reqs:
-# HDP cluster with Hive/Ranger/Atlas already installed
+# HDP cluster with Hive LLAP/Ranger/Atlas already installed via cloudbreak
 # 1. Install Zeppelin if not already installed
 # 2. Ranger admin user with known credentials (or create your own) e.g. ali/Hadoop123
 #
