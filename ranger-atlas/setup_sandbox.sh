@@ -12,7 +12,7 @@ export zeppelin_pass=BadPass#1
 export kdc_realm=HWX.COM
 
 export enable_kerberos=${enable_kerberos:-true}   
-export enable_hive_acid=${enable_hive_acid:-false} 
+export enable_hive_acid=${enable_hive_acid:-true} 
 
 export host=$(hostname -f)
 export ambari_host=$(hostname -f)
@@ -258,38 +258,55 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 su hdfs -c ./05-create-hdfs-user-folders.sh
 su hdfs -c ./06-copy-data-to-hdfs.sh
 
-echo make sure hive is up
-while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
-
-./07-create-hive-schema.sh
-if [ "${enable_hive_acid}" = true  ]; then
-  beeline -u jdbc:hive2://localhost:10000 -n hive -f data/TransSchema.hsql
-fi
-           
-
 if [ "${enable_kerberos}" = true  ]; then           
   echo "Enabling kerberos..."
   ./08-enable-kerberos.sh     
 fi
 
-
-
-echo make sure Atlas/Hive are up
-while ! echo exit | nc ${host} 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+echo make sure hive is up
 while ! echo exit | nc ${host} 10000; do echo "waiting for hive to come up..."; sleep 10; done
+while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done
+
+sleep 30
+
+#kill any previous Hive/tez apps to clear queue before creating tables
+
+if [ "${enable_kerberos}" = true  ]; then
+  kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+fi    
+#kill any previous Hive/tez apps to clear queue before hading cluster to end user
+for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+do 
+	yarn application -kill  "$app"
+done    
+
+	
+#create tables
+	
+if [ "${enable_kerberos}" = true  ]; then
+   ./07-create-hive-schema-kerberos.sh
+else
+   ./07-create-hive-schema.sh        
+fi     
+
+if [ "${enable_kerberos}" = true  ]; then
+  kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@${kdc_realm}
+fi    
+#kill any previous Hive/tez apps to clear queue before hading cluster to end user
+for app in $(yarn application -list | awk '$2==hive && $3==TEZ && $6 == "ACCEPTED" || $6 == "RUNNING" { print $1 }')
+do 
+	yarn application -kill  "$app"
+done
 
 
-echo "Now that we enabled Kafka Ranger plugin (by enabling kerberos), import Atlas entities"
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-./02-atlas-import-entities.sh
-# Need to do this twice due to bug: RANGER-1897 
-# second time, the notification is of type ENTITY_UPDATE which gets processed correctly
-./02-atlas-import-entities.sh
 
-
-
-cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+#create kafka topics and populate data - do it after kerberos to ensure Kafka Ranger plugin enabled
 ./08-create-hbase-kafka.sh
+
+#import Atlas entities 
+./09-associate-entities-with-tags.sh
+
 
 echo "Automated portion of setup is complete, next please create the tag repo in Ranger, associate with Hive and import tag policies"
 echo "See https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md for more details"
