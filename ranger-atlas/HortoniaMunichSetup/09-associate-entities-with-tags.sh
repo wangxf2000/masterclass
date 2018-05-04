@@ -227,3 +227,32 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
 
 
+#create entities for HDFS path /banking and associate with BANKING tag
+hdfs_prefix="hdfs://$(hostname -f):8020"
+hdfs_path="/banking"
+${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
+{  
+   "entity":{  
+      "typeName":"hdfs_path",
+      "attributes":{  
+         "description":null,
+         "name":"${hdfs_path}",
+         "owner":null,
+         "qualifiedName":"${hdfs_prefix}${hdfs_path}",
+         "clusterName":"${cluster_name}",
+         "path":"${hdfs_prefix}${hdfs_path}"
+      },
+      "guid":-1
+   },
+   "referredEntities":{  
+   }
+}
+EOF
+
+guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hdfs_path?attr:qualifiedName=${hdfs_prefix}${hdfs_path} | jq '.entity.guid'  | tr -d '"')
+
+${atlas_curl} ${atlas_url}/entities/${guid}/traits \
+-X POST -H 'Content-Type: application/json' \
+--data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"BANKING","values":{}}'
+
+
