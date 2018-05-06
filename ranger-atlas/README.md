@@ -58,14 +58,14 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - Once script is complete, there are manual steps required to create tag service, associate with Hive service and import tag based policies 
 
-- [ ] Create Tag Service
+- ~~[ ] Create Tag Service
   - Open Ranger 
   - Click Access Manager -> Tag Based Policies
   - Click the + icon and create a service named 'tags'
     - ![](./media/screenshot-ranger-add-tag-service.png)
 
 
-- [ ] Import tag based policies in Ranger
+- ~~[ ] Import tag based policies in Ranger
   - Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json) (Make sure to download the 'Raw' file)
   - Open Ranger
   - Access Manager -> Tag based Policies
