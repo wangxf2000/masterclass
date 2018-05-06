@@ -61,7 +61,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 - ~~[ ] Create Tag Service
   - Open Ranger 
   - Click Access Manager -> Tag Based Policies
-  - Click the + icon and create a service named 'tags'
+  - Click the + icon and create a service named 'tags'~~
     - ![](./media/screenshot-ranger-add-tag-service.png)
 
 
@@ -71,7 +71,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - Access Manager -> Tag based Policies
   - Click the import icon to import policies
   - Make sure to select the 'Override Policy' checkbox
-  - Wait 30s
+  - Wait 30s~~
   
 - [ ] Configure Hive for Tag based Policies
   - Open Ranger
