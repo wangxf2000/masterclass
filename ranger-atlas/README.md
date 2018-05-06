@@ -58,14 +58,14 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - Once script is complete, there are manual steps required to complete the demo setup 
 
-- ~~[ ] Create Tag Service~~
+- [ ] ~~Create Tag Service~~
   - ~~Open Ranger~~
   - ~~Click Access Manager -> Tag Based Policies~~
   - ~~Click the + icon and create a service named 'tags'~~
     - ![](./media/screenshot-ranger-add-tag-service.png)
 
 
-- ~~[ ] Import tag based policies in Ranger~~
+- [ ] ~~Import tag based policies in Ranger~~
   - ~~Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json) (Make sure to download the 'Raw' file)~~
   - ~~Open Ranger~~
   - ~~Access Manager -> Tag based Policies~~
@@ -90,7 +90,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - ~~Open Ranger~~
   - ~~Click Access Manager -> Resources Based Policies~~
   - ~~Click ‘edit/pen’ icon next to the Kafka service~~
-  - ~~[ ] Set ‘Select Tag Service’ to ‘tags’~~
+  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
 
 
 - [ ] In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
