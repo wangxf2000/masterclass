@@ -73,24 +73,24 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - ~~Make sure to select the 'Override Policy' checkbox~~
   - ~~Wait 30s~~
   
-- [ ] Configure Hive for Tag based Policies
-  - Open Ranger
-  - Click Access Manager -> Resources Based Policies
-  - Click ‘edit/pen’ icon next to the Hive service
-  - [ ] Set ‘Select Tag Service’ to ‘tags’
+- [ ] ~~Configure Hive for Tag based Policies~~
+  - ~~Open Ranger~~
+  - ~~Click Access Manager -> Resources Based Policies~~
+  - ~~Click ‘edit/pen’ icon next to the Hive service~~
+  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
     - ![](./media/screenshot-ranger-configure-hive-tag-service.png)
 
-- [ ] Configure Hbase for Tag based Policies
-  - Open Ranger
-  - Click Access Manager -> Resources Based Policies
-  - Click ‘edit/pen’ icon next to the Hbase service
-  - [ ] Set ‘Select Tag Service’ to ‘tags’
+- [ ] ~~Configure Hbase for Tag based Policies~~
+  - ~~Open Ranger~~
+  - ~~Click Access Manager -> Resources Based Policies~~
+  - ~~Click ‘edit/pen’ icon next to the Hbase service~~
+  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
   
-- [ ] Configure Kafka for Tag based Policies
-  - Open Ranger
-  - Click Access Manager -> Resources Based Policies
-  - Click ‘edit/pen’ icon next to the Kafka service
-  - [ ] Set ‘Select Tag Service’ to ‘tags’
+- [ ] ~~Configure Kafka for Tag based Policies~~
+  - ~~Open Ranger~~
+  - ~~Click Access Manager -> Resources Based Policies~~
+  - ~~Click ‘edit/pen’ icon next to the Kafka service~~
+  - ~~[ ] Set ‘Select Tag Service’ to ‘tags’~~
 
 
 - [ ] In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
