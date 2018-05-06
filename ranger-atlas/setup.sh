@@ -353,6 +353,15 @@ EOF
 EOF
 
 
+   #associate tag service with Hive/Hbase/Kafka Ranger repos
+   for component in hive hbase kafka ; do
+     echo "Adding tags service to Ranger $component repo..."
+     ${ranger_curl} ${ranger_url}/public/v2/api/service | jq ".[] | select (.type==\"${component}\")"  > tmp.json
+     cat tmp.json | jq '. |= .+  {"tagService":"tags"}' > tmp-updated.json
+     ${ranger_curl} ${ranger_url}/public/v2/api/service/name/${cluster_name}_${component} -X PUT  -H "Content-Type: application/json"  -d @tmp-updated.json
+   done 
+
+
     cd /tmp/masterclass/ranger-atlas/Scripts/
     echo "importing ranger Tag policies.."
     < ranger-policies-tags.json jq '.policies[].service = "tags"' > ranger-policies-tags_apply.json
