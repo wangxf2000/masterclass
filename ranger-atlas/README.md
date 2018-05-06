@@ -56,7 +56,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 ## Manual steps
 
-- Once script is complete, there are manual steps required to create tag service, associate with Hive service and import tag based policies 
+- Once script is complete, there are manual steps required to complete the demo setup 
 
 - ~~[ ] Create Tag Service~~
   - ~~Open Ranger~~
