@@ -236,7 +236,27 @@ ${ranger_curl} -i \
 sleep 10
 
 
+#create tag service repo in Ranger called tags
+${ranger_curl} ${ranger_url}/public/v2/api/service -X POST  -H "Content-Type: application/json"  -d @- <<EOF
+{
+  "name":"tags",
+  "description":"tags service from API",
+  "type": "tag",
+  "configs":{},
+  "isActive":true
+}
+EOF
+
+
+
 cd /tmp/masterclass/ranger-atlas/Scripts/
+echo "importing ranger Tag policies.."
+< ranger-policies-tags.json jq '.policies[].service = "tags"' > ranger-policies-tags_apply.json
+${ranger_curl} -X POST \
+-H "Content-Type: multipart/form-data" \
+-H "Content-Type: application/json" \
+-F 'file=@ranger-policies-tags_apply.json' \
+         "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
 
               
 echo "import ranger Hive policies..."
