@@ -57,46 +57,12 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 ## Manual steps
 
 - Once script is complete, there are manual steps required to complete the demo setup 
-
-- [ ] ~~Create Tag Service~~
-  - ~~Open Ranger~~
-  - ~~Click Access Manager -> Tag Based Policies~~
-  - ~~Click the + icon and create a service named 'tags'~~
-    - ![](./media/screenshot-ranger-add-tag-service.png)
-
-
-- [ ] ~~Import tag based policies in Ranger~~
-  - ~~Download tag policies to your laptop from [here](./Scripts/ranger-policies-tags.json) (Make sure to download the 'Raw' file)~~
-  - ~~Open Ranger~~
-  - ~~Access Manager -> Tag based Policies~~
-  - ~~Click the import icon to import policies~~
-  - ~~Make sure to select the 'Override Policy' checkbox~~
-  - ~~Wait 30s~~
-  
-- [ ] ~~Configure Hive for Tag based Policies~~
-  - ~~Open Ranger~~
-  - ~~Click Access Manager -> Resources Based Policies~~
-  - ~~Click ‘edit/pen’ icon next to the Hive service~~
-  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
-    - ![](./media/screenshot-ranger-configure-hive-tag-service.png)
-
-- [ ] ~~Configure Hbase for Tag based Policies~~
-  - ~~Open Ranger~~
-  - ~~Click Access Manager -> Resources Based Policies~~
-  - ~~Click ‘edit/pen’ icon next to the Hbase service~~
-  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
-  
-- [ ] ~~Configure Kafka for Tag based Policies~~
-  - ~~Open Ranger~~
-  - ~~Click Access Manager -> Resources Based Policies~~
-  - ~~Click ‘edit/pen’ icon next to the Kafka service~~
-  - [ ] ~~Set ‘Select Tag Service’ to ‘tags’~~
-
+- [X] The previous steps of manually creating a tag service in Ranger, importing tag policies and associating it with Hive/Hbase/Kafka services are no longer required. These are now taken care of by the script
 
 - [ ] In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
-  - From Ambari: enable/start Interactive Hive (the consent queries require Hive 2.x+)
-  - From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
-  - From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent'
+  - [ ] From Ambari: enable/start Interactive Hive (the consent queries require Hive 2.x+)
+  - [ ] From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
+  - [ ] From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent' (disable existing policy first)
 
 - [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks
 
