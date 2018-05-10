@@ -72,6 +72,13 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
   ## Troubleshooting
 
+- While running script, beeline stuck at analyzing tables?
+  - Check the YARN UI on port 8088: there is likely one job in RUNNING and one in ACCEPTED state. Kinit and kill the one in RUNNING state:
+```
+kinit -kVt /etc/security/keytabs/rm.service.keytab rm/$(hostname -f)@HWX.COM
+yarn application -kill <application_id>
+```
+
 - Ranger audits not picking up tags?
   - Restart Ranger tagsync process via Ambari and re-try
 
@@ -81,3 +88,4 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   
 - Zeppelin complains of `Prefix not found.`?
   - Zeppelin service was not restarted after enabled Interactive Hive. Restart Zeppelin via Ambari
+
