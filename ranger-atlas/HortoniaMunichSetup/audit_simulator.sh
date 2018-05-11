@@ -1,8 +1,10 @@
 #Basic script to simulate hive queries from random users across random tables
 
 export kdc_realm=${kdc_realm:-HWX.COM}
+export hive_port=10500   ## if LLAP is enabled
+#export hive_port=10000   ## if LLAP is not enabled
 
-users=("joe_analyst" "kate_hr" "sasha_eu_hr" "ivanna_eu_hr" "john_finance" "mark_bizdev" "jermy_contractor" "diane_csr" "log_monitor")
+users=("joe_analyst" "kate_hr" "sasha_eu_hr" "ivanna_eu_hr" "john_finance" "mark_bizdev" "jermy_contractor" "diane_csr" "etl_user")
 tables=("hortoniabank.ww_customers" "hortoniabank.us_customers" "finance.tax_2009" "finance.tax_2010" "finance.tax_2015" "cost_savings.claim_savings" "claim.provider_summary" "consent_master.consent_data")
 
 # Seed random generator
@@ -18,9 +20,9 @@ do
 
     if [ -d "/etc/security/keytabs/" ]; then
        kinit -kt /etc/security/keytabs/${selecteduser}.keytab  ${selecteduser}/$(hostname -f)@${kdc_realm}
-       beeline_url="jdbc:hive2://localhost:10000/default;principal=hive/$(hostname -f)@${kdc_realm}"
+       beeline_url="jdbc:hive2://localhost:${hive_port}/default;principal=hive/$(hostname -f)@${kdc_realm}"
     else
-       beeline_url="jdbc:hive2://localhost:10000/default"
+       beeline_url="jdbc:hive2://localhost:${hive_port}/default"
     fi
     
     # Write to Shell
