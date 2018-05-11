@@ -64,11 +64,30 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - [ ] From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
   - [ ] From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent' (disable existing policy first)
 
-- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks
+- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks. After running each query, refresh Ranger audits page to understand what transpired
 
   ## Demo walkthrough
   
   - Detailed walkthrough of demo steps available [here](https://community.hortonworks.com/articles/151939/hdp-securitygovernance-demo-kit.html)
+
+  ## Other things to try
+- Simulate users trying to randomly access Hive tables to generate more interesting audits
+```
+/tmp/masterclass/ranger-atlas/HortoniaMunichSetup/audit_simulator.sh
+```
+
+- Install Ranger Audits Banana dashboard to visuaize audits
+
+
+  ## How does it work?
+- The script basically:
+  - uses [Ambari bootstrap](https://github.com/seanorama/ambari-bootstrap) to install Ambari, generate a blueprint and deploy HDP cluster that includes Ranger/Atlas
+  - uses Ranger APIs to import service defs, create tag repo and import policies for HDFS/Hive/Hbase/Kafka
+  - import tags into Atlas
+  - imports sample Hive data (which also creates HDFS/Hive entities in Atlas)
+  - [uses Atlas APIs to associate tags with Hive/Kafka/Hbase/HDFS entities](https://community.hortonworks.com/articles/189615/atlas-how-to-automate-associating-tagsclassificati.html)
+  - enables kerberos
+
 
   ## Troubleshooting
 
