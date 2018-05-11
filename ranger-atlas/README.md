@@ -47,6 +47,8 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
 
+- Note: enabling LLAP (along with all the other components required) may require extra memory resources on your VM
+
 ## Login details 
 
 - Ambari port: 8080 login: admin/BadPass#1
