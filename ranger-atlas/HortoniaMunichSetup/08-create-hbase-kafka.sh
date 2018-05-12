@@ -28,8 +28,8 @@ if [ "${enable_kerberos}" = true  ]; then
   kinit -kt /etc/security/keytabs/log_monitor.keytab log_monitor/$(hostname -f)@${kdc_realm}
 fi
 
-/usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic FOREX
-/usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partition 1 --topic PRIVATE
+/usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partitions 1 --topic FOREX
+/usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partitions 1 --topic PRIVATE
 /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --zookeeper $(hostname -f):2181 --list
 
 
