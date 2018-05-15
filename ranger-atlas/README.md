@@ -7,8 +7,9 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 ## Versions tested
 
 Tested with:
-- [x] HDP 2.6.3 / Ambari 2.6.0
+- [x] HDP 2.6.5 / Ambari 2.6.2
 - [x] HDP 2.6.4 / Ambari 2.6.1
+- [x] HDP 2.6.3 / Ambari 2.6.0
 - [x] HDP 2.6.4 Sandbox
 
 ## Option #1: Fresh install of HDP plus demo
