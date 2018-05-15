@@ -78,6 +78,10 @@ echo Ranger tagsync mappings
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c ranger-tagsync-site -k ranger.tagsync.atlas.kafka.instance.cl1.ranger.service -v ${cluster_name}_kafka
 
 
+echo Set Kafka replication factor to 1
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host ${host} --port 8080 --cluster ${cluster_name} -a set -c kafka-broker -k offsets.topic.replication.factor -v 1
+
+
 echo stop Ranger
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${host}:8080/api/v1/clusters/${cluster_name}/services/RANGER
 while echo exit | nc ${host} 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
