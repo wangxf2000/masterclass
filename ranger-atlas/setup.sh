@@ -19,7 +19,7 @@ export host_count=${host_count:-skip}      #number of nodes, defaults to 1
 export enable_hive_acid=${enable_hive_acid:-true}   #enable Hive ACID? 
 export enable_kerberos=${enable_kerberos:-true}      
 export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
-export ambari_version="${ambari_version:-2.6.1.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
+export ambari_version="${ambari_version:-2.6.2.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
 
 
 
@@ -32,9 +32,6 @@ export deploy=true
 
 export host=$(hostname -f)
 export ambari_host=$(hostname -f)
-## overrides
-#export ambari_stack_version=2.6
-#export ambari_repo=https://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.0.3/ambari.repo
 
 export install_ambari_server ambari_pass host_count ambari_services
 export ambari_password cluster_name recommendation_strategy
@@ -151,6 +148,9 @@ cat << EOF > configuration-custom.json
     "ams-site": {
       "timeline.metrics.cache.size": "100"
     },   
+    "kafka-broker": {
+      "offsets.topic.replication.factor": "1"
+    },    
     "admin-properties": {
         "policymgr_external_url": "http://localhost:6080",
         "db_root_user": "admin",
@@ -202,6 +202,10 @@ cat << EOF > configuration-custom.json
 }
 EOF
 
+
+    sed -i.bak "s/\[security\]/\[security\]\nforce_https_protocol=PROTOCOL_TLSv1_2/"   /etc/ambari-agent/conf/ambari-agent.ini
+    sudo ambari-agent restart
+
     sleep 40
     service ambari-server status
     #curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X GET ${ambari_url}/hosts
@@ -214,24 +218,10 @@ EOF
         source ~/ambari-bootstrap/extras/ambari_functions.sh
         ambari_configs
         ambari_wait_request_complete 1
-        sleep 5
+        sleep 10
         
-        #Needed due to BUG-91977: Blueprint bug in Ambari 2.6.0.0
-        if ! nc localhost 6080 ; then
-           echo "Ranger did not start. Restarting..."
-   
-           curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
-           sleep 5
-   
-           echo "Starting all services..."
-           curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT -d  '{"RequestInfo":{"context":"_PARSE_.START.ALL_SERVICES","operation_level":{"level":"CLUSTER","cluster_name":"'"${cluster_name}"'"}},"Body":{"ServiceInfo":{"state":"STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services
 
-           while ! echo exit | nc localhost 21000; do echo "waiting for services to start...."; sleep 10; done
-           while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
-           while ! echo exit | nc localhost 50111; do echo "waiting for hcat to come up..."; sleep 10; done           
-        fi
 
-        sleep 30
 
         #TODO: fix adding groups to Hive views
         #curl -u admin:${ambari_pass} -i -H "X-Requested-By: blah" -X PUT http://localhost:8080/api/v1/views/HIVE/versions/1.5.0/instances/AUTO_HIVE_INSTANCE/privileges \
