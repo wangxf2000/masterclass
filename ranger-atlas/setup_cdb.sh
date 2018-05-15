@@ -164,6 +164,23 @@ echo wait until hive comes up
 while ! echo exit | nc ${hiveserver_host} ${hiveserver_port}; do echo "waiting for Hive to come up..."; sleep 10; done
 
 
+echo Set Kafka replication factor to 1
+/var/lib/ambari-server/resources/scripts/configs.py -u ${ambari_admin} -p ${ambari_pass} --host ${ambari_host} --port 8080 --cluster ${cluster_name} -a set -c kafka-broker -k offsets.topic.replication.factor -v 1
+
+
+echo stop kafka
+curl -u ${ambari_admin}:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop KAFKA via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://${ambari_host}:8080/api/v1/clusters/${cluster_name}/services/KAFKA
+while echo exit | nc ${kafka_broker} 6667; do echo "waiting for Kafka to go down..."; sleep 10; done
+sleep 10
+
+echo start kafka
+curl -u ${ambari_admin}:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start KAFKA via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://${ambari_host}:8080/api/v1/clusters/${cluster_name}/services/KAFKA
+
+
+echo wait until kafka comes up
+while ! echo exit | nc ${kafka_broker} 6667; do echo "waiting for Kafka to come up..."; sleep 10; done
+
+
 
 echo ###### Start HortoniaBank demo setup
 
