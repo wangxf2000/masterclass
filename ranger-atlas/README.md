@@ -26,8 +26,9 @@ cd
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
-- This will run for about 30min. Once complete, proceed to part 2 below and complete the manual steps
+- This will run for about 30min. Once complete, proceed to part 2 below and complete the manual steps to enable Hive LLAP
 
+- Note: if you will later be registering this cluster with DSS, you can skip the manual steps to enable LLAP (as the profiler will not be able to launch any jobs on the default YARN queue after LLAP is enabled)
 
 ## Option #2: Setup demo on HDP Sandbox 
 
@@ -49,6 +50,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 - This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
 
 - Note: enabling LLAP (along with all the other components required) may require extra memory resources on your VM
+
 
 ## Login details 
 
