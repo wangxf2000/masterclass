@@ -8,6 +8,9 @@ hadoop fs -mkdir /user/sasha_eu_hr
 hadoop fs -chown sasha_eu_hr:hadoop /user/sasha_eu_hr
 hadoop fs -mkdir /user/ivanna_eu_hr
 hadoop fs -chown ivanna_eu_hr:hadoop /user/ivanna_eu_hr
+hadoop fs -mkdir /user/etl_user
+hadoop fs -chown etl_user:hadoop /user/etl_user
+
 
 hadoop fs -mkdir /user/john_finance
 hadoop fs -chown john_finance:hadoop /user/john_finance
