@@ -1,7 +1,8 @@
 atlas_host=${atlas_host:-$(hostname -f)}
 cluster_name=${cluster_name:-hdp}
+atlas_pass=${atlas_pass:-admin}
 
-atlas_curl="curl -u admin:admin"
+atlas_curl="curl -u admin:${atlas_pass}"
 atlas_url="http://${atlas_host}:21000/api/atlas"
 
 ##Tagging Hive Tables
