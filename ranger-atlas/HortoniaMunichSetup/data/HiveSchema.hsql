@@ -206,16 +206,5 @@ CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.eu_countries(
                                   LOCATION '/hive_data/eu_countries';
 
 
-analyze table hortoniabank.us_customers compute statistics for columns;
-analyze table hortoniabank.ww_customers compute statistics for columns;
-analyze table hortoniabank.eu_countries compute statistics for columns;
-analyze table finance.tax_2015 compute statistics for columns;
-analyze table finance.tax_2010 compute statistics for columns;
-analyze table finance.tax_2009 compute statistics for columns;
-analyze table cost_savings.claim_savings compute statistics for columns;
-analyze table claim.provider_summary compute statistics for columns;
-
-analyze table consent_master.consent_data compute statistics for columns;
-analyze table consent_master.eu_countries compute statistics for columns;
 
 
