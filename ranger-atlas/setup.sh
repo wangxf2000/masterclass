@@ -90,11 +90,8 @@ if [ "${install_ambari_server}" = "true" ]; then
     sed -i "s/\(^    total_sinks_count = \)0$/\11/" /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/stack_advisor.py
     bash -c "nohup ambari-server restart" || true
     
-    ambari_pass=admin source ~/ambari-bootstrap/extras/ambari_functions.sh
-    until [ $(ambari_pass=BadPass#1 ${ambari_curl}/hosts -o /dev/null -w "%{http_code}") -eq "200" ]; do
-        sleep 1
-    done
-    ambari_change_pass admin admin ${ambari_pass}
+    while ! echo exit | nc localhost 8080; do echo "waiting for ambari to come up..."; sleep 10; done    
+    curl -iv -u admin:admin -H "X-Requested-By: blah" -X PUT -d "{ \"Users\": { \"user_name\": \"admin\", \"old_password\": \"admin\", \"password\": \"${ambari_password}\" }}" http://localhost:8080/api/v1/users/admin
 
     yum -y install postgresql-jdbc
     ambari-server setup --jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc.jar
