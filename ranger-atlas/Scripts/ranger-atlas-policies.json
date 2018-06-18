@@ -1,0 +1,346 @@
+{
+  "metaDataInfo": {
+    "Host name": "securitysme-hortonia0.field.hortonworks.com",
+    "Exported by": "admin",
+    "Export time": "Jun 18, 2018 8:23:02 PM",
+    "Ranger apache version": "0.7.0.2.6.5.0-292"
+  },
+  "policies": [
+    {
+      "service": "hdp_atlas",
+      "name": "all - taxonomy",
+      "policyType": 0,
+      "description": "Policy for all - taxonomy",
+      "isAuditEnabled": true,
+      "resources": {
+        "taxonomy": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "admin",
+            "admin",
+            "atlas"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 6,
+      "guid": "6aed9c97-9db9-4cd7-b1d0-6699a4325458",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_atlas",
+      "name": "all - operation",
+      "policyType": 0,
+      "description": "Policy for all - operation",
+      "isAuditEnabled": true,
+      "resources": {
+        "operation": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "admin",
+            "admin",
+            "atlas"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 7,
+      "guid": "1878b8dc-b2dc-40a9-990a-b6b9735b05bd",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_atlas",
+      "name": "all - type",
+      "policyType": 0,
+      "description": "Policy for all - type",
+      "isAuditEnabled": true,
+      "resources": {
+        "type": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "admin",
+            "admin",
+            "atlas"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "nifi"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 8,
+      "guid": "5b4bf914-a176-47c4-bbdf-31b929b7d9ba",
+      "isEnabled": true,
+      "version": 3
+    },
+    {
+      "service": "hdp_atlas",
+      "name": "all - entity",
+      "policyType": 0,
+      "description": "Policy for all - entity",
+      "isAuditEnabled": true,
+      "resources": {
+        "entity": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "admin",
+            "admin",
+            "atlas"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "nifi"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 9,
+      "guid": "71560de6-18cc-4f65-9e99-f85051a6bd67",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "hdp_atlas",
+      "name": "all - term",
+      "policyType": 0,
+      "description": "Policy for all - term",
+      "isAuditEnabled": true,
+      "resources": {
+        "term": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "read",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "admin",
+            "admin",
+            "atlas"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": true
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "id": 10,
+      "guid": "ca586d6c-fa49-4155-a05d-7566d8511902",
+      "isEnabled": true,
+      "version": 1
+    }
+  ],
+  "startIndex": 0,
+  "pageSize": 0,
+  "totalCount": 0,
+  "resultSize": 0,
+  "queryTimeMS": 1529353382911
+}
