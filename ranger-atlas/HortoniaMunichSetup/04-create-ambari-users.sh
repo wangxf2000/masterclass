@@ -1,7 +1,7 @@
 export ambari_admin=${ambari_admin:-admin}
 
 users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jermy_contractor diane_csr log_monitor etl_user"
-groups="hr analyst us_employee eu_employee finance business_dev contractor csr etl"
+groups="hr analyst us_employee eu_employee finance business_dev contractor csr etl demokitadmin"
 ambari_url="http://${ambari_host}:8080/api/v1"
 
 for user in ${users}; do
