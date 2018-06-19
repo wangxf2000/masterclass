@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS erasure_master.data_erasure_trans(
                                 
 insert into erasure_master.data_erasure_trans select Country, CountryFull, InsuranceID, MarketingConsent, MarketingConsentStartDate, LoyaltyConsent from consent_master.consent_data limit 500;                                                                
 
-analyze table consent_master.consent_data_trans compute statistics for columns;
-analyze table hortoniabank.ww_customers_trans compute statistics for columns;
-analyze table hortoniabank.us_customers_trans compute statistics for columns;
-analyze table erasure_master.data_erasure_trans compute statistics for columns;
+-- analyze table consent_master.consent_data_trans compute statistics for columns;
+-- analyze table hortoniabank.ww_customers_trans compute statistics for columns;
+-- analyze table hortoniabank.us_customers_trans compute statistics for columns;
+-- analyze table erasure_master.data_erasure_trans compute statistics for columns;
