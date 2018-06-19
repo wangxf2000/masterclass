@@ -13,15 +13,17 @@ export TERM=xterm
 #overridable vars
 export stack=${stack:-hdp}    #cluster name
 export ambari_pass=${ambari_pass:-BadPass#1}  #ambari password
-export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN KNOX}   #HDP services
+export ambari_services=${ambari_services:-HBASE HDFS MAPREDUCE2 PIG YARN HIVE ZOOKEEPER SLIDER AMBARI_INFRA TEZ RANGER ATLAS KAFKA SPARK ZEPPELIN KNOX NIFI}   #HDP services
 export ambari_stack_version=${ambari_stack_version:-2.6}  #HDP Version
 export host_count=${host_count:-skip}      #number of nodes, defaults to 1
 export enable_hive_acid=${enable_hive_acid:-true}   #enable Hive ACID? 
 export enable_kerberos=${enable_kerberos:-true}      
 export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
-export ambari_version="${ambari_version:-2.6.2.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
+export ambari_version="${ambari_version:-2.6.2.2}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
 
-
+export hdf_mpack="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.1.2.0/tars/hdf_ambari_mp/hdf-ambari-mpack-3.1.2.0-7.tar.gz"
+export nifi_password=${nifi_password:-StrongPassword}
+export nifi_flow="https://gist.githubusercontent.com/abajwa-hw/6a2506911a1667a1b1feeb8e4341eeed/raw"
 
 #internal vars
 export ambari_password="${ambari_pass}"
@@ -78,6 +80,9 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     sleep 30
         
+    echo "Adding HDF mpack..."
+    sudo ambari-server install-mpack --verbose --mpack=${hdf_mpack}
+
     ## add admin user to postgres for other services, such as Ranger
     cd /tmp
     sudo -u postgres createuser -U postgres -d -e -E -l -r -s admin
@@ -99,9 +104,15 @@ if [ "${install_ambari_server}" = "true" ]; then
 
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./04-create-ambari-users.sh
-    
-    cd ~/ambari-bootstrap/deploy
 
+    #cd /tmp
+    #echo "downloading twitter flow..."
+    #twitter_flow=$(curl -L ${nifi_flow})
+    #change host and realm names
+    #twitter_flow=$(echo ${twitter_flow}  | sed "s/demo.hortonworks.com/${host}/g" | sed "s/HWX.COM/${kdc_realm}/g")
+    #nifi_config="\"nifi-flow-env\" : { \"properties_attributes\" : { }, \"properties\" : { \"content\" : \"${twitter_flow}\"  }  }"
+
+    cd ~/ambari-bootstrap/deploy
 
 	if [ "${enable_hive_acid}" = true  ]; then
 		acid_hive_env="\"hive-env\": { \"hive_txn_acid\": \"on\" }"
@@ -117,6 +128,7 @@ if [ "${install_ambari_server}" = "true" ]; then
         ## various configuration changes for demo environments, and fixes to defaults
 cat << EOF > configuration-custom.json
 {
+  
   "configurations" : {
     "core-site": {
         "hadoop.proxyuser.root.users" : "admin",
@@ -146,6 +158,7 @@ cat << EOF > configuration-custom.json
       "timeline.metrics.cache.size": "100"
     },   
     "kafka-broker": {
+      "listeners": "PLAINTEXTSASL://localhost:6667",
       "offsets.topic.replication.factor": "1"
     },    
     "admin-properties": {
@@ -190,6 +203,10 @@ cat << EOF > configuration-custom.json
         "ranger.tagsync.atlas.yarn.instance.cl1.ranger.service": "${cluster_name}_yarn",
         "ranger.tagsync.atlas.tag.instance.cl1.ranger.service": "tags"        
     },    
+    "nifi-ambari-config": {
+      "nifi.security.encrypt.configuration.password": "${nifi_password}",
+      "nifi.sensitive.props.key": "${nifi_password}"
+    },     
     "ranger-hive-audit" : {
         "xasecure.audit.is.enabled" : "true",
         "xasecure.audit.destination.hdfs" : "true",
@@ -391,9 +408,23 @@ EOF
     -F 'file=@ranger-hbase-policies-apply.json' \
               "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hbase"
 
+    echo "import ranger atlas policies..."
+    < ranger-atlas-policies.json jq '.policies[].service = "'${cluster_name}'_atlas"' > ranger-atlas-policies-apply.json
+    ${ranger_curl} -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -H "Content-Type: application/json" \
+    -F 'file=@ranger-atlas-policies-apply.json' \
+              "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=atlas"
 
 
     sleep 40    
+    
+    cd /var/lib/nifi/conf 
+    mv flow.xml.gz flow.xml.gz.orig
+    wget https://gist.github.com/abajwa-hw/815757d9446c246ee9a1407449f7ff45/raw -O ./flow.xml
+    sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
+    gzip flow.xml
+    chown nifi:hadoop flow.xml.gz   
     
     cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
     ./01-atlas-import-classification.sh
@@ -405,9 +436,9 @@ EOF
     su hdfs -c ./05-create-hdfs-user-folders.sh
     su hdfs -c ./06-copy-data-to-hdfs.sh
     
-
-    
+ 
         
+	
     #Enable kerberos	
     if [ "${enable_kerberos}" = true  ]; then
        ./08-enable-kerberos.sh
