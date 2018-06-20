@@ -58,6 +58,12 @@ cat << EOF > /tmp/private.csv
 098-45-10927
 EOF
 
+echo "Creating HDFS sensitive dir..."
+if [ "${enable_kerberos}" = true  ]; then   
+   kinit -kt /etc/security/keytabs/nn.service.keytab nn/$(hostname -f)@${kdc_realm}
+fi  
+hdfs dfs -mkdir /sensitive
+hdfs dfs -put /tmp/private.csv /sensitive/
 
 echo "Publishing test data to Kafka topics..."
 sleep 5
@@ -70,6 +76,8 @@ fi
 
 /usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol ${security_protocol} --broker-list ${kafka_broker}:6667 --topic PRIVATE < /tmp/private.csv
 /usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol ${security_protocol} --broker-list ${kafka_broker}:6667 --topic FOREX <  /tmp/forex.csv
+
+
 
 
 if [ "${enable_kerberos}" = true  ]; then 
