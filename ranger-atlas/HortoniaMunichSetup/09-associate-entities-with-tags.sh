@@ -228,9 +228,9 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
 
 
-#create entities for HDFS path /banking and associate with BANKING tag
+#create entities for HDFS path /sensitive and associate with SENSITIVE tag
 hdfs_prefix="hdfs://$(hostname -f):8020"
-hdfs_path="/banking"
+hdfs_path="/sensitive"
 ${atlas_curl}  ${atlas_url}/v2/entity -X POST -H 'Content-Type: application/json' -d @- <<EOF
 {  
    "entity":{  
@@ -254,6 +254,6 @@ guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hdfs_path?attr
 
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 -X POST -H 'Content-Type: application/json' \
---data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"BANKING","values":{}}'
+--data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"SENSITIVE","values":{}}'
 
 
