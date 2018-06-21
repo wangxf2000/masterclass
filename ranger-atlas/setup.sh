@@ -362,7 +362,11 @@ EOF
      echo "Adding tags service to Ranger $component repo..."
      ${ranger_curl} ${ranger_url}/public/v2/api/service | jq ".[] | select (.type==\"${component}\")"  > tmp.json
      cat tmp.json | jq '. |= .+  {"tagService":"tags"}' > tmp-updated.json
-     ${ranger_curl} ${ranger_url}/public/v2/api/service/name/${cluster_name}_${component} -X PUT  -H "Content-Type: application/json"  -d @tmp-updated.json
+     if [ "${component}" = "hdfs" ]; then
+        ${ranger_curl} ${ranger_url}/public/v2/api/service/name/${cluster_name}_hadoop -X PUT  -H "Content-Type: application/json"  -d @tmp-updated.json     
+     else
+        ${ranger_curl} ${ranger_url}/public/v2/api/service/name/${cluster_name}_${component} -X PUT  -H "Content-Type: application/json"  -d @tmp-updated.json
+     fi	
    done 
 
 
