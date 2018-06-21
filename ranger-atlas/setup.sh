@@ -358,7 +358,7 @@ EOF
 
 
    #associate tag service with Hive/Hbase/Kafka Ranger repos
-   for component in hive hbase kafka hadoop ; do
+   for component in hive hbase kafka hdfs ; do
      echo "Adding tags service to Ranger $component repo..."
      ${ranger_curl} ${ranger_url}/public/v2/api/service | jq ".[] | select (.type==\"${component}\")"  > tmp.json
      cat tmp.json | jq '. |= .+  {"tagService":"tags"}' > tmp-updated.json
