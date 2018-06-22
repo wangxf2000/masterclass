@@ -15,7 +15,7 @@ EOF
 
 cat ambari.props
 chmod +x *.sh 
-if  
+
 if [ "${automate_kerberos}" = true  ]; then
   ./setup_kerberos.sh 
 else
