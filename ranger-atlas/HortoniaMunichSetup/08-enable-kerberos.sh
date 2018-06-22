@@ -1,3 +1,4 @@
+automate_kerberos=${automate_kerberos:-true} #whether to automate kerberos or deploy only KDC
 
 cd /tmp
 git clone https://github.com/crazyadmins/useful-scripts.git
@@ -13,8 +14,13 @@ KERBEROS_CLIENTS=$(hostname -f)
 EOF
 
 cat ambari.props
-chmod +x setup_kerberos.sh 
-./setup_kerberos.sh 
+chmod +x *.sh 
+if  
+if [ "${automate_kerberos}" = true  ]; then
+  ./setup_kerberos.sh 
+else
+  ./setup_only_kdc.sh
+fi
 
 echo "Creating users in KDC..."
 kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
