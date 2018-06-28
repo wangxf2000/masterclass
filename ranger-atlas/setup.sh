@@ -485,6 +485,7 @@ EOF
     ./08-create-hbase-kafka.sh
     
      #import Atlas entities 
+     ./01-atlas-import-classification.sh
      ./09-associate-entities-with-tags.sh
     
     echo "Done."
