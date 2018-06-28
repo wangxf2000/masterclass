@@ -58,6 +58,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 - Ranger port: 6080 login: admin/admin
 - Atlas port: 21000 login: admin/admin
 - Zeppelin port: 9995 login: ivanna_eu_hr/BadPass#1 OR joe_analyst/BadPass#1 OR etl_user/BadPass#1
+- Nifi port: 9090
 
 ## Manual steps
 
@@ -91,6 +92,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - import tags into Atlas
   - imports sample Hive data (which also creates HDFS/Hive entities in Atlas)
   - [uses Atlas APIs to associate tags with Hive/Kafka/Hbase/HDFS entities](https://community.hortonworks.com/articles/189615/atlas-how-to-automate-associating-tagsclassificati.html)
+  - import sample Nifi flow that reads tweets into HDFS
   - enables kerberos
 
 
