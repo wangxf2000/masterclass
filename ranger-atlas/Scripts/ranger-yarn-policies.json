@@ -1,8 +1,8 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-hortonia-30ea-script0.field.hortonworks.com",
+    "Host name": "securitysme-hortonia-300.field.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Jun 27, 2018 3:49:25 AM",
+    "Export time": "Jun 29, 2018 8:58:18 PM",
     "Ranger apache version": "1.0.0.3.0.0.0-1485"
   },
   "policies": [
@@ -50,7 +50,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 9,
+      "id": 60,
       "guid": "63cfd00f-a987-4ea6-8879-b16b4521f095",
       "isEnabled": true,
       "version": 1
@@ -95,7 +95,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 10,
+      "id": 61,
       "guid": "2f326f3c-263b-4325-acec-98dc8f3b96f8",
       "isEnabled": true,
       "version": 1
@@ -139,6 +139,70 @@
             }
           ],
           "users": [
+            "joe_analyst",
+            "hive"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 62,
+      "guid": "0634c226-4fe2-4a64-93ce-ef5ca112df8e",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "hdp_yarn",
+      "name": "LLAP queue",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "queue": {
+          "values": [
+            "root.llap"
+          ],
+          "isExcludes": false,
+          "isRecursive": true
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "admin-queue",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "HTTP"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        },
+        {
+          "accesses": [
+            {
+              "type": "submit-app",
+              "isAllowed": true
+            },
+            {
+              "type": "admin-queue",
+              "isAllowed": true
+            }
+          ],
+          "users": [
             "joe_analyst"
           ],
           "groups": [],
@@ -154,15 +218,15 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 60,
-      "guid": "0634c226-4fe2-4a64-93ce-ef5ca112df8e",
+      "id": 64,
+      "guid": "bf94706a-8453-40ff-ba6a-05b78ec053c4",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1530071365331
+  "queryTimeMS": 1530305898450
 }
