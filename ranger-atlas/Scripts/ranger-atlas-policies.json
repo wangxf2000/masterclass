@@ -1,9 +1,9 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-hortonia-30eatesting0.field.hortonworks.com",
+    "Host name": "abajwa-hortonia300.field.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Jun 27, 2018 12:28:41 AM",
-    "Ranger apache version": "1.0.0.3.0.0.0-1485"
+    "Export time": "Jul 14, 2018 1:06:57 AM",
+    "Ranger apache version": "1.1.0.3.0.0.0-1634"
   },
   "policies": [
     {
@@ -69,8 +69,8 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 11,
-      "guid": "83e455e5-a552-44f1-bb40-1ad82052b5fe",
+      "id": 12,
+      "guid": "203473b7-e08e-4fc3-91e1-9358560bc54f",
       "isEnabled": true,
       "version": 1
     },
@@ -188,10 +188,10 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 12,
-      "guid": "cdd8e1f7-9c5c-45c6-b27e-738b2fe83b9f",
+      "id": 13,
+      "guid": "76514979-2b79-417c-8da7-384c86057c42",
       "isEnabled": true,
-      "version": 3
+      "version": 2
     },
     {
       "service": "hdp_atlas",
@@ -243,10 +243,6 @@
               "isAllowed": true
             },
             {
-              "type": "entity-read-classification",
-              "isAllowed": true
-            },
-            {
               "type": "entity-add-classification",
               "isAllowed": true
             },
@@ -283,10 +279,6 @@
             },
             {
               "type": "entity-delete",
-              "isAllowed": true
-            },
-            {
-              "type": "entity-read-classification",
               "isAllowed": true
             },
             {
@@ -336,15 +328,15 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 13,
-      "guid": "ddb8568c-2e82-44b4-8b57-f46bd1ec967c",
+      "id": 14,
+      "guid": "0a7f14bd-0ada-4e0f-b1d7-9225a6480901",
       "isEnabled": true,
-      "version": 3
+      "version": 2
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1530059321837
+  "queryTimeMS": 1531530417077
 }
