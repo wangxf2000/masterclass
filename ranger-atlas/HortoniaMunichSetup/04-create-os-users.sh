@@ -3,6 +3,8 @@ groupadd business_dev
 groupadd contractor
 groupadd csr
 groupadd etl
+groupadd intern
+
 
 useradd -g finance john_finance
 useradd -g business_dev mark_bizdev
@@ -10,7 +12,7 @@ useradd -g contractor jeremy_contractor
 useradd -g csr diane_csr
 useradd -g etl log_monitor
 useradd -g etl etl_user
-
+useradd -g intern scott_intern
 
 groupadd us_employee
 groupadd eu_employee
