@@ -207,4 +207,38 @@ CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.eu_countries(
 
 
 
+CREATE DATABASE IF NOT EXISTS hr LOCATION '/hive_data/hr';
 
+CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees(
+                                    Id          INT
+                                  , Name        STRING
+                                  , Age         INT
+                                  , Phone       STRING
+                                  , Email       STRING
+                                  , DateOfBirth DATE
+                                  , Region      STRING
+                                  , Salary      INT
+                                ) ROW FORMAT DELIMITED
+                                  FIELDS TERMINATED BY ','
+                                  STORED AS TEXTFILE
+                                  LOCATION '/hive_data/hr/employees';
+
+CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees_masked(
+                                    Id          INT
+                                  , Name        STRING
+                                  , Age         INT
+                                  , Phone       STRING
+                                  , Email       STRING
+                                  , DateOfBirth DATE
+                                  , Region      STRING
+                                  , Salary      INT
+                                ) ROW FORMAT DELIMITED
+                                  FIELDS TERMINATED BY ','
+                                  STORED AS TEXTFILE
+                                  LOCATION '/hive_data/hr/employees';
+
+CREATE VIEW IF NOT EXISTS hr.us_employees AS SELECT * FROM hr.employees where region='US';
+
+CREATE VIEW IF NOT EXISTS hr.uk_employees AS SELECT * FROM hr.employees where region='UK';
+
+CREATE VIEW IF NOT EXISTS hr.eu_employees AS SELECT * FROM hr.employees where region='EU';
