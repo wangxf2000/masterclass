@@ -242,3 +242,10 @@ CREATE VIEW IF NOT EXISTS hr.us_employees AS SELECT * FROM hr.employees where re
 CREATE VIEW IF NOT EXISTS hr.uk_employees AS SELECT * FROM hr.employees where region='UK';
 
 CREATE VIEW IF NOT EXISTS hr.eu_employees AS SELECT * FROM hr.employees where region='EU';
+
+
+
+CREATE function aes_encrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesEncrypt' USING JAR  'hdfs:///apps/hive/share/udfs/hive-exec.jar'; 
+CREATE function aes_decrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesDecrypt' USING JAR 'hdfs:///apps/hive/share/udfs/hive-exec.jar'; 
+
+create table hr.employees_encrypted as select id, name, age, base64(aes_encrypt(phone,'1234567890123456')) as phone, base64(aes_encrypt(email,'1234567890123456')) as email from hr.employees;
