@@ -225,4 +225,4 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 sleep 10
 while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
 
-cd current_dir
+cd ${current_dir}
