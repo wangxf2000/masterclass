@@ -3,7 +3,7 @@ export cluster_name=$1
 export host=$(hostname -f)
 export ambari_pass=$2
 
-echo "Enable service discovery for knox"
+echo "Enable service discovery for knox" ##new feature in HDP 3.0
 python /tmp/config_update.py hdp KNOX gateway-site "gateway.cluster.config.monitor.ambari.enabled" "true" admin "${ambari_pass}"
 python /tmp/config_update.py hdp KNOX gateway-site "gateway.remote.config.monitor.client" "sandbox-zookeeper-client" admin "${ambari_pass}"
 
@@ -33,6 +33,8 @@ sleep 30
 #create alias for discovery password
 /usr/hdp/current/knox-server/bin/knoxcli.sh create-alias ambari.discovery.password --value "${ambari_pass}"
 
+#descriptor file with all services
+#knox will auto detect service end points from ambari APIs
 cd /tmp
 cat << EOF > ui.json
 {
@@ -68,6 +70,7 @@ cat << EOF > ui.json
 }
 EOF
 
+##delta provider to be added
 cat << EOF > cookieprovider.xml
 <gateway>
     <provider>
@@ -91,4 +94,6 @@ cp /tmp/cookieprovider.xml /etc/knox/conf/shared-providers/
 cp /tmp/ui.json /etc/knox/conf/descriptors/
 
 sleep 30
+
+##Knox watcher will pick up these changes - no restart required
 
