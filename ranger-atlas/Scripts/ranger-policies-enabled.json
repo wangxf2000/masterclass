@@ -1,15 +1,16 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-dws-hortonia40.field.hortonworks.com",
+    "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 13, 2018 7:35:55 PM",
-    "Ranger apache version": "0.7.0.2.6.4.0-91"
+    "Export time": "Sep 15, 2018 1:10:51 AM",
+    "Ranger apache version": "1.1.0.3.0.0.0-1634"
   },
   "policies": [
     {
       "service": "hdp_hive",
       "name": "all - database, table, column",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "Policy for all - database, table, column",
       "isAuditEnabled": true,
       "resources": {
@@ -75,9 +76,7 @@
             "hive",
             "ambari-qa"
           ],
-          "groups": [
-            "public"
-          ],
+          "groups": [],
           "conditions": [],
           "delegateAdmin": true
         }
@@ -87,15 +86,19 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 17,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 65,
       "guid": "6a6dddad-7d6f-4eec-a635-e8eb58e072c8",
       "isEnabled": true,
-      "version": 1
+      "version": 6
     },
     {
       "service": "hdp_hive",
       "name": "all - database, udf",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "Policy for all - database, udf",
       "isAuditEnabled": true,
       "resources": {
@@ -164,7 +167,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 18,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 66,
       "guid": "b1bf4bda-4742-4150-8812-a332bfb41d06",
       "isEnabled": true,
       "version": 1
@@ -173,6 +179,7 @@
       "service": "hdp_hive",
       "name": "access: us_customers_table",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -265,15 +272,19 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 19,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 67,
       "guid": "63a8e206-ca69-48ed-b405-98cc5abff782",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_hive",
       "name": "access: ww_customers",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -323,7 +334,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 20,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 68,
       "guid": "5f725ac5-38fd-4b78-a901-e153d48306d1",
       "isEnabled": true,
       "version": 1
@@ -332,6 +346,7 @@
       "service": "hdp_hive",
       "name": "access: eu_countries",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -392,7 +407,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 21,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 69,
       "guid": "6cc65946-b1a1-47a8-b8be-237107026a9e",
       "isEnabled": true,
       "version": 1
@@ -401,6 +419,7 @@
       "service": "hdp_hive",
       "name": "prohibit zipcode, insuranceid, bloodtype",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -455,7 +474,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 22,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 70,
       "guid": "8d4db3fd-97f4-431c-9d17-e8507ae3ab1e",
       "isEnabled": true,
       "version": 1
@@ -464,6 +486,7 @@
       "service": "hdp_hive",
       "name": "prevent UDF create/drop",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -507,7 +530,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 23,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 71,
       "guid": "8fa624c9-c99c-414e-9311-6a50ca76b8a6",
       "isEnabled": true,
       "version": 1
@@ -516,6 +542,7 @@
       "service": "hdp_hive",
       "name": "filter: ww_customers",
       "policyType": 2,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -542,7 +569,7 @@
       "rowFilterPolicyItems": [
         {
           "rowFilterInfo": {
-            "filterExpr": "country in ('US')"
+            "filterExpr": "country in (\u0027US\u0027)"
           },
           "accesses": [
             {
@@ -577,15 +604,19 @@
           "delegateAdmin": false
         }
       ],
-      "id": 24,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 72,
       "guid": "a72c1ce8-0ec2-48b1-a7f3-57fc2d56bc81",
-      "isEnabled": true,
-      "version": 3
+      "isEnabled": false,
+      "version": 1
     },
     {
       "service": "hdp_hive",
       "name": "mask : nationalid show last 4",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -637,7 +668,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 25,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 73,
       "guid": "99d2537b-01e5-4503-a3c9-f89dfe82c9d7",
       "isEnabled": true,
       "version": 1
@@ -646,6 +680,7 @@
       "service": "hdp_hive",
       "name": "mask: ccn show first 4",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -697,7 +732,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 26,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 74,
       "guid": "f0980759-3b51-466d-9d2e-de3628fdd74d",
       "isEnabled": true,
       "version": 1
@@ -706,6 +744,7 @@
       "service": "hdp_hive",
       "name": "mask: hash password",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -757,7 +796,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 27,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 75,
       "guid": "543342d3-eed6-413c-8d95-e70ad64d08ce",
       "isEnabled": false,
       "version": 1
@@ -766,6 +808,7 @@
       "service": "hdp_hive",
       "name": "mask: redact street address",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -815,7 +858,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 28,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 76,
       "guid": "781c4fb9-b898-47ae-8588-5d234353ccad",
       "isEnabled": true,
       "version": 1
@@ -824,6 +870,7 @@
       "service": "hdp_hive",
       "name": "custom mask: randomize age",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -875,7 +922,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 29,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 77,
       "guid": "4a8eebe8-2739-43ff-abb9-b781a7841a70",
       "isEnabled": true,
       "version": 1
@@ -884,6 +934,7 @@
       "service": "hdp_hive",
       "name": "custom mask: retain birth year",
       "policyType": 1,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -917,8 +968,8 @@
         {
           "dataMaskInfo": {
             "dataMaskType": "CUSTOM",
-            "conditionExpr": "concat('01-01-',  cast( year(TO_DATE(from_unixtime(UNIX_TIMESTAMP({col},'dd/MM/yy')))) as string) )",
-            "valueExpr": "concat('01-01-',  cast( year(TO_DATE(from_unixtime(UNIX_TIMESTAMP({col},'dd/MM/yy')))) as string) )"
+            "conditionExpr": "concat(\u002701-01-\u0027,  cast( year(TO_DATE(from_unixtime(UNIX_TIMESTAMP({col},\u0027dd/MM/yy\u0027)))) as string) )",
+            "valueExpr": "concat(\u002701-01-\u0027,  cast( year(TO_DATE(from_unixtime(UNIX_TIMESTAMP({col},\u0027dd/MM/yy\u0027)))) as string) )"
           },
           "accesses": [
             {
@@ -935,7 +986,10 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "id": 30,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 78,
       "guid": "4d4b99a7-dea2-4f08-ad2d-6413f5cc6d48",
       "isEnabled": true,
       "version": 1
@@ -944,6 +998,7 @@
       "service": "hdp_hive",
       "name": "filter: ww_customers for consent",
       "policyType": 2,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -970,7 +1025,7 @@
       "rowFilterPolicyItems": [
         {
           "rowFilterInfo": {
-            "filterExpr": "country in ('US')"
+            "filterExpr": "country in (\u0027US\u0027)"
           },
           "accesses": [
             {
@@ -987,7 +1042,7 @@
         },
         {
           "rowFilterInfo": {
-            "filterExpr": "country in (select countrycode from hortoniabank.eu_countries) and insuranceid in (select insuranceid from consent_master.consent_data_trans  where (marketingconsent = 'YES' and current_date < date_add(marketingconsentstartdate, 365)))"
+            "filterExpr": "country in (select countrycode from hortoniabank.eu_countries) and insuranceid in (select insuranceid from consent_master.consent_data_trans  where (marketingconsent \u003d \u0027YES\u0027 and current_date \u003c date_add(marketingconsentstartdate, 365)))"
           },
           "accesses": [
             {
@@ -1023,15 +1078,527 @@
           "delegateAdmin": false
         }
       ],
-      "id": 31,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 79,
       "guid": "31ffdfa2-5ef7-48f1-b745-8c8569f67fc3",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "hdp_hive",
+      "name": "access: Information Schema policy",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "information_schema"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "hive"
+          ],
+          "groups": [
+            "us_employee",
+            "etl"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 80,
+      "guid": "9d685472-93b3-49b2-8498-fbe5a1162848",
+      "isEnabled": true,
+      "version": 3
+    },
+    {
+      "service": "hdp_hive",
+      "name": "access: scheduled maintenance policy",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hr"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "uk_employees"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [],
+      "denyPolicyItems": [
+        {
+          "accesses": [
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "public"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "allowExceptions": [],
+      "denyExceptions": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "drop",
+              "isAllowed": true
+            },
+            {
+              "type": "alter",
+              "isAllowed": true
+            },
+            {
+              "type": "index",
+              "isAllowed": true
+            },
+            {
+              "type": "lock",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "hive"
+          ],
+          "groups": [
+            "etl"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [
+        {
+          "startTime": "2018/07/19 00:00:45",
+          "endTime": "2018/07/20 23:00:48",
+          "recurrences": []
+        }
+      ],
+      "policyLabels": [
+        "Schedulable-policy"
+      ],
+      "id": 81,
+      "guid": "ec2f5856-66f1-4cbb-afaa-815f5200f001",
+      "isEnabled": true,
+      "version": 9
+    },
+    {
+      "service": "hdp_hive",
+      "name": "deny hr database for interns",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hr"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [],
+      "denyPolicyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            },
+            {
+              "type": "update",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "drop",
+              "isAllowed": true
+            },
+            {
+              "type": "alter",
+              "isAllowed": true
+            },
+            {
+              "type": "index",
+              "isAllowed": true
+            },
+            {
+              "type": "lock",
+              "isAllowed": true
+            },
+            {
+              "type": "all",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "intern"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 82,
+      "guid": "725390b6-c237-4edc-8b75-b7a359582fbb",
       "isEnabled": false,
-      "version": 4
+      "version": 2
+    },
+    {
+      "service": "hdp_hive",
+      "name": "temporary access to hr data for interns",
+      "policyType": 0,
+      "policyPriority": 1,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hr"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "employees"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "intern"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [
+        {
+          "startTime": "2018/05/01 06:00:31",
+          "endTime": "2018/08/31 00:00:31",
+          "recurrences": []
+        }
+      ],
+      "policyLabels": [
+        "Schedulable-policy"
+      ],
+      "id": 83,
+      "guid": "66f83a4b-20be-4e22-ab24-d30e0ae88a7d",
+      "isEnabled": true,
+      "version": 5
+    },
+    {
+      "service": "hdp_hive",
+      "name": "access: hr.uk_employees for etl_user",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hr"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "uk_employees"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "etl_user"
+          ],
+          "groups": [
+            "etl"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 84,
+      "guid": "c8090b62-51ce-4004-809d-9b0b8c65c76f",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "hdp_hive",
+      "name": "access:  hr.employees_encrypted",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "hr"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "employees_encrypted"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "us_employee",
+            "intern",
+            "eu_employee"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 86,
+      "guid": "35c33704-7196-4862-8423-8f04799922df",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "hdp_hive",
+      "name": "access: consent_master",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "database": {
+          "values": [
+            "consent_master"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "column": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "table": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "select",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "public"
+          ],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 87,
+      "guid": "69f884df-4960-49d9-9918-5c8daca0ef48",
+      "isEnabled": true,
+      "version": 1
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1523648155669
+  "queryTimeMS": 1536973851679
 }
