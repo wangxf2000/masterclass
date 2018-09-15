@@ -1,9 +1,9 @@
 {
   "metaDataInfo": {
-    "Host name": "securitysme-hortonia-300.field.hortonworks.com",
+    "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Jun 29, 2018 8:58:18 PM",
-    "Ranger apache version": "1.0.0.3.0.0.0-1485"
+    "Export time": "Sep 15, 2018 1:11:05 AM",
+    "Ranger apache version": "1.1.0.3.0.0.0-1634"
   },
   "policies": [
     {
@@ -139,10 +139,13 @@
             }
           ],
           "users": [
-            "joe_analyst",
             "hive"
           ],
-          "groups": [],
+          "groups": [
+            "etl",
+            "eu_employee",
+            "us_employee"
+          ],
           "conditions": [],
           "delegateAdmin": false
         }
@@ -158,7 +161,7 @@
       "id": 62,
       "guid": "0634c226-4fe2-4a64-93ce-ef5ca112df8e",
       "isEnabled": true,
-      "version": 2
+      "version": 3
     },
     {
       "service": "hdp_yarn",
@@ -202,10 +205,12 @@
               "isAllowed": true
             }
           ],
-          "users": [
-            "joe_analyst"
+          "users": [],
+          "groups": [
+            "eu_employee",
+            "us_employee",
+            "etl"
           ],
-          "groups": [],
           "conditions": [],
           "delegateAdmin": false
         }
@@ -218,15 +223,15 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 64,
+      "id": 63,
       "guid": "bf94706a-8453-40ff-ba6a-05b78ec053c4",
       "isEnabled": true,
-      "version": 2
+      "version": 3
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1530305898450
+  "queryTimeMS": 1536973865375
 }
