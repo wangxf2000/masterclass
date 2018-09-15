@@ -270,9 +270,9 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 
 
 #Upload UDF jar to HDFS
-hdfs dfs -mkdir -p /apps/hive/share/udfs
+sudo -u hdfs hdfs dfs -mkdir -p /apps/hive/share/udfs
 cd /usr/hdp/3.*/hive/lib
-hdfs dfs -copyFromLocal hive-exec-3.*.jar /apps/hive/share/udfs/hive-exec.jar
+sudo -u hdfs hdfs dfs -copyFromLocal hive-exec-3.*.jar /apps/hive/share/udfs/hive-exec.jar
 
 ## update zeppelin notebooks and upload to HDFS
 curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
