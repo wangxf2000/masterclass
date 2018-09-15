@@ -1,8 +1,8 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-hortonia300.field.hortonworks.com",
+    "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Jul 14, 2018 1:06:57 AM",
+    "Export time": "Sep 15, 2018 1:11:56 AM",
     "Ranger apache version": "1.1.0.3.0.0.0-1634"
   },
   "policies": [
@@ -69,7 +69,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 12,
+      "id": 57,
       "guid": "203473b7-e08e-4fc3-91e1-9358560bc54f",
       "isEnabled": true,
       "version": 1
@@ -188,10 +188,10 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 13,
+      "id": 58,
       "guid": "76514979-2b79-417c-8da7-384c86057c42",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_atlas",
@@ -328,15 +328,15 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 14,
+      "id": 59,
       "guid": "0a7f14bd-0ada-4e0f-b1d7-9225a6480901",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1531530417077
+  "queryTimeMS": 1536973916879
 }
