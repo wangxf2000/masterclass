@@ -173,9 +173,10 @@ python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.providerur
 
 echo "restart ranger"
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
-while echo exit | nc localhost 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
 sleep 5
+while echo exit | nc localhost 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
+sleep 5
 while ! echo exit | nc localhost 6080; do echo "waiting for ranger to come up..."; sleep 10; done
 
 #Step 5: setup SSO for Atlas
@@ -188,9 +189,10 @@ python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.br
 echo "restart Atlas"
 
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop ATLAS via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/ATLAS
-while echo exit | nc localhost 21000; do echo "waiting for Atlas to go down..."; sleep 10; done
 sleep 5
+while echo exit | nc localhost 21000; do echo "waiting for Atlas to go down..."; sleep 10; done
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start ATLAS via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/ATLAS
+sleep 5
 while ! echo exit | nc localhost 21000; do echo "waiting for Atlas to come up..."; sleep 10; done
 sleep 5
 
