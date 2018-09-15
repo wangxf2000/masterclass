@@ -1,15 +1,16 @@
 {
   "metaDataInfo": {
-    "Host name": "abajwa-dws-hortonia40.field.hortonworks.com",
+    "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Apr 13, 2018 7:21:52 PM",
-    "Ranger apache version": "0.7.0.2.6.4.0-91"
+    "Export time": "Sep 15, 2018 1:12:11 AM",
+    "Ranger apache version": "1.1.0.3.0.0.0-1634"
   },
   "policies": [
     {
       "service": "hdp_hadoop",
       "name": "all - path",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "Policy for all - path",
       "isAuditEnabled": true,
       "resources": {
@@ -51,7 +52,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 32,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 44,
       "guid": "fc0f1551-111a-4f48-882a-365c9099cdf2",
       "isEnabled": true,
       "version": 1
@@ -60,6 +64,7 @@
       "service": "hdp_hadoop",
       "name": "kms-audit-path",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "Policy for kms-audit-path",
       "isAuditEnabled": true,
       "resources": {
@@ -100,7 +105,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 33,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 45,
       "guid": "f2bc4c0c-6f0c-4ebd-bf6c-2e19c73c025f",
       "isEnabled": true,
       "version": 1
@@ -109,6 +117,7 @@
       "service": "hdp_hadoop",
       "name": "/hive_data",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -153,15 +162,19 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 34,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 46,
       "guid": "ece43591-2ff3-4863-a453-0b168b1f928d",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_hadoop",
       "name": "home dir",
       "policyType": 0,
+      "policyPriority": 0,
       "description": "",
       "isAuditEnabled": true,
       "resources": {
@@ -202,7 +215,10 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "id": 35,
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "id": 47,
       "guid": "8658d519-2fbe-4118-8819-78dce3f24728",
       "isEnabled": true,
       "version": 1
@@ -212,5 +228,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1523647312431
+  "queryTimeMS": 1536973931719
 }
