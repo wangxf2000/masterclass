@@ -26,6 +26,7 @@ export ambari_version="${ambari_version:-2.7.0.0}"   #Need Ambari 2.6.0+ to avoi
 export hdf_mpack="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.2.0.0/tars/hdf_ambari_mp/hdf-ambari-mpack-3.2.0.0-520.tar.gz"
 export nifi_password=${nifi_password:-StrongPassword}
 export nifi_flow="https://gist.githubusercontent.com/abajwa-hw/6a2506911a1667a1b1feeb8e4341eeed/raw"
+export zeppelin_pass=${zeppelin_pass:-BadPass#1} 
 
 #internal vars
 #export ambari_password="${ambari_pass}"
@@ -288,14 +289,14 @@ sudo -u zeppelin hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/* /user
 #TODO: remove workaround to make jdbc(hive) work, as this will break jdbc(spark)
 rm -f /usr/hdp/current/zeppelin-server/interpreter/jdbc/hive*1.21*.jar
 
-#update zeppelin configs to include ivanna/joe/diane users
-/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c zeppelin-shiro-ini \
-| sed -e '1,2d' \
--e "s/admin = admin, admin/etl_user = ${ambari_pass},admin/"  \
--e "s/user1 = user1, role1, role2/ivanna_eu_hr = ${ambari_pass}, admin/" \
--e "s/user2 = user2, role3/scott_intern = ${ambari_pass}, admin/" \
--e "s/user3 = user3, role2/joe_analyst = ${ambari_pass}, admin/" \
-> /tmp/zeppelin-env.json
+echo disable anonymous login and create Hortonia users
+cat << EOF > /tmp/zeppelin-env.json
+{
+  "properties": {
+    "shiro_ini_content": "\n [users]\n etl_user = ${zeppelin_pass},admin\n ivanna_eu_hr = ${zeppelin_pass}, admin\n scott_intern = ${zeppelin_pass}, admin\n joe_analyst = ${zeppelin_pass}, admin\n \n \n [main]\n sessionManager = org.apache.shiro.web.session.mgt.DefaultWebSessionManager\n cacheManager = org.apache.shiro.cache.MemoryConstrainedCacheManager\n securityManager.cacheManager = \$cacheManager\n cookie = org.apache.shiro.web.servlet.SimpleCookie\n cookie.name = JSESSIONID\n cookie.httpOnly = true\n sessionManager.sessionIdCookie = \$cookie\n securityManager.sessionManager = \$sessionManager\n securityManager.sessionManager.globalSessionTimeout = 86400000\n shiro.loginUrl = /api/login\n \n [roles]\n role1 = *\n role2 = *\n role3 = *\n admin = *\n \n [urls]\n /api/version = anon\n #/** = anon\n /** = authc\n \n"
+  }
+}
+EOF
 
 
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c zeppelin-shiro-ini -f /tmp/zeppelin-env.json
