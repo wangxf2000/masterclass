@@ -172,27 +172,10 @@ python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.publicKey"
 python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.providerurl" "$knox_sso_url" admin "${ambari_pass}"
 
 echo "restart ranger"
-sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-   \"RequestInfo\":{
-      \"command\":\"RESTART\",
-      \"context\":\"Restart Ranger\",
-      \"operation_level\":{
-         \"level\":\"HOST\",
-         \"cluster_name\":\"${cluster_name}\"
-      }
-   },
-   \"Requests/resource_filters\":[
-      {
-         \"service_name\":\"RANGER\",
-         \"component_name\":\"RANGER_ADMIN\",
-         \"hosts\":\"${hostname}\"
-      }
-   ]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
-
-sleep 10
-
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
+while echo exit | nc localhost 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
+sleep 5
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
 while ! echo exit | nc localhost 6080; do echo "waiting for ranger to come up..."; sleep 10; done
 
 #Step 5: setup SSO for Atlas
@@ -203,26 +186,12 @@ python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.pr
 python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.browser.useragent" "Mozilla,Chrome,Opera" admin "${ambari_pass}"
 
 echo "restart Atlas"
-sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
-{
-   \"RequestInfo\":{
-      \"command\":\"RESTART\",
-      \"context\":\"Restart Atlas\",
-      \"operation_level\":{
-         \"level\":\"HOST\",
-         \"cluster_name\":\"${cluster_name}\"
-      }
-   },
-   \"Requests/resource_filters\":[
-      {
-         \"service_name\":\"ATLAS\",
-         \"component_name\":\"ATLAS_SERVER\",
-         \"hosts\":\"${hostname}\"
-      }
-   ]
-}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests 
 
-sleep 10
-while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop ATLAS via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/ATLAS
+while echo exit | nc localhost 21000; do echo "waiting for Atlas to go down..."; sleep 10; done
+sleep 5
+curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start ATLAS via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/ATLAS
+while ! echo exit | nc localhost 21000; do echo "waiting for Atlas to come up..."; sleep 10; done
+sleep 5
 
 cd ${current_dir}
