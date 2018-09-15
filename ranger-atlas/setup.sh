@@ -326,6 +326,40 @@ sleep 5
 
 
 
+#update Knox LDAP passwords
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c users-ldif \
+  | sed -e '1,2d' \
+  -e "s/admin-password/${ambari_pass}/"  \
+  -e "s/guest-password/${ambari_pass}/"  \
+  -e "s/sam-password/${ambari_pass}/"  \
+  -e "s/tom-password/${ambari_pass}/"  \
+  > /tmp/user-ldif.json
+
+
+/var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a set -c users-ldif -f /tmp/user-ldif.json
+sleep 5
+
+#restart Knox
+sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+\"RequestInfo\":{
+  \"command\":\"RESTART\",
+  \"context\":\"Restart Knox\",
+  \"operation_level\":{
+	 \"level\":\"HOST\",
+	 \"cluster_name\":\"${cluster_name}\"
+  }
+},
+\"Requests/resource_filters\":[
+  {
+	 \"service_name\":\"KNOX\",
+	 \"component_name\":\"KNOX_GATEWAY\",
+	 \"hosts\":\"${host}\"
+  }
+]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests 
+
+
 while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
 sleep 30
 
