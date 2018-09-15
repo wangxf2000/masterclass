@@ -280,7 +280,7 @@ cd /usr/hdp/current/zeppelin-server/notebook/
 mv -t /tmp 2DAHF93NE 2C2HQQXVC 2C3T6AYDG 
 rm * -rf
 cd /tmp
-mv -t /usr/hdp/current/zeppelin-server/notebook/ 2DAHF93NE 2C2HQQXVC 2C3T6AYDG
+mv -t /usr/hdp/current/zeppelin-server/notebook/ 2DAHF93NE 2C2HQQXVC 2C3T6AYDG 2DJVH9H46
 
 sudo -u zeppelin hdfs dfs -rmr /user/zeppelin/notebook/*
 sudo -u zeppelin hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/* /user/zeppelin/notebook/
