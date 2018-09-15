@@ -446,13 +446,13 @@ ${ranger_curl} -X POST \
 
 sleep 40    
 
-echo "Importing Nifi flow..."
-cd /var/lib/nifi/conf 
-mv flow.xml.gz flow.xml.gz.orig
-wget https://gist.github.com/abajwa-hw/815757d9446c246ee9a1407449f7ff45/raw -O ./flow.xml
-sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
-gzip flow.xml
-chown nifi:hadoop flow.xml.gz 
+#echo "Importing Nifi flow..."
+#cd /var/lib/nifi/conf 
+#mv flow.xml.gz flow.xml.gz.orig
+#wget https://gist.github.com/abajwa-hw/815757d9446c246ee9a1407449f7ff45/raw -O ./flow.xml
+#sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
+#gzip flow.xml
+#chown nifi:hadoop flow.xml.gz 
     
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=BadPass#1/g" env_atlas.sh
