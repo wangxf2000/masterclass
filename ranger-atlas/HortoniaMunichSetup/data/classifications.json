@@ -218,7 +218,35 @@
             "updateTime": 1490762500725,
             "updatedBy": "admin",
             "version": 1
-        },        
+        },                
+		{
+			"attributeDefs": [
+				{
+					"cardinality": "SINGLE",
+					"includeInNotification": false,
+					"isIndexable": false,
+					"isOptional": true,
+					"isUnique": false,
+					"name": "type",
+					"typeName": "string",
+					"valuesMaxCount": 1,
+					"valuesMinCount": 0
+				}
+			],
+			"category": "CLASSIFICATION",
+			"createTime": 1532068460862,
+			"createdBy": "admin",
+			"description": "ENCRYPTED",
+			"entityTypes": [],
+			"guid": "5a10c2e2-7956-424f-9e65-624744fade41",
+			"name": "ENCRYPTED",
+			"subTypes": [],
+			"superTypes": [],
+			"typeVersion": "1.0",
+			"updateTime": 1532068460862,
+			"updatedBy": "admin",
+			"version": 1
+		},        
         {
             "attributeDefs": [],
             "category": "CLASSIFICATION",
