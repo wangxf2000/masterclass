@@ -2,6 +2,7 @@
 export cluster_name=$1
 export host=$(hostname -f)
 export ambari_pass=$2
+export knox_ldap_pass=$3
 hostname=$(hostname -f)
 current_dir=$(pwd)
 cd /tmp
@@ -152,7 +153,7 @@ EOF
 
 expect setupambarisso-helper.sh "$knox_sso_url" "$knox_cert" "$ambari_pass"
 
-ambari-server setup-ldap --ldap-url=$hostname:33389 --ldap-user-class=person --ldap-user-attr=uid --ldap-group-class=groupofnames --ldap-ssl=false --ldap-secondary-url="" --ldap-referral="" --ldap-group-attr=cn --ldap-member-attr=member --ldap-dn=dn --ldap-base-dn=dc=hadoop,dc=apache,dc=org --ldap-bind-anonym=false --ldap-manager-dn=uid=admin,ou=people,dc=hadoop,dc=apache,dc=org --ldap-manager-password=admin-password --ldap-save-settings --ldap-sync-username-collisions-behavior=convert  --ldap-force-setup --ldap-secondary-host="" --ldap-secondary-port=33389 --ldap-force-lowercase-usernames=true --ldap-pagination-enabled=false --ambari-admin-username=admin --ambari-admin-password=$ambari_pass
+ambari-server setup-ldap --ldap-url=$hostname:33389 --ldap-user-class=person --ldap-user-attr=uid --ldap-group-class=groupofnames --ldap-ssl=false --ldap-secondary-url="" --ldap-referral="" --ldap-group-attr=cn --ldap-member-attr=member --ldap-dn=dn --ldap-base-dn=dc=hadoop,dc=apache,dc=org --ldap-bind-anonym=false --ldap-manager-dn=uid=admin,ou=people,dc=hadoop,dc=apache,dc=org --ldap-manager-password=${knox_ldap_pass} --ldap-save-settings --ldap-sync-username-collisions-behavior=convert  --ldap-force-setup --ldap-secondary-host="" --ldap-secondary-port=33389 --ldap-force-lowercase-usernames=true --ldap-pagination-enabled=false --ambari-admin-username=admin --ambari-admin-password=$ambari_pass
 
 echo "Restarting ambari server"
 ambari-server restart
@@ -160,7 +161,7 @@ ambari-server restart
 echo "Sync Ldap"
 ambari-server sync-ldap --ldap-sync-admin-name=admin --ldap-sync-admin-password=$ambari_pass --all
 
-ambari-server sync-ldap --ldap-sync-admin-name=admin --ldap-sync-admin-password=admin-password --all
+ambari-server sync-ldap --ldap-sync-admin-name=admin --ldap-sync-admin-password=${knox_ldap_pass} --all
 
 echo "Restarting ambari server"
 ambari-server restart
