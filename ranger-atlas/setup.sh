@@ -335,6 +335,7 @@ sleep 5
   -e "s/guest-password/${knox_ldap_pass}/"  \
   -e "s/sam-password/${knox_ldap_pass}/"  \
   -e "s/tom-password/${knox_ldap_pass}/"  \
+  -e "s/sam/demokitadmin/"  \  
   > /tmp/user-ldif.json
 
 
