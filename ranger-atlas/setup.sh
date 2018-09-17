@@ -249,7 +249,8 @@ ambari_configs
 ambari_wait_request_complete 1
 sleep 10
         
-
+#wait until Hive is up
+while ! echo exit | nc localhost 10000; do echo "waiting for hive to come up..."; sleep 10; done
 
 sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
