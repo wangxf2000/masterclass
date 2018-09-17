@@ -620,7 +620,7 @@ chmod 777 /usr/hdp/current/spark2-client/conf/atlas-application.properties
 if [ "${enable_knox_sso_proxy}" = true  ]; then
   cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
   echo "Setting up KNOX SSO"
-  ./10-SSOSetup.sh ${cluster_name} ${ambari_pass}
+  ./10-SSOSetup.sh ${cluster_name} ${ambari_pass} ${knox_ldap_pass}
 
   echo "Setting up UI proxy"
   ./11-KNOX-UI-proxySetup.sh ${cluster_name} ${ambari_pass}
