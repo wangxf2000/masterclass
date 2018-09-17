@@ -27,6 +27,7 @@ export hdf_mpack="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3
 export nifi_password=${nifi_password:-StrongPassword}
 export nifi_flow="https://gist.githubusercontent.com/abajwa-hw/6a2506911a1667a1b1feeb8e4341eeed/raw"
 export zeppelin_pass=${zeppelin_pass:-BadPass#1} 
+export knox_ldap_pass=${knox_ldap_pass:-BadPass#1} 
 
 #internal vars
 #export ambari_password="${ambari_pass}"
@@ -329,10 +330,10 @@ sleep 5
 #update Knox LDAP passwords
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c users-ldif \
   | sed -e '1,2d' \
-  -e "s/admin-password/${ambari_pass}/"  \
-  -e "s/guest-password/${ambari_pass}/"  \
-  -e "s/sam-password/${ambari_pass}/"  \
-  -e "s/tom-password/${ambari_pass}/"  \
+  -e "s/admin-password/${knox_ldap_pass}/"  \
+  -e "s/guest-password/${knox_ldap_pass}/"  \
+  -e "s/sam-password/${knox_ldap_pass}/"  \
+  -e "s/tom-password/${knox_ldap_pass}/"  \
   > /tmp/user-ldif.json
 
 
