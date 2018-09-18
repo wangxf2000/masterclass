@@ -173,6 +173,7 @@ python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.publicKey"
 python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.providerurl" "$knox_sso_url" admin "${ambari_pass}"
 
 echo "restart ranger"
+sleep 10
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
 sleep 10
 while echo exit | nc localhost 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
@@ -187,6 +188,7 @@ python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.pu
 python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.providerurl" "$knox_sso_url" admin "${ambari_pass}"
 python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.browser.useragent" "Mozilla,Chrome,Opera" admin "${ambari_pass}"
 
+sleep 10
 echo "restart Atlas"
 
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop ATLAS via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/ATLAS
