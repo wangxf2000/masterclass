@@ -636,6 +636,9 @@ if [ "${enable_knox_sso_proxy}" = true  ]; then
 
   #echo "Setting up Zeppelin SSO"
   #./12-enable-zeppelin_SSO.sh ${cluster_name} ${ambari_pass} "https://$(hostname -f):8443/gateway/knoxsso/api/v1/websso"
+  
+  #when using SSO, startup script shouldn't change Ambari pass
+  touch /root/.firstbootdone
 fi
 
 echo "Importing Nifi flow..."
