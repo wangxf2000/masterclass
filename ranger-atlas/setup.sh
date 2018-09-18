@@ -498,13 +498,6 @@ ${ranger_curl} -X POST \
 
 sleep 40    
 
-#echo "Importing Nifi flow..."
-#cd /var/lib/nifi/conf 
-#mv flow.xml.gz flow.xml.gz.orig
-#wget https://gist.github.com/abajwa-hw/815757d9446c246ee9a1407449f7ff45/raw -O ./flow.xml
-#sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
-#gzip flow.xml
-#chown nifi:hadoop flow.xml.gz 
     
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=BadPass#1/g" env_atlas.sh
@@ -644,6 +637,37 @@ if [ "${enable_knox_sso_proxy}" = true  ]; then
   #echo "Setting up Zeppelin SSO"
   #./12-enable-zeppelin_SSO.sh ${cluster_name} ${ambari_pass} "https://$(hostname -f):8443/gateway/knoxsso/api/v1/websso"
 fi
+
+echo "Importing Nifi flow..."
+cd /var/lib/nifi/conf 
+mv flow.xml.gz flow.xml.gz.orig
+wget https://gist.github.com/abajwa-hw/815757d9446c246ee9a1407449f7ff45/raw -O ./flow.xml
+sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
+gzip flow.xml
+chown nifi:hadoop flow.xml.gz 
+
+sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+   \"RequestInfo\":{
+      \"command\":\"RESTART\",
+      \"context\":\"Restart Atlas\",
+      \"operation_level\":{
+         \"level\":\"HOST\",
+         \"cluster_name\":\"${cluster_name}\"
+      }
+   },
+   \"Requests/resource_filters\":[
+      {
+         \"service_name\":\"NIFI\",
+         \"component_name\":\"NIFI_MASTER\",
+         \"hosts\":\"${host}\"
+      }
+   ]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
+
+#wait until Nifi is up
+while ! echo exit | nc localhost 9090; do echo "waiting for Nifi to come up..."; sleep 10; done
+
 
 echo "--------------------------"
 echo "--------------------------"
