@@ -649,11 +649,13 @@ sed -i "s/demo.hortonworks.com/${host}/g; s/HWX.COM/${kdc_realm}/g;" flow.xml
 gzip flow.xml
 chown nifi:hadoop flow.xml.gz 
 
+sleep 5
+echo "Restarting Nifi..."
 sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 {
    \"RequestInfo\":{
       \"command\":\"RESTART\",
-      \"context\":\"Restart Atlas\",
+      \"context\":\"Restart Nifi\",
       \"operation_level\":{
          \"level\":\"HOST\",
          \"cluster_name\":\"${cluster_name}\"
@@ -669,7 +671,7 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
 #wait until Nifi is up
-while ! echo exit | nc localhost 9090; do echo "waiting for Nifi to come up..."; sleep 10; done
+while ! echo exit | nc $(hostname -f) 9090; do echo "waiting for Nifi to come up..."; sleep 10; done
 
 
 echo "--------------------------"
