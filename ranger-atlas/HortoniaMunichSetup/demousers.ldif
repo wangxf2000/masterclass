@@ -1,0 +1,169 @@
+
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: 1
+
+# Please replace with site specific values
+dn: dc=hadoop,dc=apache,dc=org
+objectclass: organization
+objectclass: dcObject
+o: Hadoop
+dc: hadoop
+
+# Entry for a sample people container
+# Please replace with site specific values
+dn: ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:organizationalUnit
+ou: people
+
+# Entry for a sample end user
+# Please replace with site specific values
+dn: uid=demokitadmin,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: demokitadmin
+sn: demokitadmin
+uid: demokitadmin
+userPassword:BadPass#1
+
+# entry for sample user admin
+dn: uid=admin,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: Admin
+sn: Admin
+uid: admin
+userPassword:BadPass#1
+
+# entry for sample user joe_analyst
+dn: uid=joe_analyst,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: joe_analyst
+sn: joe_analyst
+uid: joe_analyst
+userPassword:BadPass#1
+
+# entry for sample user ivanna_eu_hr
+dn: uid=ivanna_eu_hr,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: ivanna_eu_hr
+sn: ivanna_eu_hr
+uid: ivanna_eu_hr
+userPassword:BadPass#1
+
+# entry for sample user etl_user
+dn: uid=etl_user,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: etl_user
+sn: etl_user
+uid: etl_user
+userPassword:BadPass#1
+
+# entry for sample user log_monitor
+dn: uid=log_monitor,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: log_monitor
+sn: log_monitor
+uid: log_monitor
+userPassword:BadPass#1
+
+# entry for sample user scott_intern
+dn: uid=scott_intern,ou=people,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:person
+objectclass:organizationalPerson
+objectclass:inetOrgPerson
+cn: scott_intern
+sn: scott_intern
+uid: scott_intern
+userPassword:BadPass#1
+
+# create FIRST Level groups branch
+dn: ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass:organizationalUnit
+ou: groups
+description: generic groups branch
+
+# create the analyst group under groups
+dn: cn=analyst,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: analyst
+description:analyst  group
+member: uid=joe_analyst,ou=people,dc=hadoop,dc=apache,dc=org
+
+
+# create the hr group under groups
+dn: cn=hr,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: hr
+description: hr group
+member: uid=ivanna_eu_hr,ou=people,dc=hadoop,dc=apache,dc=org
+
+
+# create the etl group under groups
+dn: cn=etl,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: etl
+description: etl group
+member: uid=etl_user,ou=people,dc=hadoop,dc=apache,dc=org
+member: uid=log_monitor,ou=people,dc=hadoop,dc=apache,dc=org
+
+# create the intern group under groups
+dn: cn=intern,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: intern
+description: intern group
+member: uid=scott_intern,ou=people,dc=hadoop,dc=apache,dc=org
+
+# create the us_employee group under groups
+dn: cn=us_employee,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: us_employee
+description: us_employee group
+member: uid=joe_analyst,ou=people,dc=hadoop,dc=apache,dc=org
+
+
+# create the eu_employee group under groups
+dn: cn=eu_employee,ou=groups,dc=hadoop,dc=apache,dc=org
+objectclass:top
+objectclass: groupofnames
+cn: eu_employee
+description: eu_employee group
+member: uid=ivanna_eu_hr,ou=people,dc=hadoop,dc=apache,dc=org
