@@ -280,7 +280,7 @@ sudo -u hdfs hdfs dfs -copyFromLocal hive-exec-3.*.jar /apps/hive/share/udfs/hiv
 ## update zeppelin notebooks and upload to HDFS
 curl -sSL https://raw.githubusercontent.com/hortonworks-gallery/zeppelin-notebooks/master/update_all_notebooks.sh | sudo -E sh 
 cd /usr/hdp/current/zeppelin-server/notebook/
-mv -t /tmp 2DAHF93NE 2C2HQQXVC 2C3T6AYDG 
+mv -t /tmp 2DAHF93NE 2C2HQQXVC 2C3T6AYDG 2DJVH9H46
 rm * -rf
 cd /tmp
 mv -t /usr/hdp/current/zeppelin-server/notebook/ 2DAHF93NE 2C2HQQXVC 2C3T6AYDG 2DJVH9H46
