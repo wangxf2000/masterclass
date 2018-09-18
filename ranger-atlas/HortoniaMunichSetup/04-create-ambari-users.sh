@@ -4,6 +4,9 @@ users="kate_hr ivanna_eu_hr joe_analyst sasha_eu_hr john_finance mark_bizdev jer
 groups="hr analyst us_employee eu_employee finance business_dev contractor csr etl"
 ambari_url="http://${ambari_host}:8080/api/v1"
 
+#give demokitadmin admin rights in Ambari
+curl -u ${ambari_admin}:${ambari_pass} -i -H 'X-Requested-By: blah' -X PUT -d '{"Users" : {"admin" : "true"}}' ${ambari_url}/users/demokitadmin
+
 for user in ${users}; do
   echo "adding user ${user} to Ambari"
   curl -u ${ambari_admin}:${ambari_pass} -H "X-Requested-By: blah" -X POST -d "{\"Users/user_name\":\"${user}\",\"Users/password\":\"${ambari_pass}\",\"Users/active\":\"true\",\"Users/admin\":\"false\"}" ${ambari_url}/users 
