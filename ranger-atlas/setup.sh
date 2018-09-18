@@ -331,13 +331,14 @@ sleep 5
 #update Knox LDAP passwords
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c users-ldif \
   | sed -e '1,2d' \
-  -e "s/admin-password/${knox_ldap_pass}/"  \
-  -e "s/guest-password/${knox_ldap_pass}/"  \
-  -e "s/sam-password/${knox_ldap_pass}/"  \
-  -e "s/tom-password/${knox_ldap_pass}/"  \
-  -e "s/guest/demokitadmin/"  \
-  -e "s/sam/joe_analyst/"  \
-  -e "s/tom/ivanna_eu_hr/"  \
+  -e "s/sample/test/g"  \
+  -e "s/admin-password/${knox_ldap_pass}/g"  \
+  -e "s/guest-password/${knox_ldap_pass}/g"  \
+  -e "s/sam-password/${knox_ldap_pass}/g"  \
+  -e "s/tom-password/${knox_ldap_pass}/g"  \
+  -e "s/guest/demokitadmin/g"  \
+  -e "s/sam/joe_analyst/g"  \
+  -e "s/tom/ivanna_eu_hr/g"  \
   > /tmp/user-ldif.json
 
 
