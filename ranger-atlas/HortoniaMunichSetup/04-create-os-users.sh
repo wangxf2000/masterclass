@@ -6,6 +6,7 @@ groupadd etl
 groupadd intern
 
 
+useradd -g hadoop admin
 useradd -g finance john_finance
 useradd -g business_dev mark_bizdev
 useradd -g contractor jeremy_contractor
