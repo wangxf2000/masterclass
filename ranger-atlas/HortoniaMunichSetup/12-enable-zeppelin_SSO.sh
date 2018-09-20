@@ -8,6 +8,7 @@ yum -y -q install crudini
 #update zeppelin configs to include ivanna/joe/diane users
 /var/lib/ambari-server/resources/scripts/configs.py -u admin -p ${ambari_pass} --host localhost --port 8080 --cluster ${cluster_name} -a get -c zeppelin-shiro-ini \
 | sed -e "1,2d" \
+| sed -e 's/ //g' \
 | python -c "import sys, json; print json.load(sys.stdin)['properties']['shiro_ini_content']" > /tmp/zeppelin-shiro.ini
 
 cp /tmp/knox.cert /etc/zeppelin/conf/knox-sso.pem
