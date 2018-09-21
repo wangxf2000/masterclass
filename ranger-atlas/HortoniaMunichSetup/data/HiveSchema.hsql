@@ -221,7 +221,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hr/employees';
+                                  LOCATION '/hive_data/hr/employees'
+				  tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees_masked(
                                     Id          INT
@@ -235,7 +236,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees_masked(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hr/employees';
+                                  LOCATION '/hive_data/hr/employees'
+				  tblproperties("skip.header.line.count"="1");
 
 CREATE VIEW IF NOT EXISTS hr.us_employees AS SELECT * FROM hr.employees where region='US';
 
