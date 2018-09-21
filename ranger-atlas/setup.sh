@@ -21,7 +21,7 @@ export enable_hive_acid=${enable_hive_acid:-true}   #enable Hive ACID?
 export enable_kerberos=${enable_kerberos:-true}      
 export enable_knox_sso_proxy=${enable_knox_sso_proxy:-true}
 export kdc_realm=${kdc_realm:-HWX.COM}      #KDC realm
-export ambari_version="${ambari_version:-2.7.0.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
+export ambari_version="${ambari_version:-2.7.1.0}"   #Need Ambari 2.6.0+ to avoid Zeppelin BUG-92211
 
 export hdf_mpack="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.2.0.0/tars/hdf_ambari_mp/hdf-ambari-mpack-3.2.0.0-520.tar.gz"
 export nifi_password=${nifi_password:-StrongPassword}
