@@ -7,17 +7,16 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 ## Versions tested
 
 Tested with:
-- [x] HDP 2.6.5 / Ambari 2.6.2
-- [x] HDP 2.6.4 / Ambari 2.6.1
-- [x] HDP 2.6.3 / Ambari 2.6.0
-- [x] HDP 2.6.4 Sandbox
+- [x] HDP 3.0.1 / Ambari 2.7.0.1
+- [x] HDP 3.0.0 / Ambari 2.7.0.0
+
 
 ## Option #1: Fresh install of HDP plus demo
 
 - Pre-reqs:
   - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) 
   - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run script on HDP sandbox)
-  - The VM requires 4 vcpus and ~17-18 GB RAM once all services are running and you execute a query, so m3.2xlarge size is recommended
+  - The VM requires 4 vcpus and ~32 GB RAM once all services are running and you execute a query, so m3.2xlarge size is recommended
   
 - Login as root and run setup.sh as below:
 ```
@@ -26,9 +25,7 @@ cd
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
-- This will run for about 30min. Once complete, proceed to part 2 below and complete the manual steps to enable Hive LLAP
-
-- Note: if you will later be registering this cluster with DSS, you can skip the manual steps to enable LLAP (as the profiler will not be able to launch any jobs on the default YARN queue after LLAP is enabled)
+- This will run for about 30min. 
 
 ## Option #2: Setup demo on HDP Sandbox 
 
@@ -47,30 +44,22 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 ```
 
 
-- This will run for about 10min. Once complete, proceed to part 2 below and complete the manual steps
-
-- Note: enabling LLAP (along with all the other components required) may require extra memory resources on your VM
-
+- This will run for about 10min. 
 
 ## Login details 
 
-- Ambari port: 8080 login: admin/BadPass#1
-- Ranger port: 6080 login: admin/admin
-- Atlas port: 21000 login: admin/admin
-- Zeppelin port: 9995 login: ivanna_eu_hr/BadPass#1 OR joe_analyst/BadPass#1 OR etl_user/BadPass#1
-- Nifi port: 9090
+- Knox SSO crendentials: admin/BadPass#1
+https://yourhostname:8443/gateway/ui/ambari
+https://yourhostname:8443/gateway/ui/ranger
+https://yourhostname:8443/gateway/ui/atlas
+https://yourhostname:8443/gateway/ui/yarn
+https://yourhostname:8443/gateway/ui/yarnuiv2
+https://yourhostname:8443/gateway/manager/admin-ui/
+https://yourhostname:8443/gateway/ui/hdfs/?host=http://demo.hortonworks.com:50070
+https://yourhostname:8443/gateway/ui/zeppelin/ 
+https://yourhostname:8443/gateway/ui/nifi/ 
 
-## Manual steps
 
-- Once script is complete, there are manual steps required to complete the demo setup 
-- [X] The previous steps of manually creating a tag service in Ranger, importing tag policies and associating it with Hive/Hbase/Kafka services are no longer required. These are now taken care of by the script
-
-- [ ] In order to be able to run consent related queries, the below additional pre-reqs must be taken care of:
-  - [ ] From Ambari: enable/start Interactive Hive (the consent queries require Hive 2.x+)
-  - [ ] From Ambari: restart Zeppelin (to make it aware of %jdbc(hive_interactive))
-  - [ ] From Ranger: enable Hive row filter policy called 'filter: ww_customers for consent' (disable existing policy first)
-
-- [ ] Login to Zeppelin as end users (ivanna_eu_hr and joe_analyst and etl_user) and run through demo Hive queries one by one in the prebuilt notebooks. After running each query, refresh Ranger audits page to understand what transpired
 
   ## Demo walkthrough
   
@@ -94,6 +83,7 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
   - [uses Atlas APIs to associate tags with Hive/Kafka/Hbase/HDFS entities](https://community.hortonworks.com/articles/189615/atlas-how-to-automate-associating-tagsclassificati.html)
   - import sample Nifi flow that reads tweets into HDFS
   - enables kerberos
+  - enables SSO for Ambari/Ranger/Atlas/Zeppelin
 
 
   ## Troubleshooting
