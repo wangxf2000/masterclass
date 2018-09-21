@@ -49,15 +49,16 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 ## Login details 
 
 - Knox SSO crendentials: admin/BadPass#1
-https://yourhostname:8443/gateway/ui/ambari
-https://yourhostname:8443/gateway/ui/ranger
-https://yourhostname:8443/gateway/ui/atlas
-https://yourhostname:8443/gateway/ui/yarn
-https://yourhostname:8443/gateway/ui/yarnuiv2
-https://yourhostname:8443/gateway/manager/admin-ui/
-https://yourhostname:8443/gateway/ui/hdfs/?host=http://demo.hortonworks.com:50070
-https://yourhostname:8443/gateway/ui/zeppelin/ 
-https://yourhostname:8443/gateway/ui/nifi/ 
+- Login urls:
+  - https://yourhostname:8443/gateway/ui/ambari
+  - https://yourhostname:8443/gateway/ui/ranger
+  - https://yourhostname:8443/gateway/ui/atlas
+  - https://yourhostname:8443/gateway/ui/yarn
+  - https://yourhostname:8443/gateway/ui/yarnuiv2
+  - https://yourhostname:8443/gateway/manager/admin-ui/
+  - https://yourhostname:8443/gateway/ui/hdfs/?host=http://demo.hortonworks.com:50070
+  - https://yourhostname:8443/gateway/ui/zeppelin/ 
+  - https://yourhostname:8443/gateway/ui/nifi/ 
 
 
 
