@@ -626,20 +626,6 @@ chmod 777 /tmp/spark-atlas-connector-assembly_2.11-0.1.0-SNAPSHOT.jar
 cp /etc/atlas/conf/atlas-application.properties /usr/hdp/current/spark2-client/conf/    
 chmod 777 /usr/hdp/current/spark2-client/conf/atlas-application.properties
 
-if [ "${enable_knox_sso_proxy}" = true  ]; then
-  cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
-  echo "Setting up KNOX SSO"
-  ./10-SSOSetup.sh ${cluster_name} ${ambari_pass} ${knox_ldap_pass}
-
-  echo "Setting up UI proxy"
-  ./11-KNOX-UI-proxySetup.sh ${cluster_name} ${ambari_pass}
-
-  #echo "Setting up Zeppelin SSO"
-  ./12-enable-zeppelin_SSO.sh ${cluster_name} ${ambari_pass} "https://$(hostname -f):8443/gateway/knoxsso/api/v1/websso"
-  
-  #when using SSO, startup script shouldn't change Ambari pass
-  touch /root/.firstbootdone
-fi
 
 echo "Importing Nifi flow..."
 cd /var/lib/nifi/conf 
@@ -695,6 +681,22 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 
 #wait until hive is up
 while ! echo exit | nc $(hostname -f) 10000; do echo "waiting for Hive to come up..."; sleep 10; done
+
+if [ "${enable_knox_sso_proxy}" = true  ]; then
+  cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
+  echo "Setting up KNOX SSO"
+  ./10-SSOSetup.sh ${cluster_name} ${ambari_pass} ${knox_ldap_pass}
+
+  echo "Setting up UI proxy"
+  ./11-KNOX-UI-proxySetup.sh ${cluster_name} ${ambari_pass}
+
+  #echo "Setting up Zeppelin SSO"
+  ./12-enable-zeppelin_SSO.sh ${cluster_name} ${ambari_pass} "https://$(hostname -f):8443/gateway/knoxsso/api/v1/websso"
+  
+  #when using SSO, startup script shouldn't change Ambari pass
+  touch /root/.firstbootdone
+fi
+
 
 
 
