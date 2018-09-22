@@ -58,7 +58,5 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
-sleep 5
-
-while ! echo exit | nc localhost 9995; do echo "waiting for zeppelin to come up..."; sleep 10; done
-sleep 30
+echo "Sleeping for 20s..."
+sleep 20
