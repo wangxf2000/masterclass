@@ -674,6 +674,30 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
 while ! echo exit | nc $(hostname -f) 9090; do echo "waiting for Nifi to come up..."; sleep 10; done
 
 
+sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
+{
+   \"RequestInfo\":{
+      \"command\":\"RESTART\",
+      \"context\":\"Restart Hive\",
+      \"operation_level\":{
+         \"level\":\"HOST\",
+         \"cluster_name\":\"${cluster_name}\"
+      }
+   },
+   \"Requests/resource_filters\":[
+      {
+         \"service_name\":\"HIVE\",
+         \"component_name\":\"HIVE_SERVER\",
+         \"hosts\":\"${host}\"
+      }
+   ]
+}" http://localhost:8080/api/v1/clusters/${cluster_name}/requests 
+
+#wait until hive is up
+while ! echo exit | nc $(hostname -f) 10000; do echo "waiting for Hive to come up..."; sleep 10; done
+
+
+
 echo "--------------------------"
 echo "--------------------------"
 echo "Automated portion of setup is complete. Next, check and run manual steps from https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/README.md"
