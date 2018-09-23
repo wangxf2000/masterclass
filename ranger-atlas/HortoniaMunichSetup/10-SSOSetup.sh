@@ -153,7 +153,9 @@ EOF
 
 expect setupambarisso-helper.sh "$knox_sso_url" "$knox_cert" "$ambari_pass"
 
-ambari-server setup-ldap --ldap-url=$hostname:33389 --ldap-user-class=person --ldap-user-attr=uid --ldap-group-class=groupofnames --ldap-ssl=false --ldap-secondary-url="" --ldap-referral="" --ldap-group-attr=cn --ldap-member-attr=member --ldap-dn=dn --ldap-base-dn=dc=hadoop,dc=apache,dc=org --ldap-bind-anonym=false --ldap-manager-dn=uid=admin,ou=people,dc=hadoop,dc=apache,dc=org --ldap-manager-password=${knox_ldap_pass} --ldap-save-settings --ldap-sync-username-collisions-behavior=convert  --ldap-force-setup --ldap-secondary-host="" --ldap-secondary-port=33389 --ldap-force-lowercase-usernames=true --ldap-pagination-enabled=false --ambari-admin-username=admin --ambari-admin-password=$ambari_pass
+ambari-server setup-ldap --ldap-url=$hostname:33389 --ldap-user-class=person --ldap-user-attr=uid --ldap-group-class=groupofnames --ldap-ssl=false --ldap-secondary-url="" --ldap-referral="" --ldap-group-attr=cn --ldap-member-attr=member --ldap-dn=dn --ldap-base-dn=dc=hadoop,dc=apache,dc=org --ldap-bind-anonym=false --ldap-manager-dn=uid=admin,ou=people,dc=hadoop,dc=apache,dc=org --ldap-manager-password=${knox_ldap_pass} --ldap-save-settings --ldap-sync-username-collisions-behavior=convert  --ldap-force-setup --ldap-secondary-host="" --ldap-secondary-port=33389 --ldap-force-lowercase-usernames=true --ldap-pagination-enabled=false --ambari-admin-username=admin --ambari-admin-password=$ambari_pass << EOF
+Generic LDAP
+EOF
 
 echo "Restarting ambari server"
 ambari-server restart
