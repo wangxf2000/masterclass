@@ -11,7 +11,7 @@ Tested with:
 - [x] HDP 3.0.0 / Ambari 2.7.0.0
 
 
-## Option #1: Fresh install of HDP plus demo
+## Fresh install of HDP plus Hortoniabank demo
 
 - Pre-reqs:
   - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) 
@@ -27,24 +27,6 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 - This will run for about 30min. 
 
-## Option #2: Setup demo on HDP Sandbox 
-
-- Pre-reqs (refer to [sandbox guide](https://hortonworks.com/tutorial/sandbox-deployment-and-install-guide) for detailed steps)
-  - Download HDP 2.6.4 Sandbox from [here](http://hortonworks.com/sandbox) 
-  - Allocate 4 vcpus and 12+ GB RAM 
-  - Start Sandbox
-  - Login via SSH as root/hadoop (you will be required to change the passord)
-  - Run `ambari-admin-password-reset` to reset the Ambari admin password to one of your choosing e.g. BadPass#1
-
-  
-- Connect via SSH to sandbox as root, set your Ambari admin password and run setup_sandbox.sh (note this requires VM has access to internet):
-```
-export ambari_pass=BadPass#1
-curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_sandbox.sh | sudo -E sh
-```
-
-
-- This will run for about 10min. 
 
 ## Login details 
 
