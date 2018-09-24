@@ -18,10 +18,11 @@ Tested with:
   - The VM should not already have any Ambari or HDP components installed (e.g. do NOT run script on HDP sandbox)
   - The VM requires 4 vcpus and ~32 GB RAM once all services are running and you execute a query, so m3.2xlarge size is recommended
   
-- Login as root and run setup.sh as below:
+- Login as root, (optionally [override any parameters](https://github.com/abajwa-hw/masterclass/blob/master/ranger-atlas/setup.sh#L14-L30)) and run setup.sh as below:
 ```
 sudo su
 cd
+export enable_knox_sso_proxy=true
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
