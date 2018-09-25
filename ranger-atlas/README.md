@@ -7,7 +7,7 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 ## Versions tested
 
 Tested with:
-- [x] HDP 3.0.1 / Ambari 2.7.0.1
+- [x] HDP 3.0.1 / Ambari 2.7.1.0
 - [x] HDP 3.0.0 / Ambari 2.7.0.0
 
 
