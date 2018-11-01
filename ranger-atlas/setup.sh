@@ -161,6 +161,9 @@ cat << EOF > configuration-custom.json
     "yarn-site": {
         "yarn.acl.enable" : "true"
     },
+    "yarn-env": {
+        "apptimelineserver_heapsize": "1024"
+    },    
     "tez-site": {
         "tez.am.resource.memory.mb" : "1024",
         "tez.task.resource.memory.mb" : "1024"	
