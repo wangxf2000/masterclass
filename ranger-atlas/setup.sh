@@ -509,7 +509,7 @@ sed -i.bak "s/RANGER_ADMIN_PASS=admin/RANGER_ADMIN_PASS=BadPass#1/g" env_ranger.
 
 ./01-atlas-import-classification.sh
 #./02-atlas-import-entities.sh      ## replaced with 09-associate-entities-with-tags.sh
-./03-update-servicedefs.sh
+#./03-update-servicedefs.sh
 ./04-create-ambari-users.sh
 		
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
