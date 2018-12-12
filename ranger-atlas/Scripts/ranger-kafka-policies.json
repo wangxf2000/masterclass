@@ -2,8 +2,8 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Sep 15, 2018 1:11:35 AM",
-    "Ranger apache version": "1.1.0.3.0.0.0-1634"
+    "Export time": "Dec 12, 2018 3:15:38 AM",
+    "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
     {
@@ -72,7 +72,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 48,
+      "id": 60,
       "guid": "d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
       "isEnabled": true,
       "version": 1
@@ -102,6 +102,10 @@
             },
             {
               "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
               "isAllowed": true
             }
           ],
@@ -174,8 +178,10 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
-      "id": 49,
+      "policyLabels": [
+        ""
+      ],
+      "id": 61,
       "guid": "95c0718a-bd93-4b97-95f1-4931d5429345",
       "isEnabled": true,
       "version": 2
@@ -224,7 +230,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 50,
+      "id": 62,
       "guid": "2cc20bfc-be26-45e1-939f-59076756ab86",
       "isEnabled": true,
       "version": 1
@@ -285,7 +291,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 51,
+      "id": 63,
       "guid": "4df11955-20f4-4652-bf31-a466fe834d50",
       "isEnabled": true,
       "version": 1
@@ -334,7 +340,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 52,
+      "id": 64,
       "guid": "c8218587-5955-46e1-a300-fc0c7f4c97ba",
       "isEnabled": true,
       "version": 1
@@ -344,5 +350,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1536973895262
+  "queryTimeMS": 1544584538908
 }
