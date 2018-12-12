@@ -2,8 +2,8 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Sep 15, 2018 1:11:05 AM",
-    "Ranger apache version": "1.1.0.3.0.0.0-1634"
+    "Export time": "Dec 12, 2018 3:15:20 AM",
+    "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
     {
@@ -50,7 +50,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 60,
+      "id": 72,
       "guid": "63cfd00f-a987-4ea6-8879-b16b4521f095",
       "isEnabled": true,
       "version": 1
@@ -95,7 +95,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 61,
+      "id": 73,
       "guid": "2f326f3c-263b-4325-acec-98dc8f3b96f8",
       "isEnabled": true,
       "version": 1
@@ -125,7 +125,8 @@
             }
           ],
           "users": [
-            "HTTP"
+            "HTTP",
+            "ambari-qa"
           ],
           "groups": [],
           "conditions": [],
@@ -157,11 +158,13 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
-      "id": 62,
+      "policyLabels": [
+        ""
+      ],
+      "id": 74,
       "guid": "0634c226-4fe2-4a64-93ce-ef5ca112df8e",
       "isEnabled": true,
-      "version": 3
+      "version": 2
     },
     {
       "service": "hdp_yarn",
@@ -223,15 +226,15 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 63,
+      "id": 75,
       "guid": "bf94706a-8453-40ff-ba6a-05b78ec053c4",
       "isEnabled": true,
-      "version": 3
+      "version": 1
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1536973865375
+  "queryTimeMS": 1544584520731
 }
