@@ -2,7 +2,7 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Dec 12, 2018 3:15:38 AM",
+    "Export time": "Dec 13, 2018 7:17:13 PM",
     "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
@@ -57,7 +57,8 @@
           "users": [
             "kafka",
             "atlas",
-            "rangertagsync"
+            "rangertagsync",
+            "hive"
           ],
           "groups": [],
           "conditions": [],
@@ -71,11 +72,13 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
+      "policyLabels": [
+        ""
+      ],
       "id": 60,
       "guid": "d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
       "isEnabled": true,
-      "version": 1
+      "version": 3
     },
     {
       "service": "hdp_kafka",
@@ -184,7 +187,7 @@
       "id": 61,
       "guid": "95c0718a-bd93-4b97-95f1-4931d5429345",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_kafka",
@@ -344,11 +347,87 @@
       "guid": "c8218587-5955-46e1-a300-fc0c7f4c97ba",
       "isEnabled": true,
       "version": 1
+    },
+    {
+      "service": "hdp_kafka",
+      "name": "* cluster",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "",
+      "isAuditEnabled": true,
+      "resources": {
+        "cluster": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "configure",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "kafka_admin",
+              "isAllowed": true
+            },
+            {
+              "type": "idempotent_write",
+              "isAllowed": true
+            },
+            {
+              "type": "describe_configs",
+              "isAllowed": true
+            },
+            {
+              "type": "alter_configs",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "kafka",
+            "hive",
+            "atlas",
+            "hbase",
+            "nifi",
+            "ANONYMOUS"
+          ],
+          "groups": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [
+        ""
+      ],
+      "id": 77,
+      "guid": "1d0e2712-7661-4228-a94b-4d692dcbb65e",
+      "isEnabled": true,
+      "version": 2
     }
   ],
   "startIndex": 0,
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1544584538908
+  "queryTimeMS": 1544728633707
 }
