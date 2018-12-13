@@ -2,8 +2,8 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Sep 17, 2018 11:10:35 PM",
-    "Ranger apache version": "1.1.0.3.0.0.0-1634"
+    "Export time": "Dec 13, 2018 7:17:18 PM",
+    "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
     {
@@ -68,11 +68,13 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
-      "id": 65,
+      "policyLabels": [
+        ""
+      ],
+      "id": 70,
       "guid": "203473b7-e08e-4fc3-91e1-9358560bc54f",
       "isEnabled": true,
-      "version": 1
+      "version": 3
     },
     {
       "service": "hdp_atlas",
@@ -188,7 +190,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 66,
+      "id": 71,
       "guid": "76514979-2b79-417c-8da7-384c86057c42",
       "isEnabled": true,
       "version": 1
@@ -295,7 +297,8 @@
             }
           ],
           "users": [
-            "atlas"
+            "atlas",
+            "hive"
           ],
           "groups": [],
           "conditions": [],
@@ -331,8 +334,10 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
-      "id": 67,
+      "policyLabels": [
+        ""
+      ],
+      "id": 72,
       "guid": "0a7f14bd-0ada-4e0f-b1d7-9225a6480901",
       "isEnabled": true,
       "version": 2
@@ -342,5 +347,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1537225835548
+  "queryTimeMS": 1544728638463
 }
