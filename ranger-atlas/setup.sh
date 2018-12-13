@@ -605,6 +605,11 @@ sleep 30
 
 while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
 
+echo "Sleeping for 100s..."
+sleep 100
+
+while ! echo exit | nc localhost 21000; do echo "waiting for atlas to come up..."; sleep 10; done
+
  #import Atlas entities 
 export atlas_pass="BadPass#1"
 ./01-atlas-import-classification.sh
