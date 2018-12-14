@@ -282,7 +282,7 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
 ./01-atlas-import-classification.sh
 #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
-./03-update-servicedefs.sh
+#./03-update-servicedefs.sh
 
         
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
