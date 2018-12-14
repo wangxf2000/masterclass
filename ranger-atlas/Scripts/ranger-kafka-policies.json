@@ -2,7 +2,7 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Dec 13, 2018 7:17:13 PM",
+    "Export time": "Dec 14, 2018 1:55:37 AM",
     "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
@@ -78,7 +78,7 @@
       "id": 60,
       "guid": "d2e23571-0e39-4092-9cdb-7a06e4a70cfc",
       "isEnabled": true,
-      "version": 3
+      "version": 1
     },
     {
       "service": "hdp_kafka",
@@ -404,7 +404,11 @@
             "nifi",
             "ANONYMOUS"
           ],
-          "groups": [],
+          "groups": [
+            "etl",
+            "us_employee",
+            "eu_employee"
+          ],
           "conditions": [],
           "delegateAdmin": false
         }
@@ -419,7 +423,7 @@
       "policyLabels": [
         ""
       ],
-      "id": 77,
+      "id": 65,
       "guid": "1d0e2712-7661-4228-a94b-4d692dcbb65e",
       "isEnabled": true,
       "version": 2
@@ -429,5 +433,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1544728633707
+  "queryTimeMS": 1544752537763
 }
