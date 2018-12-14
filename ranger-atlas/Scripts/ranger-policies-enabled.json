@@ -2,8 +2,8 @@
   "metaDataInfo": {
     "Host name": "demo.hortonworks.com",
     "Exported by": "admin",
-    "Export time": "Sep 21, 2018 11:35:26 PM",
-    "Ranger apache version": "1.1.0.3.0.1.0-187"
+    "Export time": "Dec 14, 2018 1:55:21 AM",
+    "Ranger apache version": "1.2.0.3.1.0.0-78"
   },
   "policies": [
     {
@@ -76,7 +76,9 @@
             "hive",
             "ambari-qa"
           ],
-          "groups": [],
+          "groups": [
+            "public"
+          ],
           "conditions": [],
           "delegateAdmin": true
         }
@@ -88,11 +90,13 @@
       "rowFilterPolicyItems": [],
       "options": {},
       "validitySchedules": [],
-      "policyLabels": [],
-      "id": 32,
+      "policyLabels": [
+        ""
+      ],
+      "id": 34,
       "guid": "6a6dddad-7d6f-4eec-a635-e8eb58e072c8",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
       "service": "hdp_hive",
@@ -170,7 +174,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 33,
+      "id": 35,
       "guid": "b1bf4bda-4742-4150-8812-a332bfb41d06",
       "isEnabled": true,
       "version": 1
@@ -275,7 +279,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 34,
+      "id": 36,
       "guid": "63a8e206-ca69-48ed-b405-98cc5abff782",
       "isEnabled": true,
       "version": 1
@@ -381,10 +385,10 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 35,
+      "id": 37,
       "guid": "5f725ac5-38fd-4b78-a901-e153d48306d1",
       "isEnabled": true,
-      "version": 4
+      "version": 1
     },
     {
       "service": "hdp_hive",
@@ -454,7 +458,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 36,
+      "id": 38,
       "guid": "6cc65946-b1a1-47a8-b8be-237107026a9e",
       "isEnabled": true,
       "version": 1
@@ -521,7 +525,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 37,
+      "id": 39,
       "guid": "8d4db3fd-97f4-431c-9d17-e8507ae3ab1e",
       "isEnabled": true,
       "version": 1
@@ -577,7 +581,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 38,
+      "id": 40,
       "guid": "8fa624c9-c99c-414e-9311-6a50ca76b8a6",
       "isEnabled": true,
       "version": 1
@@ -651,7 +655,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 39,
+      "id": 41,
       "guid": "a72c1ce8-0ec2-48b1-a7f3-57fc2d56bc81",
       "isEnabled": false,
       "version": 1
@@ -715,7 +719,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 40,
+      "id": 42,
       "guid": "99d2537b-01e5-4503-a3c9-f89dfe82c9d7",
       "isEnabled": true,
       "version": 1
@@ -779,7 +783,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 41,
+      "id": 43,
       "guid": "f0980759-3b51-466d-9d2e-de3628fdd74d",
       "isEnabled": true,
       "version": 1
@@ -843,7 +847,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 42,
+      "id": 44,
       "guid": "543342d3-eed6-413c-8d95-e70ad64d08ce",
       "isEnabled": false,
       "version": 1
@@ -905,7 +909,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 43,
+      "id": 45,
       "guid": "781c4fb9-b898-47ae-8588-5d234353ccad",
       "isEnabled": true,
       "version": 1
@@ -969,7 +973,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 44,
+      "id": 46,
       "guid": "4a8eebe8-2739-43ff-abb9-b781a7841a70",
       "isEnabled": true,
       "version": 1
@@ -1033,7 +1037,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 45,
+      "id": 47,
       "guid": "4d4b99a7-dea2-4f08-ad2d-6413f5cc6d48",
       "isEnabled": true,
       "version": 1
@@ -1125,10 +1129,10 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 46,
+      "id": 48,
       "guid": "31ffdfa2-5ef7-48f1-b745-8c8569f67fc3",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_hive",
@@ -1187,7 +1191,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 47,
+      "id": 49,
       "guid": "9d685472-93b3-49b2-8498-fbe5a1162848",
       "isEnabled": true,
       "version": 1
@@ -1299,7 +1303,7 @@
       "policyLabels": [
         "Schedulable-policy"
       ],
-      "id": 48,
+      "id": 50,
       "guid": "ec2f5856-66f1-4cbb-afaa-815f5200f001",
       "isEnabled": true,
       "version": 1
@@ -1386,7 +1390,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 49,
+      "id": 51,
       "guid": "725390b6-c237-4edc-8b75-b7a359582fbb",
       "isEnabled": false,
       "version": 1
@@ -1453,10 +1457,10 @@
       "policyLabels": [
         "Schedulable-policy"
       ],
-      "id": 50,
+      "id": 52,
       "guid": "66f83a4b-20be-4e22-ab24-d30e0ae88a7d",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "hdp_hive",
@@ -1514,7 +1518,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 51,
+      "id": 53,
       "guid": "c8090b62-51ce-4004-809d-9b0b8c65c76f",
       "isEnabled": true,
       "version": 1
@@ -1575,7 +1579,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 52,
+      "id": 54,
       "guid": "35c33704-7196-4862-8423-8f04799922df",
       "isEnabled": true,
       "version": 1
@@ -1634,7 +1638,7 @@
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
-      "id": 53,
+      "id": 55,
       "guid": "69f884df-4960-49d9-9918-5c8daca0ef48",
       "isEnabled": true,
       "version": 1
@@ -1644,5 +1648,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1537572926702
+  "queryTimeMS": 1544752521619
 }
