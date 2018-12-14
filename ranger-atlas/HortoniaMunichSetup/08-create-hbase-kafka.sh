@@ -84,7 +84,7 @@ fi
 #/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol ${security_protocol} --broker-list ${kafka_broker}:6667 --topic FOREX <  /tmp/forex.csv
 
 /usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --producer-property security.protocol=${security_protocol} --broker-list ${kafka_broker}:6667 --topic PRIVATE  < /tmp/private.csv
-/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --producer-property security.protocol=${security_protocol} --broker-list ${kafka_broker}:6667 --topic PRIVATE  < /tmp/private.csv
+/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --producer-property security.protocol=${security_protocol} --broker-list ${kafka_broker}:6667 --topic FOREX  < /tmp/forex.csv
 
 
 
