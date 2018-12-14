@@ -330,7 +330,7 @@ sed -i.bak "s/localhost:21000/${atlas_host}:21000/g" env_atlas.sh
 
 ./01-atlas-import-classification.sh
 #./02-atlas-import-entities.sh      ## this gives 500 error so moving to end
-./03-update-servicedefs.sh
+#./03-update-servicedefs.sh
 
         
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
