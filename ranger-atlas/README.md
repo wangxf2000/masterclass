@@ -32,14 +32,13 @@ curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-
 
 ## Known issues on HDP 3.1
 
-- Atlas doesn't come up after kerberos due to Hbase master still initializing causing script to pause.
+- On AWS, Atlas may not come up after kerberos due to Hbase master still initializing causing script to pause.
   - Fix: Manually restart Hbase, Hive, Spark2 and Atlas. Script will continue on its own.
 - Shell interpreter is removed from Zeppelin 
   - Fix: it can by manually added back via Interpreters menu in Zeppelin UI
 - Knox SSO timeout is short (30s)
   - Fix: manually increase the value of knoxsso.token.ttl in Knox settings via Ambari
-- The portion of the demo showing tag based policies for Kafka no longer works.
-  - Fix: WIP
+
 
 ## Login details 
 
