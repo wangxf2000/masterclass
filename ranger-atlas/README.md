@@ -7,6 +7,7 @@ Demo overview can be found [here](https://community.hortonworks.com/articles/151
 ## Versions tested
 
 Tested with:
+- [x] HDP 3.1.0 / Ambari 2.7.3.0
 - [x] HDP 3.0.1 / Ambari 2.7.1.0
 - [x] HDP 3.0.0 / Ambari 2.7.0.0
 
@@ -26,8 +27,19 @@ export enable_knox_sso_proxy=true
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup.sh | sudo -E bash  
 ```
 
-- This will run for about 30min. 
+- This will run for about 35min and install HDP 3.1 cluster with the Ranger/Atlas demo installed
 
+
+## Known issues on HDP 3.1
+
+- Atlas doesn't come up after kerberos due to Hbase master still initializing causing script to pause.
+  - Fix: Manually restart Hbase, Hive, Spark2 and Atlas. Script will continue on its own.
+- Shell interpreter is removed from Zeppelin 
+  - Fix: it can by manually added back via Interpreters menu in Zeppelin UI
+- Knox SSO timeout is short (30s)
+  - Fix: manually increase the value of knoxsso.token.ttl in Knox settings via Ambari
+- The portion of the demo showing tag based policies for Kafka no longer works.
+  - Fix: WIP
 
 ## Login details 
 
