@@ -664,6 +664,8 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests  
 
+sleep 10
+
 #wait until Nifi is up
 while ! echo exit | nc $(hostname -f) 9090; do echo "waiting for Nifi to come up..."; sleep 10; done
 
@@ -686,6 +688,8 @@ sudo curl -u admin:${ambari_pass} -H 'X-Requested-By: blah' -X POST -d "
       }
    ]
 }" http://localhost:8080/api/v1/clusters/${cluster_name}/requests 
+
+sleep 10
 
 #wait until hive is up
 while ! echo exit | nc $(hostname -f) 10000; do echo "waiting for Hive to come up..."; sleep 10; done
