@@ -172,6 +172,8 @@ cat << EOF > configuration-custom.json
       "timeline.metrics.cache.size": "100"
     },   
     "kafka-broker": {
+      "listeners": "SASL_PLAINTEXT://localhost:6667",
+      "security.inter.broker.protocol": "SASL_PLAINTEXT",      
       "offsets.topic.replication.factor": "1"
     },    
     "admin-properties": {
