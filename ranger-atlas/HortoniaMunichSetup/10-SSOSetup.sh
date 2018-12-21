@@ -175,9 +175,9 @@ python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.publicKey"
 python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.providerurl" "$knox_sso_url" admin "${ambari_pass}"
 
 echo "restart ranger"
-sleep 10
+sleep 20
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop RANGER via REST"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
-sleep 10
+sleep 15
 while echo exit | nc localhost 6080; do echo "waiting for Ranger to go down..."; sleep 10; done
 sleep 15
 curl -u admin:${ambari_pass} -i -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Start RANGER via REST"}, "Body": {"ServiceInfo": {"state": "STARTED"}}}' http://localhost:8080/api/v1/clusters/${cluster_name}/services/RANGER
