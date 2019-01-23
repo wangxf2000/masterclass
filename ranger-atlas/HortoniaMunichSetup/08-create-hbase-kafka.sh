@@ -100,6 +100,8 @@ if [ "${enable_kerberos}" = true  ]; then
 
    chown etl_user:hadoop /etc/security/keytabs/etl_user.keytab
    chmod g+r /etc/security/keytabs/etl_user.keytab
-
+   
+   chown root:hadoop /etc/security/keytabs/log_monitor.keytab
+   chmod g+r /etc/security/keytabs/log_monitor.keytab
 fi
 
