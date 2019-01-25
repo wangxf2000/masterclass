@@ -232,6 +232,7 @@ cat << EOF > configuration-custom.json
     "ranger-hive-audit" : {
         "xasecure.audit.is.enabled" : "true",
         "xasecure.audit.destination.hdfs" : "true",
+	"xasecure.audit.destination.hdfs.file.rollover.sec" : "300",
         "xasecure.audit.destination.solr" : "true"
     }
   }
