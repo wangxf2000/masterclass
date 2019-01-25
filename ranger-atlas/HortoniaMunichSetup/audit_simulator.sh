@@ -6,7 +6,7 @@ export hive_port=10000   ## if LLAP is not enabled
 ##export hive_port=10500   ## if LLAP is enabled
 
 users=("joe_analyst" "kate_hr" "sasha_eu_hr" "ivanna_eu_hr" "john_finance" "mark_bizdev" "jermy_contractor" "diane_csr" "etl_user")
-tables=("hortoniabank.ww_customers" "hortoniabank.us_customers" "finance.tax_2009" "finance.tax_2010" "finance.tax_2015" "cost_savings.claim_savings" "claim.provider_summary" "consent_master.consent_data")
+tables=("salary.summary_08" "salary.summary_07" "salary.salary_07" "salary.salary_08" "hortoniabank.ww_customers" "hortoniabank.us_customers" "finance.tax_2009" "finance.tax_2010" "finance.tax_2015" "cost_savings.claim_savings" "claim.provider_summary" "consent_master.consent_data")
 
 # Seed random generator
 RANDOM=$$$(date +%s)
