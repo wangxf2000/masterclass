@@ -90,8 +90,8 @@ cp /tmp/knoxidentity.jks /usr/hdp/current/knox-server/data/security/keystores/
 
 #Update signing alias in KNOX
 echo "Update signing alias in KNOX"
-python /tmp/config_update.py hdp KNOX gateway-site "gateway.signing.keystore.name" "knoxidentity.jks" admin "${ambari_pass}"
-python /tmp/config_update.py hdp KNOX gateway-site "gateway.signing.key.alias" "knoxidentity" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} KNOX gateway-site "gateway.signing.keystore.name" "knoxidentity.jks" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} KNOX gateway-site "gateway.signing.key.alias" "knoxidentity" admin "${ambari_pass}"
 
 #restart Knox
 echo "restart Knox"
@@ -170,9 +170,9 @@ ambari-server restart
 
 #STEP 4: Update SSO settings for RANGER
 echo "Update sso configs for ranger"
-python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.enabled" "true" admin "${ambari_pass}"
-python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.publicKey" "$knox_cert" admin "${ambari_pass}"
-python /tmp/config_update.py hdp RANGER ranger-admin-site "ranger.sso.providerurl" "$knox_sso_url" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} RANGER ranger-admin-site "ranger.sso.enabled" "true" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} RANGER ranger-admin-site "ranger.sso.publicKey" "$knox_cert" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} RANGER ranger-admin-site "ranger.sso.providerurl" "$knox_sso_url" admin "${ambari_pass}"
 
 echo "restart ranger"
 sleep 20
@@ -186,10 +186,10 @@ while ! echo exit | nc localhost 6080; do echo "waiting for ranger to come up...
 
 #Step 5: setup SSO for Atlas
 echo "Update sso configs for atlas"
-python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.enabled" "true" admin "${ambari_pass}"
-python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.publicKey" "$knox_cert" admin "${ambari_pass}"
-python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.providerurl" "$knox_sso_url" admin "${ambari_pass}"
-python /tmp/config_update.py hdp ATLAS application-properties "atlas.sso.knox.browser.useragent" "Mozilla,Chrome,Opera" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} ATLAS application-properties "atlas.sso.knox.enabled" "true" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} ATLAS application-properties "atlas.sso.knox.publicKey" "$knox_cert" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} ATLAS application-properties "atlas.sso.knox.providerurl" "$knox_sso_url" admin "${ambari_pass}"
+python /tmp/config_update.py ${cluster_name} ATLAS application-properties "atlas.sso.knox.browser.useragent" "Mozilla,Chrome,Opera" admin "${ambari_pass}"
 
 sleep 10
 echo "restart Atlas"
