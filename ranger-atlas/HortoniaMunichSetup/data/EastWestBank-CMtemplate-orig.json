@@ -1,0 +1,1626 @@
+{
+    "cdhVersion": "7.0.0", 
+    "cmVersion": "7.x.0", 
+    "displayName": "Cluster 1", 
+    "hostTemplates": [
+        {
+            "cardinality": 1.0, 
+            "refName": "HostTemplate-0-from-sv-eastwestbank-sec-3.vpc.cloudera.com", 
+            "roleConfigGroupsRefNames": [
+                "HBASE-1-REGIONSERVER-BASE", 
+                "HDFS-1-DATANODE-BASE", 
+                "HIVE-1-GATEWAY-BASE", 
+                "HIVE_ON_TEZ-1-GATEWAY-BASE", 
+                "IMPALA-1-IMPALAD-BASE", 
+                "KAFKA-1-GATEWAY-BASE", 
+                "KAFKA-1-KAFKA_BROKER-BASE", 
+                "KUDU-1-KUDU_TSERVER-BASE", 
+                "LIVY-1-GATEWAY-BASE", 
+                "SPARK_ON_YARN-1-GATEWAY-BASE", 
+                "SQOOP_CLIENT-1-GATEWAY-BASE", 
+                "TEZ-1-GATEWAY-BASE", 
+                "YARN-1-NODEMANAGER-BASE"
+            ]
+        }, 
+        {
+            "cardinality": 1.0, 
+            "refName": "HostTemplate-1-from-sv-eastwestbank-sec-2.vpc.cloudera.com", 
+            "roleConfigGroupsRefNames": [
+                "HBASE-1-REGIONSERVER-BASE", 
+                "HDFS-1-DATANODE-BASE", 
+                "HIVE-1-GATEWAY-BASE", 
+                "HIVE_ON_TEZ-1-GATEWAY-BASE", 
+                "IMPALA-1-IMPALAD-BASE", 
+                "KAFKA-1-KAFKA_BROKER-BASE", 
+                "KUDU-1-KUDU_TSERVER-BASE", 
+                "LIVY-1-GATEWAY-BASE", 
+                "SPARK_ON_YARN-1-GATEWAY-BASE", 
+                "SQOOP_CLIENT-1-GATEWAY-BASE", 
+                "TEZ-1-GATEWAY-BASE", 
+                "YARN-1-NODEMANAGER-BASE"
+            ]
+        }, 
+        {
+            "cardinality": 1.0, 
+            "refName": "HostTemplate-2-from-sv-eastwestbank-sec-1.vpc.cloudera.com", 
+            "roleConfigGroupsRefNames": [
+                "ATLAS-1-ATLAS_SERVER-BASE", 
+                "HBASE-1-GATEWAY-BASE", 
+                "HBASE-1-HBASETHRIFTSERVER-BASE", 
+                "HBASE-1-MASTER-BASE", 
+                "HDFS-1-BALANCER-BASE", 
+                "HDFS-1-GATEWAY-BASE", 
+                "HDFS-1-NAMENODE-1", 
+                "HDFS-1-NFSGATEWAY-BASE", 
+                "HDFS-1-SECONDARYNAMENODE-BASE", 
+                "HIVE-1-GATEWAY-BASE", 
+                "HIVE-1-HIVEMETASTORE-BASE", 
+                "HIVE_ON_TEZ-1-GATEWAY-BASE", 
+                "HIVE_ON_TEZ-1-HIVESERVER2-BASE", 
+                "HUE-1-HUE_LOAD_BALANCER-BASE", 
+                "HUE-1-HUE_SERVER-BASE", 
+                "HUE-1-KT_RENEWER-BASE", 
+                "IMPALA-1-CATALOGSERVER-BASE", 
+                "IMPALA-1-STATESTORE-BASE", 
+                "KAFKA-1-KAFKA_BROKER-BASE", 
+                "KNOX-1-KNOX_GATEWAY-BASE", 
+                "KUDU-1-KUDU_MASTER-BASE", 
+                "LIVY-1-GATEWAY-BASE", 
+                "LIVY-1-LIVY_SERVER-BASE", 
+                "OOZIE-1-OOZIE_SERVER-BASE", 
+                "RANGER-1-RANGER_ADMIN-BASE", 
+                "RANGER-1-RANGER_TAGSYNC-BASE", 
+                "RANGER-1-RANGER_USERSYNC-BASE", 
+                "SOLR-1-SOLR_SERVER-BASE", 
+                "SPARK_ON_YARN-1-GATEWAY-BASE", 
+                "SPARK_ON_YARN-1-SPARK_YARN_HISTORY_SERVER-BASE", 
+                "SQOOP_CLIENT-1-GATEWAY-BASE", 
+                "TEZ-1-GATEWAY-BASE", 
+                "YARN-1-GATEWAY-BASE", 
+                "YARN-1-JOBHISTORY-BASE", 
+                "YARN-1-RESOURCEMANAGER-1", 
+                "ZEPPELIN-1-ZEPPELIN_SERVER-BASE", 
+                "ZOOKEEPER-1-SERVER-BASE", 
+                "das-DAS_EVENT_PROCESSOR-BASE", 
+                "das-DAS_WEBAPP-BASE"
+            ]
+        }
+    ], 
+    "instantiator": {
+        "clusterName": "<changeme>", 
+        "hosts": [
+            {
+                "hostName": "<changeme>", 
+                "hostTemplateRefName": "<changeme>"
+            }, 
+            {
+                "hostNameRange": "<HOST[0001-0002]>", 
+                "hostTemplateRefName": "<changeme>"
+            }
+        ], 
+        "roleConfigGroups": [
+            {
+                "name": "", 
+                "rcgRefName": "HDFS-1-NAMENODE-1"
+            }, 
+            {
+                "name": "", 
+                "rcgRefName": "YARN-1-GATEWAY-1"
+            }, 
+            {
+                "name": "", 
+                "rcgRefName": "YARN-1-RESOURCEMANAGER-1"
+            }
+        ], 
+        "variables": [
+            {
+                "name": "HIVE-1-hive_metastore_database_host", 
+                "value": "sv-eastwestbank-sec-1.vpc.cloudera.com"
+            }, 
+            {
+                "name": "HIVE-1-hive_metastore_database_name", 
+                "value": "hive1"
+            }, 
+            {
+                "name": "HIVE-1-hive_metastore_database_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "HIVE-1-hive_metastore_database_port", 
+                "value": "3306"
+            }, 
+            {
+                "name": "HIVE-1-hive_metastore_database_type", 
+                "value": "mysql"
+            }, 
+            {
+                "name": "HIVE-1-hive_metastore_database_user", 
+                "value": "hive1"
+            }, 
+            {
+                "name": "HUE-1-database_host", 
+                "value": "sv-eastwestbank-sec-1.vpc.cloudera.com"
+            }, 
+            {
+                "name": "HUE-1-database_name", 
+                "value": "hueserverb6a9cf28e08ba841ca5b3f8ece030c4c"
+            }, 
+            {
+                "name": "HUE-1-database_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "HUE-1-database_port", 
+                "value": "3306"
+            }, 
+            {
+                "name": "HUE-1-database_type", 
+                "value": "mysql"
+            }, 
+            {
+                "name": "HUE-1-database_user", 
+                "value": "hueserverb6a9cf2"
+            }, 
+            {
+                "name": "KNOX-1-KNOX_GATEWAY-BASE-gateway_auto_discovery_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "KNOX-1-KNOX_GATEWAY-BASE-gateway_master_secret", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "KUDU-1-KUDU_MASTER-BASE-fs_data_dirs", 
+                "value": "/var/lib/kudu/master"
+            }, 
+            {
+                "name": "KUDU-1-KUDU_MASTER-BASE-fs_wal_dir", 
+                "value": "/var/lib/kudu/master"
+            }, 
+            {
+                "name": "KUDU-1-KUDU_TSERVER-BASE-fs_data_dirs", 
+                "value": "/var/lib/kudu/tserver"
+            }, 
+            {
+                "name": "KUDU-1-KUDU_TSERVER-BASE-fs_wal_dir", 
+                "value": "/var/lib/kudu/tserver"
+            }, 
+            {
+                "name": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_host", 
+                "value": "sv-eastwestbank-sec-1.vpc.cloudera.com:3306"
+            }, 
+            {
+                "name": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_name", 
+                "value": "oozieserverb6a9cf28e08ba841ca5b3f8ece030c4c"
+            }, 
+            {
+                "name": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_type", 
+                "value": "mysql"
+            }, 
+            {
+                "name": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_user", 
+                "value": "oozieserverb6a9c"
+            }, 
+            {
+                "name": "RANGER-1-RANGER_ADMIN-BASE-ranger_database_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "RANGER-1-keyadmin_user_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "RANGER-1-rangeradmin_user_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "RANGER-1-rangertagsync_user_password", 
+                "value": "<changeme>"
+            }, 
+            {
+                "name": "RANGER-1-rangerusersync_user_password", 
+                "value": "<changeme>"
+            }
+        ]
+    }, 
+    "products": [
+        {
+            "product": "CDH", 
+            "version": "7.0.0-1.cdh7.0.0.p0.1318335"
+        }
+    ], 
+    "repositories": [
+        "http://cloudera-build-4-us-west-2.vpc.cloudera.com/s3/build/1318335/cdh/7.x/parcels"
+    ], 
+    "services": [
+        {
+            "refName": "KUDU-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "fs_wal_dir", 
+                            "variable": "KUDU-1-KUDU_TSERVER-BASE-fs_wal_dir"
+                        }, 
+                        {
+                            "name": "fs_data_dirs", 
+                            "variable": "KUDU-1-KUDU_TSERVER-BASE-fs_data_dirs"
+                        }
+                    ], 
+                    "refName": "KUDU-1-KUDU_TSERVER-BASE", 
+                    "roleType": "KUDU_TSERVER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "fs_wal_dir", 
+                            "variable": "KUDU-1-KUDU_MASTER-BASE-fs_wal_dir"
+                        }, 
+                        {
+                            "name": "fs_data_dirs", 
+                            "variable": "KUDU-1-KUDU_MASTER-BASE-fs_data_dirs"
+                        }
+                    ], 
+                    "refName": "KUDU-1-KUDU_MASTER-BASE", 
+                    "roleType": "KUDU_MASTER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "enable_security", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "gflagfile_service_safety_valve", 
+                    "value": "-block_manager=file\n-use_hybrid_clock=false"
+                }
+            ], 
+            "serviceType": "KUDU"
+        }, 
+        {
+            "refName": "ZOOKEEPER-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "ZOOKEEPER-1-SERVER-BASE", 
+                    "roleType": "SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "enableSecurity", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "quorum_auth_enable_sasl", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "ZOOKEEPER"
+        }, 
+        {
+            "refName": "HDFS-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "HDFS-1-BALANCER-BASE", 
+                    "roleType": "BALANCER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "hdfs_client_config_safety_valve", 
+                            "value": "\n      <property>\n        <name>dfs.nfs.keytab.file</name>\n        <value>{{CMF_CONF_DIR}}/hdfs.keytab</value>\n      </property>"
+                        }
+                    ], 
+                    "refName": "HDFS-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "nfsgateway_config_safety_valve", 
+                            "value": "\n      <property>\n        <name>dfs.nfs.keytab.file</name>\n        <value>{{CMF_CONF_DIR}}/hdfs.keytab</value>\n      </property>"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "nfsgateway_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "nfsgateway_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HDFS-1-NFSGATEWAY-BASE", 
+                    "roleType": "NFSGATEWAY"
+                }, 
+                {
+                    "base": false, 
+                    "configs": [
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "dfs_http_port", 
+                            "value": "20101"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "namenode_config_safety_valve", 
+                            "value": "\n        <property>\n          <name>dfs.namenode.redundancy.considerLoad</name>\n          <value>false</value>\n        </property>"
+                        }, 
+                        {
+                            "name": "dfs_https_port", 
+                            "value": "20102"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "namenode_data_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "namenode_data_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "HDFS-1-NAMENODE-1", 
+                    "roleType": "NAMENODE"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "datanode_config_safety_valve", 
+                            "value": "\n        <property>\n          <name>dfs.thrift.datanode.address</name>\n          <value>0.0.0.0:20005</value>\n          <description>\n            The address where the Thrift datanode server will listen to.\n            If the port is 0 then the server will start on a free port.\n          </description>\n        </property>\n\n      <property>\n        <name>dfs.datanode.keytab.file</name>\n        <value>{{CMF_CONF_DIR}}/hdfs.keytab</value>\n      </property>"
+                        }, 
+                        {
+                            "name": "dfs_datanode_ipc_port", 
+                            "value": "20001"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "datanode_data_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "dfs_datanode_https_port", 
+                            "value": "20004"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "dfs_datanode_data_dir_perm", 
+                            "value": "700"
+                        }, 
+                        {
+                            "name": "dfs_datanode_port", 
+                            "value": "1004"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "dfs_datanode_http_port", 
+                            "value": "1006"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "datanode_data_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "HDFS-1-DATANODE-BASE", 
+                    "roleType": "DATANODE"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "dfs_secondary_http_port", 
+                            "value": "20201"
+                        }, 
+                        {
+                            "name": "secondarynamenode_checkpoint_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "dfs_secondary_https_port", 
+                            "value": "20202"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "secondarynamenode_checkpoint_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "HDFS-1-SECONDARYNAMENODE-BASE", 
+                    "roleType": "SECONDARYNAMENODE"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "enable_ranger_authorization", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "dfs_encrypt_data_transfer_algorithm", 
+                    "value": "AES/CTR/NoPadding"
+                }, 
+                {
+                    "name": "dfs_replication", 
+                    "value": "2"
+                }, 
+                {
+                    "name": "hdfs_blocks_with_corrupt_replicas_thresholds", 
+                    "value": "{\"warning\":\"2.5\",\"critical\":\"3.0\"}"
+                }, 
+                {
+                    "name": "hadoop_security_authentication", 
+                    "value": "kerberos"
+                }, 
+                {
+                    "name": "core_site_safety_valve", 
+                    "value": ""
+                }, 
+                {
+                    "name": "hadoop_security_authorization", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "hadoop_secure_web_ui", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "HDFS"
+        }, 
+        {
+            "refName": "HBASE-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "hbase_regionserver_info_port", 
+                            "value": "22102"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "hbase_regionserver_port", 
+                            "value": "22101"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HBASE-1-REGIONSERVER-BASE", 
+                    "roleType": "REGIONSERVER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "hbase_master_info_port", 
+                            "value": "22002"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "hbase_master_port", 
+                            "value": "22001"
+                        }
+                    ], 
+                    "refName": "HBASE-1-MASTER-BASE", 
+                    "roleType": "MASTER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HBASE-1-HBASETHRIFTSERVER-BASE", 
+                    "roleType": "HBASETHRIFTSERVER"
+                }, 
+                {
+                    "base": true, 
+                    "refName": "HBASE-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "hbase_thriftserver_security_authentication", 
+                    "value": "auth-conf"
+                }, 
+                {
+                    "name": "hbase_security_authentication", 
+                    "value": "kerberos"
+                }, 
+                {
+                    "name": "hbase_security_authorization", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "hbase_enable_indexing", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "hbase_enable_replication", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "zookeeper_session_timeout", 
+                    "value": "30000"
+                }
+            ], 
+            "serviceType": "HBASE"
+        }, 
+        {
+            "refName": "OOZIE-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "oozie_database_type", 
+                            "variable": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_type"
+                        }, 
+                        {
+                            "name": "oozie_email_smtp_host", 
+                            "value": "receive-mail-ec2-1.vpc.cloudera.com"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "oozie_database_password", 
+                            "variable": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_password"
+                        }, 
+                        {
+                            "name": "oozie_database_user", 
+                            "variable": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_user"
+                        }, 
+                        {
+                            "name": "oozie_database_host", 
+                            "variable": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_host"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "oozie_database_name", 
+                            "variable": "OOZIE-1-OOZIE_SERVER-BASE-oozie_database_name"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "oozie_email_from_address", 
+                            "value": "systest@receive-mail-ec2-1.vpc.cloudera.com"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "OOZIE-1-OOZIE_SERVER-BASE", 
+                    "roleType": "OOZIE_SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "oozie_upload_sharelib_concurrency", 
+                    "value": "1"
+                }, 
+                {
+                    "name": "oozie_upload_sharelib_cmd_timeout", 
+                    "value": "540"
+                }
+            ], 
+            "serviceType": "OOZIE"
+        }, 
+        {
+            "refName": "HIVE-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "role_health_suppression_hivemetastore_canary_health", 
+                            "value": "true"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "hive_metastore_java_heapsize", 
+                            "value": "1073741824"
+                        }
+                    ], 
+                    "refName": "HIVE-1-HIVEMETASTORE-BASE", 
+                    "roleType": "HIVEMETASTORE"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "hive_client_config_safety_valve", 
+                            "value": "\n      <property>\n        <name>hbase.zookeeper.quorum</name>\n        <value>sv-eastwestbank-sec-1.vpc.cloudera.com</value>\n      </property>\n      <property>\n        <name>hbase.zookeeper.property.clientPort</name>\n        <value>2181</value>\n      </property>"
+                        }
+                    ], 
+                    "refName": "HIVE-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "hive_metastore_database_password", 
+                    "variable": "HIVE-1-hive_metastore_database_password"
+                }, 
+                {
+                    "name": "hive_metastore_database_name", 
+                    "variable": "HIVE-1-hive_metastore_database_name"
+                }, 
+                {
+                    "name": "hive_metastore_database_user", 
+                    "variable": "HIVE-1-hive_metastore_database_user"
+                }, 
+                {
+                    "name": "hive_metastore_database_host", 
+                    "variable": "HIVE-1-hive_metastore_database_host"
+                }, 
+                {
+                    "name": "hive_metastore_database_type", 
+                    "variable": "HIVE-1-hive_metastore_database_type"
+                }, 
+                {
+                    "name": "hive_metastore_database_port", 
+                    "variable": "HIVE-1-hive_metastore_database_port"
+                }
+            ], 
+            "serviceType": "HIVE"
+        }, 
+        {
+            "refName": "HUE-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HUE-1-HUE_SERVER-BASE", 
+                    "roleType": "HUE_SERVER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "keytab_reinit_frequency", 
+                            "value": "600"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HUE-1-KT_RENEWER-BASE", 
+                    "roleType": "KT_RENEWER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HUE-1-HUE_LOAD_BALANCER-BASE", 
+                    "roleType": "HUE_LOAD_BALANCER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "database_password", 
+                    "variable": "HUE-1-database_password"
+                }, 
+                {
+                    "name": "database_port", 
+                    "variable": "HUE-1-database_port"
+                }, 
+                {
+                    "name": "database_host", 
+                    "variable": "HUE-1-database_host"
+                }, 
+                {
+                    "name": "database_user", 
+                    "variable": "HUE-1-database_user"
+                }, 
+                {
+                    "name": "database_name", 
+                    "variable": "HUE-1-database_name"
+                }, 
+                {
+                    "name": "database_type", 
+                    "variable": "HUE-1-database_type"
+                }
+            ], 
+            "serviceType": "HUE"
+        }, 
+        {
+            "refName": "SOLR-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "solr_java_opts", 
+                            "value": "{{JAVA_GC_ARGS}} -Dsolr.ulog.tlogDfsReplication=2"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "SOLR-1-SOLR_SERVER-BASE", 
+                    "roleType": "SOLR_SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "solr_security_authentication", 
+                    "value": "kerberos"
+                }
+            ], 
+            "serviceType": "SOLR"
+        }, 
+        {
+            "refName": "YARN-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_local_data_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_log_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_local_data_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_log_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_recovery_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "nodemanager_recovery_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "YARN-1-NODEMANAGER-BASE", 
+                    "roleType": "NODEMANAGER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "YARN-1-JOBHISTORY-BASE", 
+                    "roleType": "JOBHISTORY"
+                }, 
+                {
+                    "base": true, 
+                    "refName": "YARN-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }, 
+                {
+                    "base": false, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "YARN-1-RESOURCEMANAGER-1", 
+                    "roleType": "RESOURCEMANAGER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "hadoop_secure_web_ui", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "YARN"
+        }, 
+        {
+            "refName": "IMPALA-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "logbuflevel", 
+                            "value": "-1"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "IMPALA-1-STATESTORE-BASE", 
+                    "roleType": "STATESTORE"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "logbuflevel", 
+                            "value": "-1"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "IMPALA-1-CATALOGSERVER-BASE", 
+                    "roleType": "CATALOGSERVER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "impalad_scratch_directories_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "logbuflevel", 
+                            "value": "-1"
+                        }, 
+                        {
+                            "name": "impalad_memory_limit", 
+                            "value": "53381958860"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "impalad_scratch_directories_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "impala_graceful_shutdown_deadline", 
+                            "value": "5"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "IMPALA-1-IMPALAD-BASE", 
+                    "roleType": "IMPALAD"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "impala_cmd_args_safety_valve", 
+                    "value": "--enable_orc_scanner=true"
+                }, 
+                {
+                    "name": "all_admission_control_enabled", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "admission_control_enabled", 
+                    "value": "true"
+                }, 
+                {
+                    "name": "kerberos_reinit_interval", 
+                    "value": "10"
+                }, 
+                {
+                    "name": "enable_core_dump", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "IMPALA"
+        }, 
+        {
+            "refName": "SQOOP_CLIENT-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "SQOOP_CLIENT-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceType": "SQOOP_CLIENT"
+        }, 
+        {
+            "refName": "SPARK_ON_YARN-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "history_server_spnego_enabled", 
+                            "value": "true"
+                        }
+                    ], 
+                    "refName": "SPARK_ON_YARN-1-SPARK_YARN_HISTORY_SERVER-BASE", 
+                    "roleType": "SPARK_YARN_HISTORY_SERVER"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "spark_network_encryption_enabled", 
+                            "value": "true"
+                        }, 
+                        {
+                            "name": "spark_io_encryption_enabled", 
+                            "value": "true"
+                        }
+                    ], 
+                    "refName": "SPARK_ON_YARN-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "spark_authenticate", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "SPARK_ON_YARN"
+        }, 
+        {
+            "refName": "KAFKA-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "KAFKA-1-KAFKA_BROKER-BASE", 
+                    "roleType": "KAFKA_BROKER"
+                }, 
+                {
+                    "base": true, 
+                    "refName": "KAFKA-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "kerberos.auth.enable", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "KAFKA"
+        }, 
+        {
+            "refName": "ATLAS-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "atlas_kafka_bootstrap_servers", 
+                            "value": "sv-eastwestbank-sec-2.vpc.cloudera.com:9092,sv-eastwestbank-sec-1.vpc.cloudera.com:9092,sv-eastwestbank-sec-3.vpc.cloudera.com:9092"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "conf/atlas-application.properties_role_safety_valve", 
+                            "value": "atlas.audit.hbase.zookeeper.quorum=sv-eastwestbank-sec-1.vpc.cloudera.com:2181\natlas.graph.storage.hostname=sv-eastwestbank-sec-1.vpc.cloudera.com"
+                        }
+                    ], 
+                    "refName": "ATLAS-1-ATLAS_SERVER-BASE", 
+                    "roleType": "ATLAS_SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "kerberos.auth.enable", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "ATLAS"
+        }, 
+        {
+            "refName": "HIVE_ON_TEZ-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "HIVE_ON_TEZ-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "hive_on_tez_hs2_exec_local_scratch_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "hive_on_tez_hs2_exec_local_scratch_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "hive_on_tez_hs2_downloaded_resources_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "hive_on_tez_hs2_downloaded_resources_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "heap_dump_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }
+                    ], 
+                    "refName": "HIVE_ON_TEZ-1-HIVESERVER2-BASE", 
+                    "roleType": "HIVESERVER2"
+                }
+            ], 
+            "serviceType": "HIVE_ON_TEZ"
+        }, 
+        {
+            "refName": "KNOX-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "gateway_auto_discovery_password", 
+                            "variable": "KNOX-1-KNOX_GATEWAY-BASE-gateway_auto_discovery_password"
+                        }, 
+                        {
+                            "name": "gateway_knox_admin_groups", 
+                            "value": "knoxui"
+                        }, 
+                        {
+                            "name": "gateway_master_secret", 
+                            "variable": "KNOX-1-KNOX_GATEWAY-BASE-gateway_master_secret"
+                        }, 
+                        {
+                            "name": "gateway_auto_discovery_address", 
+                            "value": "http://sv-eastwestbank-sec-1.vpc.cloudera.com:7180"
+                        }, 
+                        {
+                            "name": "gateway_auto_discovery_user", 
+                            "value": "admin"
+                        }, 
+                        {
+                            "name": "gateway_auto_discovery_cluster", 
+                            "value": "Cluster 1"
+                        }, 
+                        {
+                            "name": "gateway_auto_discovery_enabled", 
+                            "value": "true"
+                        }
+                    ], 
+                    "refName": "KNOX-1-KNOX_GATEWAY-BASE", 
+                    "roleType": "KNOX_GATEWAY"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "kerberos.auth.enabled", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "KNOX"
+        }, 
+        {
+            "refName": "LIVY-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "LIVY-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "LIVY-1-LIVY_SERVER-BASE", 
+                    "roleType": "LIVY_SERVER"
+                }
+            ], 
+            "serviceType": "LIVY"
+        }, 
+        {
+            "refName": "RANGER-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "ranger_database_host", 
+                            "value": "sv-eastwestbank-sec-1.vpc.cloudera.com"
+                        }, 
+                        {
+                            "name": "ranger_database_user", 
+                            "value": "rangeradmin"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "ranger_database_name", 
+                            "value": "ranger1"
+                        }, 
+                        {
+                            "name": "ranger_database_type", 
+                            "value": "PostgreSQL"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "ranger_database_password", 
+                            "variable": "RANGER-1-RANGER_ADMIN-BASE-ranger_database_password"
+                        }
+                    ], 
+                    "refName": "RANGER-1-RANGER_ADMIN-BASE", 
+                    "roleType": "RANGER_ADMIN"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "RANGER-1-RANGER_TAGSYNC-BASE", 
+                    "roleType": "RANGER_TAGSYNC"
+                }, 
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }
+                    ], 
+                    "refName": "RANGER-1-RANGER_USERSYNC-BASE", 
+                    "roleType": "RANGER_USERSYNC"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "keyadmin_user_password", 
+                    "variable": "RANGER-1-keyadmin_user_password"
+                }, 
+                {
+                    "name": "rangerusersync_user_password", 
+                    "variable": "RANGER-1-rangerusersync_user_password"
+                }, 
+                {
+                    "name": "ranger_plugin_hdfs_audit_url", 
+                    "value": "hdfs://sv-eastwestbank-sec-1.vpc.cloudera.com/ranger/audit"
+                }, 
+                {
+                    "name": "rangertagsync_user_password", 
+                    "variable": "RANGER-1-rangertagsync_user_password"
+                }, 
+                {
+                    "name": "rangeradmin_user_password", 
+                    "variable": "RANGER-1-rangeradmin_user_password"
+                }
+            ], 
+            "serviceType": "RANGER"
+        }, 
+        {
+            "refName": "TEZ-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "TEZ-1-GATEWAY-BASE", 
+                    "roleType": "GATEWAY"
+                }
+            ], 
+            "serviceType": "TEZ"
+        }, 
+        {
+            "refName": "ZEPPELIN-1", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "configs": [
+                        {
+                            "name": "log_directory_free_space_absolute_thresholds", 
+                            "value": "{\"critical\":\"never\",\"warning\":\"never\"}"
+                        }, 
+                        {
+                            "name": "log_directory_free_space_percentage_thresholds", 
+                            "value": "{\"critical\":\"10.0\",\"warning\":\"20.0\"}"
+                        }, 
+                        {
+                            "name": "zeppelin.shiro.main.block", 
+                            "value": ""
+                        }, 
+                        {
+                            "name": "zeppelin.shiro.urls.block", 
+                            "value": "/api/version = anon\n/api/interpreter/setting/restart/** = authc\n/** = authc"
+                        }, 
+                        {
+                            "name": "zeppelin.shiro.user.block", 
+                            "value": "admin = BadPass#1, admin\njoe_analyst=BadPass#1\nivanna_eu_hr=BadPass#1\netl_user=BadPass#1\nscott_intern=BadPass#1"
+                        }
+                    ], 
+                    "refName": "ZEPPELIN-1-ZEPPELIN_SERVER-BASE", 
+                    "roleType": "ZEPPELIN_SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "knox_service", 
+                    "ref": "none"
+                }, 
+                {
+                    "name": "zeppelin.authentication.method.kerberos", 
+                    "value": "true"
+                }
+            ], 
+            "serviceType": "ZEPPELIN"
+        }, 
+        {
+            "refName": "das", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "das-DAS_EVENT_PROCESSOR-BASE", 
+                    "roleType": "DAS_EVENT_PROCESSOR"
+                }, 
+                {
+                    "base": true, 
+                    "refName": "das-DAS_WEBAPP-BASE", 
+                    "roleType": "DAS_WEBAPP"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "tez_service", 
+                    "ref": "TEZ-1"
+                }, 
+                {
+                    "name": "zookeeper_service", 
+                    "ref": "ZOOKEEPER-1"
+                }, 
+                {
+                    "name": "hive_on_tez_service", 
+                    "ref": "HIVE_ON_TEZ-1"
+                }, 
+                {
+                    "name": "ranger_service", 
+                    "ref": "RANGER-1"
+                }, 
+                {
+                    "name": "knox_service", 
+                    "ref": "KNOX-1"
+                }
+            ], 
+            "serviceType": "DAS"
+        }
+    ]
+}
