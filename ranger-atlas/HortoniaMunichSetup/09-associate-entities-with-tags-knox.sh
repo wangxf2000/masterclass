@@ -5,7 +5,7 @@
 #atlas_curl="curl -u admin:${atlas_pass}"
 #atlas_url="http://${atlas_host}:21000/api/atlas"
 
-atlas_curl="curl -v -k -X GET  -u ${user}:${password}"
+atlas_curl="curl -k -X GET  -u ${user}:${password}"
 atlas_url="https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/atlas/api/atlas"
 cluster_name="cm"
 
