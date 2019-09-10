@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #set -o xtrace
-#Run from DE cluster
+#Run from DE cluster with at least 2 worker nodes
 
 export env_name='testenv-01'       ## needed for Ranger/atlas API
 export datalake_name='testenv-01'  ## needed to create Ranger Admins role for group: cdp_<env_name>. This might be same as datalake_name
-export user='myuserid'              ## make sure IPA password is set for this user first
+export user='myuserid'              ## Admin user. make sure IPA password is set for this user first
 export password='BadPass#1'         ## replace with pasword
 export lake_knox='10.10.0.5'       ## private IP of Knox in DataLake
 export s3bucket="s3a://mybucket"   ##replace with your S3 bucket
