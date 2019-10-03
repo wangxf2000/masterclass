@@ -15,11 +15,12 @@ chmod +x *.sh
 useradd rangerlookup
 
 
+echo "Waiting 30s for Ranger usersync..."
+sleep 30
 
 
 ranger_curl="curl -u admin:${ranger_password}"
 ranger_url="http://localhost:6080/service"
-
 
 
 ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: application/json" ${ranger_url}/public/v2/api/roles  -d @- <<EOF
