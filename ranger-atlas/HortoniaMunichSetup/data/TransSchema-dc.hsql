@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS worldwidebank.ww_customers_trans(
                                   , Longitude            DOUBLE
                                 )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/hortoniabank/ww_customers_trans'
+                                  LOCATION '/hive_data/worldwidebank/ww_customers_trans'
                                   TBLPROPERTIES ('transactional'='true');
                                   
 insert into worldwidebank.ww_customers_trans select * from worldwidebank.ww_customers;                                
@@ -109,7 +109,7 @@ CREATE  TABLE IF NOT EXISTS worldwidebank.us_customers_trans(
                                   , Longitude            DOUBLE
                                  )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/hortoniabank/us_customers_trans'
+                                  LOCATION '/hive_data/worldwidebank/us_customers_trans'
                                   TBLPROPERTIES ('transactional'='true');
                                  
 insert into worldwidebank.us_customers_trans select * from worldwidebank.us_customers;                                
