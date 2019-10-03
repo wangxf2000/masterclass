@@ -77,11 +77,11 @@ sudo -u hdfs hdfs dfs -mkdir -p /apps/hive/share/udfs/
 sudo -u hdfs hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/share/udfs/
 sudo -u hdfs hdfs  dfs -chown -R hive:hadoop  /apps
 
-#TODO change these files: rename hortonia
+
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sudo -u hdfs ./05-create-hdfs-user-folders.sh
 sudo -u hdfs ./06-copy-data-to-hdfs-dc.sh
-
+sudo -u hdfs hdfs dfs -ls -R /hive_data
 
 sudo -u hive beeline  -n hive -f ./data/HiveSchema-dc.hsql
 sudo -u hive beeline  -n hive -f ./data/TransSchema-dc.hsql
