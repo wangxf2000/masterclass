@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS worldwidebank LOCATION '/hive_data/hortoniabank';
+CREATE DATABASE IF NOT EXISTS worldwidebank LOCATION '/hive_data/worldwidebank';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.ww_customers(
                                     Gender               STRING
@@ -44,7 +44,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.ww_customers(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hortoniabank/ww_customers'
+                                  LOCATION '/hive_data/worldwidebank/ww_customers'
 				  tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.us_customers(
@@ -90,7 +90,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.us_customers(
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/hortoniabank/us_customers'
+                                   LOCATION '/hive_data/worldwidebank/us_customers'
 				   tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.eu_countries (
@@ -100,7 +100,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.eu_countries (
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/hortoniabank/eu_countries';
+                                   LOCATION '/hive_data/worldwidebank/eu_countries';
 
 
 CREATE DATABASE IF NOT EXISTS finance LOCATION '/hive_data/finance';
