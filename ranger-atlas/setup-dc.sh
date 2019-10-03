@@ -1,3 +1,5 @@
+#run on CDP-DC master node
+
 export ranger_password=${ranger_password:-admin123}
 export atlas_pass=${atlas_pass:-admin}
 export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
