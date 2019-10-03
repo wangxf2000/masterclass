@@ -16,7 +16,7 @@ useradd rangerlookup
 
 
 echo "Waiting 30s for Ranger usersync..."
-sleep 30
+sleep 60
 
 
 ranger_curl="curl -u admin:${ranger_password}"
