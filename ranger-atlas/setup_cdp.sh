@@ -130,7 +130,7 @@ hdfs dfs -put data/employees.csv                    ${s3base}/hr/employees/
 hdfs dfs -ls -h -R ${s3base}
 
 #9. Create Hive tables
-hdfs dfs -put /opt/cloudera/parcels/CDH-7.0.0-1.cdh7.0.0.p0.*/lib/hive/lib/hive-exec.jar /user/${user}
+hdfs dfs -put /opt/cloudera/parcels/CDH-7*/lib/hive/lib/hive-exec.jar /user/${user}
 
 sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/HiveSchema-cloud.hsql
 sed -i.bak "s|__user__|${user}|g" ./data/HiveSchema-cloud.hsql
