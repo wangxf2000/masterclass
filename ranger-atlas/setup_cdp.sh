@@ -7,7 +7,7 @@ export datalake_name='testenv-01'  ## needed to create Ranger Admins role for gr
 export user='myuserid'              ## Admin user. make sure IPA password is set for this user first
 export password='BadPass#1'         ## replace with pasword
 export lake_knox='10.10.0.5'       ## private IP of Knox in DataLake
-export s3bucket="s3a://mybucket"   ##replace with your S3 bucket
+export s3bucket="s3a://mybucket/data"   ##replace with your data S3 bucket
 
 #1. Confirm demo users/groups are in Ranger (e.g. joe_analyst, michelle_dpo, jeremy_contractor, diane_csr) else Ranger policy import will fail
 #2. Confirm that group cdp_env_admin_<env name> is created and sync'd to Ranger. Confirm above user is part of this group or he won't have admin rights
@@ -139,6 +139,11 @@ beeline -f ./data/HiveSchema-cloud.hsql
 
 sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/TransSchema-cloud.hsql
 beeline -f ./data/TransSchema-cloud.hsql
+
+#optionally setup Airline demo dataset too
+hdfs dfs -cp s3a://cldr-airline-demo/ ${s3bucket}
+sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/AirlineSchema-cloud.hql
+beeline -f ./data/AirlineSchema-cloud.hql
 
 #10. associate tags with Hive entities
 chmod +x ./09-associate-entities-with-tags-knox.sh
