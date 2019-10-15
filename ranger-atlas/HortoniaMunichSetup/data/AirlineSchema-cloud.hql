@@ -1,5 +1,5 @@
 -- Airlines ORC
-​
+
 create database if not exists airlines_new_orc;
 use airlines_new_orc;
 
