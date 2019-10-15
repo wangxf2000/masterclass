@@ -6,7 +6,7 @@ export env_name='testenv-01'       ## needed for Ranger/atlas API
 export datalake_name='testenv-01'  ## needed to create Ranger Admins role for group: cdp_<env_name>. This might be same as datalake_name
 export user='myuserid'              ## Admin user. make sure IPA password is set for this user first
 export password='BadPass#1'         ## replace with pasword
-export lake_knox='10.10.0.5'       ## private IP of Knox in DataLake
+export lake_knox='10.10.0.5'       ## private IP address of DataLake master node
 export s3bucket="s3a://mybucket/data"   ##replace with your data S3 bucket
 
 #1. Confirm demo users/groups are in Ranger (e.g. joe_analyst, michelle_dpo, jeremy_contractor, diane_csr) else Ranger policy import will fail
