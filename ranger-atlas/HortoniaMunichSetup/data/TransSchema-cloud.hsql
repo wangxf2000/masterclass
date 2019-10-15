@@ -10,10 +10,8 @@ CREATE TABLE IF NOT EXISTS consent_master.consent_data_trans(
                                   , ThirdPartyConsent     		STRING
                                   , ThirdPartyConsentStartDate  DATE
                                 ) 
-                                   CLUSTERED BY(Country) INTO 3 BUCKETS   
-                                  STORED AS ORC
-                                  LOCATION '__mybucket__/wwbankdata/rawzone/consent-trans'
-                                  TBLPROPERTIES ('transactional'='true');
+                                   CLUSTERED BY(Country) INTO 3 BUCKETS;   
+
 
 insert into consent_master.consent_data_trans select * from consent_master.consent_data;
 
@@ -60,10 +58,8 @@ CREATE TABLE IF NOT EXISTS worldwidebank.ww_customers_trans(
                                   , Height               INT
                                   , Latitude             DOUBLE
                                   , Longitude            DOUBLE
-                                )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
-                                  STORED AS ORC
-                                  LOCATION '__mybucket__/wwbankdata/rawzone/ww_customers_trans'
-                                  TBLPROPERTIES ('transactional'='true');
+                                )  CLUSTERED BY(Gender) INTO 2 BUCKETS;
+
                                   
 insert into worldwidebank.ww_customers_trans select * from worldwidebank.ww_customers;                                
                                 
@@ -107,10 +103,7 @@ CREATE  TABLE IF NOT EXISTS worldwidebank.us_customers_trans(
                                   , Height               INT
                                   , Latitude             DOUBLE
                                   , Longitude            DOUBLE
-                                 )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
-                                  STORED AS ORC
-                                  LOCATION '__mybucket__/wwbankdata/rawzone/us_customers_trans'
-                                  TBLPROPERTIES ('transactional'='true');
+                                 )  CLUSTERED BY(Gender) INTO 2 BUCKETS;   
                                  
 insert into worldwidebank.us_customers_trans select * from worldwidebank.us_customers;                                
                                  
@@ -124,11 +117,7 @@ CREATE TABLE IF NOT EXISTS erasure_master.data_erasure_trans(
                                   , RTBFRequested     			STRING
                                   , RequestDate   				DATE
                                   , ErasureOverride     		STRING
-                                ) CLUSTERED BY(Country) INTO 2 BUCKETS   
-                                  STORED AS ORC
-                                  LOCATION '__mybucket__/wwbankdata/rawzone/rtbf_trans'
-                                  TBLPROPERTIES ('transactional'='true');
-                                 
+                                ) CLUSTERED BY(Country) INTO 2 BUCKETS;                                    
                                 
 insert into erasure_master.data_erasure_trans select Country, CountryFull, InsuranceID, MarketingConsent, MarketingConsentStartDate, LoyaltyConsent from consent_master.consent_data limit 500;                                                                
 
