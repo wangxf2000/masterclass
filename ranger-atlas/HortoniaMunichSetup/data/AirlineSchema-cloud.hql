@@ -84,9 +84,9 @@ load data inpath '__mybucket__/airlines_new_orc.db/flights/year=2005' into table
 load data inpath '__mybucket__/airlines_new_orc.db/flights/year=2006' into table flights partition (year=2006);
 load data inpath '__mybucket__/airlines_new_orc.db/flights/year=2007' into table flights partition (year=2007);
 load data inpath '__mybucket__/airlines_new_orc.db/flights/year=2008' into table flights partition (year=2008);
-​
+
 -- Airlines Parquet
-​
+
 create database if not exists airlines_new_parquet;
 use airlines_new_parquet;
 
