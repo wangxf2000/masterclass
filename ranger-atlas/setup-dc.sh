@@ -1,9 +1,13 @@
 #run on CDP-DC master node
-
-export ranger_password=${ranger_password:-admin123}
+export ranger_password=${ranger_password:-BadPass#1}
 export atlas_pass=${atlas_pass:-admin}
-export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
+export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 export cluster_name=${cluster_name:-cm}
+
+#export ranger_password=${ranger_password:-admin123}
+#export atlas_pass=${atlas_pass:-admin}
+#export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
+#export cluster_name=${cluster_name:-cm}
 
 yum install -y git jq
 cd /tmp
@@ -88,17 +92,6 @@ sudo -u hive beeline  -n hive -f ./data/TransSchema-dc.hsql
 
 
 
-sed -i.bak "s/21000/31000/g" env_atlas.sh
-sed -i.bak "s/localhost/$(hostname -f)/g" env_atlas.sh
-sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
-
-./01-atlas-import-classification.sh
-
-
-
-./09-associate-entities-with-tags-dc.sh
-
-
 echo "Creating users in KDC..."
 kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
 kadmin.local -q "addprinc -randkey kate_hr/$(hostname -f)@${kdc_realm}"
@@ -125,6 +118,17 @@ kadmin.local -q "xst -k kate_hr.keytab kate_hr/$(hostname -f)@${kdc_realm}"
 kadmin.local -q "xst -k etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}" 
 chmod +r *.keytab
 
+-------------------------
+sed -i.bak "s/21000/31000/g" env_atlas.sh
+sed -i.bak "s/localhost/$(hostname -f)/g" env_atlas.sh
+sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
+
+./01-atlas-import-classification.sh
+
+./08-create-hbase-kafka-dc.sh
+
+./09-associate-entities-with-tags-dc.sh
+
 
 -------------------------
 #as joe
@@ -146,21 +150,67 @@ select * from cost_savings.claim_savings limit 5
 
 -------------------------
 
-WORKAROUNDS:
-
+CM changes
 -----------------------------
 CM > Hive  >  ranger-hive-security.xml
+ranger.plugin.hive.policy.rest.supports.policy.deltas=false
+ranger.plugin.hive.tag.rest.supports.tag.deltas=false
+
+CM > Impala  >  ranger-impala-security.xml
 ranger.plugin.hive.policy.rest.supports.policy.deltas=false 
-ranger.plugin.hive.policy.rest.supports.tags.deltas=false
+ranger.plugin.hive.tag.rest.supports.tag.deltas=false
 
 
-CM > Impala  >  ranger-impala-security.xm
-ranger.plugin.hive.policy.rest.supports.policy.deltas=false 
-ranger.plugin.hive.policy.rest.supports.tags.deltas=false
+Kafka server: offsets.topic.replication.factor=1
+Atlas server: atlas.kafka.bootstrap.servers=cdp.cloudera.com:9092
+Ranger: ranger.tagsync.source.atlas=true
 
-   
------------------------------
-WIP
+YARN:
+yarn.nodemanager.resource.memory-mb=20gb
+yarn.scheduler.maximum-allocation-mb=8gb   
+
+
+------------------------------
+Ranger changes:
+kafka > Atlas_entities > rangertagsync > create/configure/consume
+
+---------------------------------
+Zeppelin changes:
+
+CM > zeppelin > disable Knox
+
+zeppelin.shiro.user.block
+admin=admin,admins
+joe_analyst=BadPass#1,admins
+ivanna_eu_hr=BadPass#1,admins
+etl_user = BadPass#1,admins
+
+
+#Zeppelin - HDFS changes
+Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml
+hadoop.proxyuser.zeppelin.groups=*
+hadoop.proxyuser.zeppelin.hosts=*
+
+#Zeppelin shiro urls block - remove these
+roles[{{zeppelin_admin_group}}], /api/notebook-repositories/** = authc, roles[{{zeppelin_admin_group}], /api/configurations/** = authc, roles[{{zeppelin_admin_group}}], /api/credential/** = authc, roles[{{zeppelin_admin_group}}], /api/admin/** = authc, roles[{{zeppelin_admin_group}}], /** = authc]
+
+
+#Add Zeppelin jdbc interpreter then add below configs
+hive.driver=org.apache.hive.jdbc.HiveDriver
+hive.password=	
+hive.proxy.user.property	=hive.server2.proxy.user
+hive.url	=jdbc:hive2://172.31.21.93:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2
+hive.user	=hive
+
+
+#restart zeppelin to auto-populate below
+zeppelin.jdbc.principal 
+zeppelin.jdbc.keytab.location 
+
+#import notebooks, enable JDBC interpreter in notebook and run
+
+
+
 KnoxUI (knoxui/knoxui) > sandbox > 
 
    <service>
