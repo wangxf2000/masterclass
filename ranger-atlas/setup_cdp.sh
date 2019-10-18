@@ -74,6 +74,7 @@ ${ranger_curl} -i \
 
 #5a. now import the Ranger resource based policies from UI (if error try incognito or diff browser/machine)
 #5b. now import the Ranger tag based policies from UI (if error try incognito or diff browser/machine)
+# You can download both policy jsons from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies
 # TODO use CLI to automate import policies
 
 #6. Add classifications
