@@ -74,7 +74,7 @@ ${ranger_curl} -i \
 sleep 10
 
 
-#Now **manually** import ranger policies
+#STOP! Now **manually** import ranger policies from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies
 
 
 sudo -u hdfs hdfs dfs -mkdir -p /apps/hive/share/udfs/
