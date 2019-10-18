@@ -148,6 +148,20 @@ select fed_tax from finance.tax_2015
 select * from cost_savings.claim_savings limit 5
 
 
+#sparksql
+kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@CLOUDERA.COM
+spark-shell --jars /opt/cloudera/parcels/CDH/jars/hive-warehouse-connector-assembly*.jar     --conf spark.sql.hive.hiveserver2.jdbc.url="jdbc:hive2://$(hostname -f):10000/default;"    --conf "spark.sql.hive.hiveserver2.jdbc.url.principal=hive/$(hostname -f)@CLOUDERA.COM"    --conf spark.security.credentials.hiveserver2.enabled=false
+
+import com.hortonworks.hwc.HiveWarehouseSession
+import com.hortonworks.hwc.HiveWarehouseSession._
+val hive = HiveWarehouseSession.session(spark).build()
+
+hive.execute("SELECT surname, streetaddress, country, age, password, nationalid, ccnumber, mrn, birthday FROM worldwidebank.us_customers").show(10)
+hive.execute("select zipcode, insuranceid, bloodtype from worldwidebank.ww_customers").show(10)
+hive.execute("select * from cost_savings.claim_savings").show(10)
+
+
+
 -------------------------
 
 CM changes
