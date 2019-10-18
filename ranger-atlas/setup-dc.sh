@@ -117,6 +117,7 @@ kadmin.local -q "xst -k ivanna_eu_hr.keytab ivanna_eu_hr/$(hostname -f)@${kdc_re
 kadmin.local -q "xst -k kate_hr.keytab kate_hr/$(hostname -f)@${kdc_realm}"
 kadmin.local -q "xst -k etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}" 
 chmod +r *.keytab
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
 -------------------------
 sed -i.bak "s/21000/31000/g" env_atlas.sh
