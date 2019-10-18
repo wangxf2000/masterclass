@@ -179,6 +179,7 @@ ranger.plugin.hive.tag.rest.supports.tag.deltas=false
 Kafka server: offsets.topic.replication.factor=1
 Atlas server: atlas.kafka.bootstrap.servers=cdp.cloudera.com:9092
 Ranger: ranger.tagsync.source.atlas=true
+Hbase: Enable Atlas Hook=true
 
 YARN:
 yarn.nodemanager.resource.memory-mb=20gb
