@@ -147,7 +147,7 @@ ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 #fetch guid for table hr.employees_encrypted.email@${cluster_name}
 guid=$(${atlas_curl}  ${atlas_url}/v2/entity/uniqueAttribute/type/hive_column?attr:qualifiedName=hr.employees_encrypted.email@${cluster_name} | jq '.entity.guid'  | tr -d '"')
 
-#add ENCRYPTED tag with type=phone
+#add ENCRYPTED tag with type=email
 ${atlas_curl} ${atlas_url}/entities/${guid}/traits \
 -X POST -H 'Content-Type: application/json' \
 --data-binary '{"jsonClass":"org.apache.atlas.typesystem.json.InstanceSerialization$_Struct","typeName":"ENCRYPTED", "values":{"type": "email"}}'
