@@ -1,5 +1,6 @@
 #run on CDP-DC master node
 export ranger_password=${ranger_password:-BadPass#1}
+export atlas_host=${atlas_host:-$(hostname -f)}
 export atlas_pass=${atlas_pass:-admin}
 export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 export cluster_name=${cluster_name:-cm}
@@ -121,7 +122,7 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
 -------------------------
 sed -i.bak "s/21000/31000/g" env_atlas.sh
-sed -i.bak "s/localhost/$(hostname -f)/g" env_atlas.sh
+sed -i.bak "s/localhost/${atlas_host}/g" env_atlas.sh
 sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
 
 ./01-atlas-import-classification.sh
