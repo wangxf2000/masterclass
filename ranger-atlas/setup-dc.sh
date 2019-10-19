@@ -1,14 +1,19 @@
 #run on CDP-DC master node
-export ranger_password=${ranger_password:-BadPass#1}
-export atlas_host=${atlas_host:-$(hostname -f)}
+export enable_kerberos=${enable_kerberos:-true}      ## whether kerberos is enabled on cluster
+export atlas_host=${atlas_host:-$(hostname -f)}      ##atlas hostname (if not on current host)
+
+#default settings for cloudcat cluster
+export ranger_password=${ranger_password:-admin123}
 export atlas_pass=${atlas_pass:-admin}
-export kdc_realm=${kdc_realm:-CLOUDERA.COM}
+export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
 export cluster_name=${cluster_name:-cm}
 
-#export ranger_password=${ranger_password:-admin123}
+#default settings for AMI cluster
+#export ranger_password=${ranger_password:-BadPass#1}
 #export atlas_pass=${atlas_pass:-admin}
-#export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
+#export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 #export cluster_name=${cluster_name:-cm}
+
 
 yum install -y git jq
 cd /tmp
