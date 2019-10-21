@@ -254,3 +254,5 @@ CREATE function aes_encrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDF
 CREATE function aes_decrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesDecrypt' USING JAR 'hdfs:///user/__user__/hive-exec.jar'; 
 
 create table hr.employees_encrypted as select id, name, age, base64(aes_encrypt(phone,'1234567890123456')) as phone, base64(aes_encrypt(email,'1234567890123456')) as email from hr.employees;
+
+
