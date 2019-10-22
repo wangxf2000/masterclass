@@ -80,8 +80,9 @@ ${ranger_curl} -i \
 sleep 10
 
 
-#STOP! Now **manually** import ranger policies from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies
-
+echo "Now **manually** import ranger policies from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies"
+echo "Sleeping for 60s"
+sleep 60
 
 sudo -u hdfs hdfs dfs -mkdir -p /apps/hive/share/udfs/
 sudo -u hdfs hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/share/udfs/
@@ -157,7 +158,7 @@ select * from cost_savings.claim_savings limit 5
 
 #sparksql
 kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@CLOUDERA.COM
-spark-shell --jars /opt/cloudera/parcels/CDH/jars/hive-warehouse-connector-assembly*.jar     --conf spark.sql.hive.hiveserver2.jdbc.url="jdbc:hive2://$(hostname -f):10000/default;"    --conf "spark.sql.hive.hiveserver2.jdbc.url.principal=hive/$(hostname -f)@CLOUDERA.COM"    --conf spark.security.credentials.hiveserver2.enabled=false
+spark-shell --jars /opt/cloudera/parcels/CDH/jars/hive-warehouse-connector-assembly*.jar     --conf spark.sql.hive.hiveserver2.jdbc.url="jdbc:hive2://$(hostname -f):10000/default;"    --conf "spark.sql.hive.hiveserver2.jdbc.url.principal=hive/$(hostname -f)@${kdc_realm}"    --conf spark.security.credentials.hiveserver2.enabled=false
 
 import com.hortonworks.hwc.HiveWarehouseSession
 import com.hortonworks.hwc.HiveWarehouseSession._
@@ -168,79 +169,80 @@ hive.execute("select zipcode, insuranceid, bloodtype from worldwidebank.ww_custo
 hive.execute("select * from cost_savings.claim_savings").show(10)
 
 
-
--------------------------
-
-CM changes
------------------------------
-CM > Hive  >  ranger-hive-security.xml
-ranger.plugin.hive.policy.rest.supports.policy.deltas=false
-ranger.plugin.hive.tag.rest.supports.tag.deltas=false
-
-CM > Impala  >  ranger-impala-security.xml
-ranger.plugin.hive.policy.rest.supports.policy.deltas=false 
-ranger.plugin.hive.tag.rest.supports.tag.deltas=false
-
-
-Kafka server: offsets.topic.replication.factor=1
-Atlas server: atlas.kafka.bootstrap.servers=cdp.cloudera.com:9092
-Ranger: ranger.tagsync.source.atlas=true
-Hbase: Enable Atlas Hook=true
-
-YARN:
-yarn.nodemanager.resource.memory-mb=20gb
-yarn.scheduler.maximum-allocation-mb=8gb   
-
-
-------------------------------
-Ranger changes:
-kafka > Atlas_entities > rangertagsync > create/configure/consume
-
----------------------------------
-Zeppelin changes:
-
-CM > zeppelin > disable Knox
-
-zeppelin.shiro.user.block
-admin=admin,admins
-joe_analyst=BadPass#1,admins
-ivanna_eu_hr=BadPass#1,admins
-etl_user = BadPass#1,admins
-
-
-#Zeppelin - HDFS changes
-Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml
-hadoop.proxyuser.zeppelin.groups=*
-hadoop.proxyuser.zeppelin.hosts=*
-
-#Zeppelin shiro urls block - remove these
-roles[{{zeppelin_admin_group}}], /api/notebook-repositories/** = authc, roles[{{zeppelin_admin_group}], /api/configurations/** = authc, roles[{{zeppelin_admin_group}}], /api/credential/** = authc, roles[{{zeppelin_admin_group}}], /api/admin/** = authc, roles[{{zeppelin_admin_group}}], /** = authc]
-
-
-#Add Zeppelin jdbc interpreter then add below configs
-hive.driver=org.apache.hive.jdbc.HiveDriver
-hive.password=	
-hive.proxy.user.property	=hive.server2.proxy.user
-hive.url	=jdbc:hive2://172.31.21.93:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2
-hive.user	=hive
-
-
-#restart zeppelin to auto-populate below
-zeppelin.jdbc.principal 
-zeppelin.jdbc.keytab.location 
-
-#import notebooks, enable JDBC interpreter in notebook and run
-
-
-
-KnoxUI (knoxui/knoxui) > sandbox > 
-
-   <service>
-      <role>ZEPPELINUI</role>
-      <url>http://sv-worldwidebank-1.vpc.cloudera.com:8885</url>
-   </service>
-   <service>
-      <role>ZEPPELINWS</role>
-      <url>ws://sv-worldwidebank-1.vpc.cloudera.com:8885</url>
-   </service>
-   
+# ---------------------------------
+# Config changes required on RC build 
+# ---------------------------------
+# 
+# CM changes
+# ------------------------------------
+# CM > Hive  >  ranger-hive-security.xml
+# ranger.plugin.hive.policy.rest.supports.policy.deltas=false
+# ranger.plugin.hive.tag.rest.supports.tag.deltas=false
+# 
+# CM > Impala  >  ranger-impala-security.xml
+# ranger.plugin.hive.policy.rest.supports.policy.deltas=false 
+# ranger.plugin.hive.tag.rest.supports.tag.deltas=false
+# 
+# 
+# Kafka server: offsets.topic.replication.factor=1
+# Atlas server: atlas.kafka.bootstrap.servers=cdp.cloudera.com:9092
+# Ranger: ranger.tagsync.source.atlas=true
+# Hbase: Enable Atlas Hook=true
+# 
+# YARN:
+# yarn.nodemanager.resource.memory-mb=20gb
+# yarn.scheduler.maximum-allocation-mb=8gb   
+# 
+# 
+# ------------------------------
+# Ranger changes:
+# kafka > Atlas_entities > rangertagsync > create/configure/consume
+# 
+# ---------------------------------
+# Zeppelin changes:
+# 
+# CM > zeppelin > disable Knox
+# 
+# zeppelin.shiro.user.block
+# admin=admin,admins
+# joe_analyst=BadPass#1,admins
+# ivanna_eu_hr=BadPass#1,admins
+# etl_user = BadPass#1,admins
+# 
+# 
+# #Zeppelin - HDFS changes
+# Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml
+# hadoop.proxyuser.zeppelin.groups=*
+# hadoop.proxyuser.zeppelin.hosts=*
+# 
+# #Zeppelin shiro urls block - remove these
+# roles[{{zeppelin_admin_group}}], /api/notebook-repositories/** = authc, roles[{{zeppelin_admin_group}], /api/configurations/** = authc, roles[{{zeppelin_admin_group}}], /api/credential/** = authc, roles[{{zeppelin_admin_group}}], /api/admin/** = authc, roles[{{zeppelin_admin_group}}], /** = authc]
+# 
+# 
+# #Add Zeppelin jdbc interpreter then add below configs
+# hive.driver=org.apache.hive.jdbc.HiveDriver
+# hive.password=	
+# hive.proxy.user.property	=hive.server2.proxy.user
+# hive.url	=jdbc:hive2://172.31.21.93:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2
+# hive.user	=hive
+# 
+# 
+# #restart zeppelin to auto-populate below
+# zeppelin.jdbc.principal 
+# zeppelin.jdbc.keytab.location 
+# 
+# #import notebooks, enable JDBC interpreter in notebook and run
+# 
+# 
+# 
+# KnoxUI (knoxui/knoxui) > sandbox > 
+# 
+#    <service>
+#       <role>ZEPPELINUI</role>
+#       <url>http://sv-worldwidebank-1.vpc.cloudera.com:8885</url>
+#    </service>
+#    <service>
+#       <role>ZEPPELINWS</role>
+#       <url>ws://sv-worldwidebank-1.vpc.cloudera.com:8885</url>
+#    </service>
+#    
