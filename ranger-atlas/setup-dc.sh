@@ -1,11 +1,11 @@
 #run on CDP-DC master node
 export enable_kerberos=${enable_kerberos:-true}      ## whether kerberos is enabled on cluster
-export atlas_host=${atlas_host:-$(hostname -f)}      ##atlas hostname (if not on current host)
+export atlas_host=${atlas_host:-$(hostname -f)}      ##atlas hostname (if not on current host). Override with your own
 
-#default settings for cloudcat cluster
-export ranger_password=${ranger_password:-admin123}
+#default settings for cloudcat cluster. You can override for your own setup
+export ranger_password=${ranger_password:-admin123}  
 export atlas_pass=${atlas_pass:-admin}
-export kdc_realm=${kdc_realm:-VPC.CLOUDERA.COM}
+export kdc_realm=${kdc_realm:-GCE.CLOUDERA.COM}
 export cluster_name=${cluster_name:-cm}
 
 #default settings for AMI cluster
