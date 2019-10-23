@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS consent_master.consent_data_trans(
                                 ) 
                                    CLUSTERED BY(Country) INTO 3 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/consent-trans'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/consent-trans'
                                   TBLPROPERTIES ('transactional'='true');
 
 insert into consent_master.consent_data_trans select * from consent_master.consent_data;
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS worldwidebank.ww_customers_trans(
                                   , Longitude            DOUBLE
                                 )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/worldwidebank/ww_customers_trans'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank/ww_customers_trans'
                                   TBLPROPERTIES ('transactional'='true');
                                   
 insert into worldwidebank.ww_customers_trans select * from worldwidebank.ww_customers;                                
@@ -109,13 +109,13 @@ CREATE  TABLE IF NOT EXISTS worldwidebank.us_customers_trans(
                                   , Longitude            DOUBLE
                                  )  CLUSTERED BY(Gender) INTO 2 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/worldwidebank/us_customers_trans'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank/us_customers_trans'
                                   TBLPROPERTIES ('transactional'='true');
                                  
 insert into worldwidebank.us_customers_trans select * from worldwidebank.us_customers;                                
                                  
 
-CREATE DATABASE      erasure_master   LOCATION '/hive_data/rtbf';   
+CREATE DATABASE      erasure_master   LOCATION '/warehouse/tablespace/managed/hive/hive_data/rtbf';   
 
 CREATE TABLE IF NOT EXISTS erasure_master.data_erasure_trans(
                                     Country              		STRING
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS erasure_master.data_erasure_trans(
                                   , ErasureOverride     		STRING
                                 ) CLUSTERED BY(Country) INTO 2 BUCKETS   
                                   STORED AS ORC
-                                  LOCATION '/hive_data/rtbf_trans'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/rtbf_trans'
                                   TBLPROPERTIES ('transactional'='true');
                                  
                                 
