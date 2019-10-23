@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS worldwidebank LOCATION '/hive_data/worldwidebank';
+CREATE DATABASE IF NOT EXISTS worldwidebank LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.ww_customers(
                                     Gender               STRING
@@ -44,7 +44,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.ww_customers(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/worldwidebank/ww_customers'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank/ww_customers'
 				  tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.us_customers(
@@ -90,7 +90,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.us_customers(
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/worldwidebank/us_customers'
+                                   LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank/us_customers'
 				   tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.eu_countries (
@@ -100,10 +100,10 @@ CREATE EXTERNAL TABLE IF NOT EXISTS worldwidebank.eu_countries (
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/worldwidebank/eu_countries';
+                                   LOCATION '/warehouse/tablespace/managed/hive/hive_data/worldwidebank/eu_countries';
 
 
-CREATE DATABASE IF NOT EXISTS finance LOCATION '/hive_data/finance';
+CREATE DATABASE IF NOT EXISTS finance LOCATION '/warehouse/tablespace/managed/hive/hive_data/finance';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2009 (
                                     ssn STRING
@@ -113,7 +113,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2009 (
                                  ) ROW FORMAT DELIMITED
                                    FIELDS TERMINATED BY ','
                                    STORED AS TEXTFILE
-                                   LOCATION '/hive_data/finance/tax_2009';
+                                   LOCATION '/warehouse/tablespace/managed/hive/hive_data/finance/tax_2009';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2010 (
                                    ssn STRING
@@ -123,7 +123,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2010 (
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/finance/tax_2010';
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/finance/tax_2010';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2015 (
                                    ssn STRING
@@ -133,9 +133,9 @@ CREATE EXTERNAL TABLE IF NOT EXISTS finance.tax_2015 (
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/finance/tax_2015';
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/finance/tax_2015';
 
-CREATE DATABASE IF NOT EXISTS cost_savings COMMENT 'Cost Savings Database' LOCATION '/hive_data/cost_savings';
+CREATE DATABASE IF NOT EXISTS cost_savings COMMENT 'Cost Savings Database' LOCATION '/warehouse/tablespace/managed/hive/hive_data/cost_savings';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS cost_savings.claim_savings(
                                      ReportDate DATE
@@ -150,10 +150,10 @@ CREATE EXTERNAL TABLE IF NOT EXISTS cost_savings.claim_savings(
                                     ROW FORMAT DELIMITED
                                     FIELDS TERMINATED BY ','
                                     STORED AS TEXTFILE
-                                    LOCATION '/hive_data/cost_savings';
+                                    LOCATION '/warehouse/tablespace/managed/hive/hive_data/cost_savings';
 
 
-CREATE DATABASE IF NOT EXISTS claim COMMENT 'Claims Database' LOCATION '/hive_data/claim';
+CREATE DATABASE IF NOT EXISTS claim COMMENT 'Claims Database' LOCATION '/warehouse/tablespace/managed/hive/hive_data/claim';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS claim.provider_summary(
                                       ProviderID STRING
@@ -171,7 +171,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS claim.provider_summary(
                                      ROW FORMAT DELIMITED
                                      FIELDS TERMINATED BY ','
                                      STORED AS TEXTFILE
-                                     LOCATION '/hive_data/claim';
+                                     LOCATION '/warehouse/tablespace/managed/hive/hive_data/claim';
 
 CREATE VIEW IF NOT EXISTS claim.prov_view AS SELECT * FROM claim.provider_summary;
 
@@ -180,7 +180,7 @@ CREATE VIEW IF NOT EXISTS claim.prov_view2 AS SELECT * FROM claim.provider_summa
 CREATE VIEW IF NOT EXISTS claim.claims_view AS SELECT * FROM cost_savings.claim_savings;
 
 
-CREATE DATABASE IF NOT EXISTS consent_master LOCATION '/hive_data/consent';
+CREATE DATABASE IF NOT EXISTS consent_master LOCATION '/warehouse/tablespace/managed/hive/hive_data/consent';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.consent_data(
                                     Country              		STRING
@@ -195,7 +195,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.consent_data(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/consent'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/consent'
 				  tblproperties("skip.header.line.count"="1");
 
 
@@ -205,11 +205,11 @@ CREATE EXTERNAL TABLE IF NOT EXISTS consent_master.eu_countries(
 				                        ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/eu_countries';
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/eu_countries';
 
 
 
-CREATE DATABASE IF NOT EXISTS hr LOCATION '/hive_data/hr';
+CREATE DATABASE IF NOT EXISTS hr LOCATION '/warehouse/tablespace/managed/hive/hive_data/hr';
 
 CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees(
                                     Id          INT
@@ -223,7 +223,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hr/employees'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/hr/employees'
 				  tblproperties("skip.header.line.count"="1");
 
 CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees_masked(
@@ -238,7 +238,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hr.employees_masked(
                                 ) ROW FORMAT DELIMITED
                                   FIELDS TERMINATED BY ','
                                   STORED AS TEXTFILE
-                                  LOCATION '/hive_data/hr/employees'
+                                  LOCATION '/warehouse/tablespace/managed/hive/hive_data/hr/employees'
 				  tblproperties("skip.header.line.count"="1");
 
 CREATE VIEW IF NOT EXISTS hr.us_employees AS SELECT * FROM hr.employees where region='US';
