@@ -140,7 +140,7 @@ sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
 
 -------------------------
 #as joe
-kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@VPC.CLOUDERA.COM
+kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@${kdc_realm}
 beeline
 
 #masking
@@ -157,7 +157,7 @@ select * from cost_savings.claim_savings limit 5
 
 
 #sparksql
-kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@CLOUDERA.COM
+kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@{kdc_realm}
 spark-shell --jars /opt/cloudera/parcels/CDH/jars/hive-warehouse-connector-assembly*.jar     --conf spark.sql.hive.hiveserver2.jdbc.url="jdbc:hive2://$(hostname -f):10000/default;"    --conf "spark.sql.hive.hiveserver2.jdbc.url.principal=hive/$(hostname -f)@${kdc_realm}"    --conf spark.security.credentials.hiveserver2.enabled=false
 
 import com.hortonworks.hwc.HiveWarehouseSession
