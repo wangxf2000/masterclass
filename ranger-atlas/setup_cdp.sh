@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #set -o xtrace
 #Run from *DataEng* cluster with at least 2 worker nodes
-#Make sure to change below variables according to your environment
+#Make sure to change below variables according to your own environment
 
 export env_name='testenv-01'       ## needed for Ranger/atlas API
 export datalake_name='testenv-01'  ## needed to create Ranger Admins role for group: cdp_<env_name>. This might be same as datalake_name
