@@ -11,7 +11,7 @@ export lake_knox='10.10.0.5'       ## private IP address of DataLake master node
 export s3bucket="s3a://mybucket/data"   ##replace with your data S3 bucket for dataeng
 
 #1. Confirm demo users/groups are in Ranger (e.g. joe_analyst, michelle_dpo, jeremy_contractor, diane_csr) else Ranger policy import will fail
-#2. Confirm that group cdp_env_admin_<env name> is created and sync'd to Ranger. Confirm above user is part of this group or he won't have admin rights
+#2. Confirm that group cdp_<env name> is created and present in Ranger. Confirm above user is part of this group or he won't have admin rights
 
 
 git clone https://github.com/abajwa-hw/masterclass
