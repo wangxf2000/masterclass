@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #set -o xtrace
-#Run from *DataEng* cluster with at least 2 worker nodes
+#Run from *DataEng* master node
 #Make sure to change below variables according to your own environment
 
 export env_name='testenv-01'       ## needed for Ranger/atlas API
