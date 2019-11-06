@@ -3,12 +3,12 @@
 #Run from *DataEng* master node
 #Make sure to change below variables according to your own environment
 
-export env_name='testenv-01'       ## needed for Ranger/atlas API
-export datalake_name='testenv-01'  ## needed to create Ranger Admins role for group: cdp_<env_name>. This might be same as datalake_name
+export env_name='myenv-01'       ## needed for Ranger/atlas API
+export datalake_name='myenv-01'  ## needed to create Ranger Admins role for group: cdp_<env_name>. This might be same as datalake_name
 export user='etl_user'              ## Admin user (e.g. etl_user) make sure IPA password is set for this user first
 export password='BadPass#1'         ## replace with pasword
-export lake_knox='10.10.0.5'       ## private IP address of DataLake master node
-export s3bucket="s3a://mybucket/data"   ##replace with your data S3 bucket for dataeng
+export lake_knox='10.X.X.X'       ## private IP address of DataLake master node
+export s3bucket="s3a://mybucket/datadir/dataeng"   ##replace with your data S3 bucket for dataeng
 
 #1. Confirm demo users/groups are in Ranger (e.g. joe_analyst, michelle_dpo, jeremy_contractor, diane_csr) else Ranger policy import will fail
 #2. Confirm that group cdp_<env name> is created and present in Ranger. Confirm above user is part of this group or he won't have admin rights
@@ -72,11 +72,23 @@ ${ranger_curl} -i \
   -d @hive.json ${ranger_url}/public/v2/api/servicedef/name/hive
   
 
-#NOW STOP! Follow below MANUAL step before proceeding!
-#5a. now import the Ranger resource based policies from UI (if error try incognito or diff browser/machine)
-#5b. now import the Ranger tag based policies from UI (if error try incognito or diff browser/machine)
-# You can download both policy jsons from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies
-# TODO use CLI to automate import policies
+#5. Import Ranger policies
+echo "Imorting Ranger policies..."
+cd ../Scripts/cdp-policies
+
+resource_policies=$(ls Ranger_Policies_ALL_*.json)
+tag_policies=$(ls Ranger_Policies_TAG_*.json)
+
+#import resource based policies
+curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${resource_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-all.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+
+#import tag based policies
+curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${tag_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-tag.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+
+cd ../../HortoniaMunichSetup
+
+echo "Sleeping for 45s..."
+sleep 45
 
 #6. Add classifications
 curl -v -k -X GET -u ${user}:${password}  https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/atlas/api/atlas/v2/types/typedefs
@@ -146,6 +158,9 @@ beeline -f ./data/TransSchema-cloud.hsql
 hdfs dfs -cp s3a://cldr-airline-demo/ ${s3bucket}
 sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/AirlineSchema-cloud.hql
 beeline -f ./data/AirlineSchema-cloud.hql
+
+echo "Sleeping for 60s..."
+sleep 60
 
 #10. associate tags with Hive entities
 chmod +x ./09-associate-entities-with-tags-knox.sh
