@@ -80,13 +80,12 @@ resource_policies=$(ls Ranger_Policies_ALL_*.json)
 tag_policies=$(ls Ranger_Policies_TAG_*.json)
 
 #import resource based policies
-curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${resource_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-all.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+${ranger_curl} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${resource_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-all.json" "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
 
 #import tag based policies
-curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${tag_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-tag.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+${ranger_curl} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${tag_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-tag.json" "${ranger_url}/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=tag"
 
 cd ../../HortoniaMunichSetup
-
 echo "Sleeping for 45s..."
 sleep 45
 
