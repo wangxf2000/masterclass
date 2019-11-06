@@ -80,14 +80,31 @@ ${ranger_curl} -i \
 sleep 10
 
 
-echo "Now **manually** import ranger policies from https://github.com/abajwa-hw/masterclass/tree/master/ranger-atlas/Scripts/cdp-policies"
-echo "Sleeping for 60s"
-sleep 60
+#Import Ranger policies
+echo "Imorting Ranger policies..."
+cd ../Scripts/cdp-policies
+
+resource_policies=$(ls Ranger_Policies_ALL_*.json)
+tag_policies=$(ls Ranger_Policies_TAG_*.json)
+
+#import resource based policies
+curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${resource_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-all.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+
+#import tag based policies
+curl -v -k -u ${user}:${password} -X POST -H "Content-Type: multipart/form-data" -H "Content-Type: application/json" -F "file=@${tag_policies}" -H "Accept: application/json"  -F "servicesMapJson=@servicemapping-tag.json" "https://${lake_knox}:8443/${datalake_name}/cdp-proxy-api/ranger/service/plugins/policies/importPoliciesFromFile?isOverride=true&serviceType=hdfs,tag,hbase,yarn,hive,knox,storm,kafka,atlas,nifi,solr"
+
+cd ../../HortoniaMunichSetup
+
+echo "Sleeping for 45s..."
+sleep 45
+
 
 sudo -u hdfs hdfs dfs -mkdir -p /apps/hive/share/udfs/
 sudo -u hdfs hdfs dfs -put /opt/cloudera/parcels/CDH/lib/hive/lib/hive-exec.jar /apps/hive/share/udfs/
 sudo -u hdfs hdfs  dfs -chown -R hive:hadoop  /apps
 
+
+echo "Imorting data..."
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sudo -u hdfs ./05-create-hdfs-user-folders.sh
@@ -135,11 +152,14 @@ sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
 
 ./08-create-hbase-kafka-dc.sh
 
+echo "Sleeping for 60s..."
+sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
+echo "Done!"
 
 -------------------------
-#as joe
+#Sample queries (run as joe_analyst)
 kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@${kdc_realm}
 beeline
 
