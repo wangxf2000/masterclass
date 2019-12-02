@@ -10,9 +10,9 @@ export cluster_name=${cluster_name:-cm}
 
 #default settings for AMI cluster
 #export ranger_password=${ranger_password:-BadPass#1}
-#export atlas_pass=${atlas_pass:-admin}
+#export atlas_pass=${atlas_pass:-BadPass#1}
 #export kdc_realm=${kdc_realm:-CLOUDERA.COM}
-#export cluster_name=${cluster_name:-cm}
+#export cluster_name=${cluster_name:-SingleNodeCluster}
 
 
 yum install -y git jq
