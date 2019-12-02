@@ -109,7 +109,7 @@ echo "Imorting data..."
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sudo -u hdfs ./05-create-hdfs-user-folders.sh
 sudo -u hdfs ./06-copy-data-to-hdfs-dc.sh
-sudo -u hdfs hdfs dfs -ls -R /hive_data
+sudo -u hdfs hdfs dfs -ls -R /warehouse/tablespace/managed/hive/hive_data
 
 sudo -u hive beeline  -n hive -f ./data/HiveSchema-dc.hsql
 sudo -u hive beeline  -n hive -f ./data/TransSchema-dc.hsql
