@@ -108,7 +108,7 @@ CREATE  TABLE IF NOT EXISTS worldwidebank.us_customers_trans(
 insert into worldwidebank.us_customers_trans select * from worldwidebank.us_customers;                                
                                  
 
-CREATE DATABASE      erasure_master   LOCATION '__mybucket__/wwbankdata/rawzone/rtbf';   
+CREATE DATABASE      erasure_master;   
 
 CREATE TABLE IF NOT EXISTS erasure_master.data_erasure_trans(
                                     Country              		STRING
