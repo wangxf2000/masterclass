@@ -6,7 +6,7 @@ echo "enable_kerberos detected as ${enable_kerberos}"
 echo "kdc_realm detected as ${kdc_realm}"
 
 if [ "${enable_kerberos}" = true  ]; then
-   kinit -kt /etc/security/keytabs/etl_user.keytab etl_user/$(hostname -f)@{kdc_realm}
+   kinit -kt /etc/security/keytabs/etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}
 fi   
 
 
