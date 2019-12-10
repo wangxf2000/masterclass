@@ -112,9 +112,7 @@ sudo -u hdfs ./06-copy-data-to-hdfs-dc.sh
 sudo -u hdfs hdfs dfs -ls -R /warehouse/tablespace/managed/hive/hive_data
 
 sudo -u hive beeline  -n hive -f ./data/HiveSchema-dc.hsql
-sudo -u hive beeline  -n hive -f ./data/TransSchema-dc.hsql
-
-
+sudo -u hive beeline  -n hive -f ./data/TransSchema-cloud.hsql
 
 echo "Creating users in KDC..."
 kadmin.local -q "addprinc -randkey joe_analyst/$(hostname -f)@${kdc_realm}"
