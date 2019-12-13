@@ -9,6 +9,18 @@ if [ "${enable_kerberos}" = true  ]; then
    kinit -kt /etc/security/keytabs/etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}
 fi   
 
+cat << EOF > /tmp/jaas.conf
+KafkaClient {
+com.sun.security.auth.module.Krb5LoginModule required
+useTicketCache=true;
+};
+EOF
+
+cat << EOF > /tmp/client.properties
+security.protocol=SASL_PLAINTEXT
+sasl.kerberos.service.name=kafka
+EOF
+
 
 echo "Creating Hbase tables..."
 
@@ -48,7 +60,7 @@ cat << EOF > /tmp/private.csv
 EOF
 
 echo "Creating HDFS sensitive dir..."
- hdfs dfs -mkdir /sensitive
+hdfs dfs -mkdir /sensitive
 hdfs dfs -put /tmp/private.csv /sensitive/
 
 
@@ -59,9 +71,9 @@ if [ "${enable_kerberos}" = true  ]; then
   kinit -kt /etc/security/keytabs/log_monitor.keytab log_monitor/$(hostname -f)@${kdc_realm}
 fi
 
-/opt/cloudera/parcels/CDH-7*/lib/kafka/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partitions 1 --topic FOREX
-/opt/cloudera/parcels/CDH-7*/lib/kafka/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181 --replication-factor 1 --partitions 1 --topic PRIVATE
-/opt/cloudera/parcels/CDH-7*/lib/kafka/bin/kafka-topics.sh --zookeeper $(hostname -f):2181 --list
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181/kafka --replication-factor 1 --partitions 1 --topic FOREX
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-topics.sh --create --zookeeper $(hostname -f):2181/kafka --replication-factor 1 --partitions 1 --topic PRIVATE
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-topics.sh --zookeeper $(hostname -f):2181/kafka --list
 
 
 
@@ -71,19 +83,25 @@ fi
 echo "Publishing test data to Kafka topics..."
 sleep 5
 
-if [ "${enable_kerberos}" = true  ]; then  
-   security_protocol=SASL_PLAINTEXT
-else
-   security_protocol=PLAINTEXT
-fi
+#if [ "${enable_kerberos}" = true  ]; then  
+#   security_protocol=SASL_PLAINTEXT
+#else
+#   security_protocol=PLAINTEXT
+#fi
 
 #HDP 3.0 commands
 #/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol ${security_protocol} --broker-list ${kafka_broker}:6667 --topic PRIVATE < /tmp/private.csv
 #/usr/hdp/current/kafka-broker/bin/kafka-console-producer.sh --security-protocol ${security_protocol} --broker-list ${kafka_broker}:6667 --topic FOREX <  /tmp/forex.csv
 
-/opt/cloudera/parcels/CDH-7*/lib/kafka/bin/kafka-console-producer.sh --producer-property security.protocol=${security_protocol} --broker-list ${kafka_broker}:6667 --topic PRIVATE  < /tmp/private.csv
-/opt/cloudera/parcels/CDH-7*/lib/kafka/bin/kafka-console-producer.sh --producer-property security.protocol=${security_protocol} --broker-list ${kafka_broker}:6667 --topic FOREX  < /tmp/forex.csv
+export KAFKA_OPTS="-Djava.security.auth.login.config=/tmp/jaas.conf"
 
+#push data to kafka topics
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-console-producer.sh --producer.config /tmp/client.properties --broker-list $(hostname -f):9092 --topic PRIVATE   < /tmp/private.csv
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-console-producer.sh --producer.config /tmp/client.properties --broker-list $(hostname -f):9092 --topic FOREX   < /tmp/forex.csv
+
+#test data got pushed
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-console-consumer.sh --consumer.config /tmp/client.properties  --bootstrap-server $(hostname -f):9092 --topic PRIVATE --from-beginning --max-messages 5
+/opt/cloudera/parcels/CDH/lib/kafka/bin/kafka-console-consumer.sh --consumer.config /tmp/client.properties  --bootstrap-server $(hostname -f):9092 --topic FOREX --from-beginning --max-messages 5
 
 
 
