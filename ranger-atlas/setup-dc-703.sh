@@ -136,7 +136,7 @@ echo "Imorting data..."
 
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./05-create-hdfs-user-folders.sh
-./06-copy-data-to-hdfs.sh
+./06-copy-data-to-hdfs-dc.sh
 
 hdfs dfs -ls -R /hive_data
 
