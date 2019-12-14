@@ -44,6 +44,9 @@ ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: applicati
 EOF
 
 
+#make backup of current Ranger hive service definition before overwriting it
+${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive > hive-orig.json
+
 #4. Update Service def to include custom policy conditions
 
 ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
