@@ -35,3 +35,13 @@ usermod -a -G eu_employee ivanna_eu_hr
 usermod -a -G eu_employee michelle_dpo
 
 
+
+echo BadPass#1 > passwd.txt
+echo BadPass#1 >> passwd.txt
+
+passwd joe_analyst < passwd.txt
+passwd ivanna_eu_hr < passwd.txt
+passwd etl_user < passwd.txt
+passwd scott_intern < passwd.txt
+
+rm -f passwd.txt
