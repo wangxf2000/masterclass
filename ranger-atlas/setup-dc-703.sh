@@ -145,6 +145,7 @@ beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
 
+setfacl -m user:zeppelin:r /etc/shadow
 
 -------------------------
 sed -i.bak "s/21000/31000/g" env_atlas.sh
