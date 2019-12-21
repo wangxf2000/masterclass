@@ -107,13 +107,13 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=/tmp/jaas.conf"
 
 if [ "${enable_kerberos}" = true  ]; then 
    echo "Allowing Zeppelin to kinit as joe/ivanna/etluser.."
-   chown joe_analyst:hadoop /etc/security/keytabs/joe_analyst.keytab
+   chown joe_analyst:zeppelin /etc/security/keytabs/joe_analyst.keytab
    chmod g+r /etc/security/keytabs/joe_analyst.keytab
 
-   chown ivanna_eu_hr:hadoop /etc/security/keytabs/ivanna_eu_hr.keytab
+   chown ivanna_eu_hr:zeppelin /etc/security/keytabs/ivanna_eu_hr.keytab
    chmod g+r /etc/security/keytabs/ivanna_eu_hr.keytab
 
-   chown etl_user:hadoop /etc/security/keytabs/etl_user.keytab
+   chown etl_user:zeppelin /etc/security/keytabs/etl_user.keytab
    chmod g+r /etc/security/keytabs/etl_user.keytab
    
    chown root:hadoop /etc/security/keytabs/log_monitor.keytab
