@@ -144,10 +144,25 @@ beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
 
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
-
+#enable PAM auth for zeppelin
 setfacl -m user:zeppelin:r /etc/shadow
 
+#import zeppelin notebooks
+cd /var/lib/zeppelin/notebook
+mkdir 2EKX5F5MF
+cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Joe-Analyst.json"  ./2EKX5F5MF/note.json
+
+mkdir 2EMPR5K29
+cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Ivanna EU HR.json" ./2EMPR5K29/note.json
+
+mkdir 2EKHXD4H3
+cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ etl_user.json" ./2EKHXD4H3/note.json
+
+chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
+
+
 -------------------------
+cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sed -i.bak "s/21000/31000/g" env_atlas.sh
 sed -i.bak "s/localhost/${atlas_host}/g" env_atlas.sh
 sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
