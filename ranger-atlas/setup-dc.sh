@@ -141,6 +141,9 @@ kadmin.local -q "xst -k etl_user.keytab etl_user/$(hostname -f)@${kdc_realm}"
 chmod +r *.keytab
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 
+#enable PAM auth for zeppelin
+setfacl -m user:zeppelin:r /etc/shadow
+
 -------------------------
 sed -i.bak "s/21000/31000/g" env_atlas.sh
 sed -i.bak "s/localhost/${atlas_host}/g" env_atlas.sh
