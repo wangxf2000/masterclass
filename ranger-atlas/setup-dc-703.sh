@@ -137,15 +137,34 @@ echo "Imorting data..."
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./05-create-hdfs-user-folders.sh
 ./06-copy-data-to-hdfs-dc.sh
-
 hdfs dfs -ls -R /hive_data
 
+#create hive tables
 beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
-
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
 #enable PAM auth for zeppelin
 setfacl -m user:zeppelin:r /etc/shadow
+
+cd ../Scripts/interpreters/
+
+#In Zeppelin, create shell and jdbc interpreter settings via API
+
+#login to zeppelin and grab cookie 
+cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
+echo "$cookie" > cookie.txt
+
+#Create shell interpreter setting
+curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./shell.json
+
+#Create jdbc interpreter setting
+hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
+sed -i.bak "s|__hivejar__|${hivejar}|g" ./jdbc.json
+curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./jdbc.json
+
+#list all interpreters settings - jdbc and sh should now be added
+curl -b ./cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
+
 
 #import zeppelin notebooks
 cd /var/lib/zeppelin/notebook
