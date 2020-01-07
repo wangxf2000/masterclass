@@ -215,7 +215,7 @@ select * from cost_savings.claim_savings limit 5
 
 
 #sparksql
-kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@{kdc_realm}
+kinit -kt /etc/security/keytabs/joe_analyst.keytab joe_analyst/$(hostname -f)@${kdc_realm}
 spark-shell --jars /opt/cloudera/parcels/CDH/jars/hive-warehouse-connector-assembly*.jar     --conf spark.sql.hive.hiveserver2.jdbc.url="jdbc:hive2://$(hostname -f):10000/default;"    --conf "spark.sql.hive.hiveserver2.jdbc.url.principal=hive/$(hostname -f)@${kdc_realm}"    --conf spark.security.credentials.hiveserver2.enabled=false
 
 import com.hortonworks.hwc.HiveWarehouseSession
