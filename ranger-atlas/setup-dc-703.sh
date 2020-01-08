@@ -195,6 +195,7 @@ sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
 echo "Setup complete!"
+exit 0
 
 -------------------------
 #Sample queries (run as joe_analyst)
@@ -232,3 +233,4 @@ hive.execute("select * from cost_savings.claim_savings").show(10)
 # 2. add etl group to admins by dfs.permissions.superusergroup=etl
 # 3. offsets.topic.replication.factor = 1
 # 4. Hbase: Enable Atlas Hook=true
+# 5. ranger.tagsync.atlas.hdfs.instance.cm.ranger.service=cm_hdfs
