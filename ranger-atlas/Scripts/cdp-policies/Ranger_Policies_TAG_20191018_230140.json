@@ -2,8 +2,8 @@
   "metaDataInfo": {
     "Host name": "cdp.cloudera.com",
     "Exported by": "admin",
-    "Export time": "Oct 18, 2019 11:01:40 PM",
-    "Ranger apache version": "2.0.0.7.0.2.0-5"
+    "Export time": "Jan 8, 2020 11:45:20 PM",
+    "Ranger apache version": "2.0.0.7.0.3.0-79"
   },
   "policies": [
     {
@@ -131,13 +131,13 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 92,
+      "id": 94,
       "guid": "30d630c7-436b-4f80-9847-80ac60d0b01a",
       "isEnabled": true,
       "version": 1
@@ -158,7 +158,23 @@
           "isRecursive": false
         }
       },
-      "policyItems": [],
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "hive:select",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "hr"
+          ],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
       "denyPolicyItems": [
         {
           "accesses": [
@@ -187,16 +203,16 @@
       "denyExceptions": [],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 93,
+      "id": 95,
       "guid": "95710adb-f564-446d-b929-cb80e9027cf7",
       "isEnabled": true,
-      "version": 1
+      "version": 2
     },
     {
       "service": "cm_tag",
@@ -675,13 +691,13 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 94,
+      "id": 96,
       "guid": "88a7bc87-97ff-40c1-9252-3a5b8e49aa95",
       "isEnabled": true,
       "version": 1
@@ -932,16 +948,16 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 95,
+      "id": 97,
       "guid": "88220be7-baea-4283-8be0-2ff46d8ab4e7",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "cm_tag",
@@ -1034,13 +1050,13 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 96,
+      "id": 98,
       "guid": "bbe231ce-dfa1-4565-a40f-16fbd10bef16",
       "isEnabled": true,
       "version": 1
@@ -1185,13 +1201,13 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 97,
+      "id": 99,
       "guid": "474d2dbb-ca9e-444a-b843-b77a0cb28a6f",
       "isEnabled": true,
       "version": 1
@@ -1494,13 +1510,13 @@
       ],
       "dataMaskPolicyItems": [],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 98,
+      "id": 100,
       "guid": "8185ec57-2d6a-4bd1-a032-9594992c0051",
       "isEnabled": true,
       "version": 1
@@ -1582,13 +1598,13 @@
         }
       ],
       "rowFilterPolicyItems": [],
-      "serviceType": "100",
+      "serviceType": "tag",
       "options": {},
       "validitySchedules": [],
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 99,
+      "id": 101,
       "guid": "8770005c-a1eb-4f76-8a2d-44c4055b79e4",
       "isEnabled": true,
       "version": 1
@@ -1598,5 +1614,5 @@
   "pageSize": 0,
   "totalCount": 0,
   "resultSize": 0,
-  "queryTimeMS": 1571439700028
+  "queryTimeMS": 1578527120240
 }
