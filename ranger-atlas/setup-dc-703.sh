@@ -1,3 +1,5 @@
+#curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup-dc-703.sh | sudo -E bash  
+
 #run on CDP-DC master node
 export enable_kerberos=${enable_kerberos:-true}      ## whether kerberos is enabled on cluster
 export atlas_host=${atlas_host:-$(hostname -f)}      ##atlas hostname (if not on current host). Override with your own
