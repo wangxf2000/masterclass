@@ -177,6 +177,13 @@ cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank
 mkdir 2EKHXD4H3
 cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ etl_user.json" ./2EKHXD4H3/note.json
 
+mkdir 2EZM9PAXV
+cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive ACID.json" ./2EZM9PAXV/note.json
+
+mkdir 2EXWA1114
+cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive Merge.json" ./2EXWA1114/note.json
+
+
 chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
 
 
