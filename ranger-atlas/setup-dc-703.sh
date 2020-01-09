@@ -201,7 +201,7 @@ echo "Sleeping for 60s..."
 sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
-echo "Setup complete!"
+echo "Setup complete! Restart Zeppelin to see imported demo notebooks"
 exit 0
 
 -------------------------
