@@ -17,7 +17,7 @@ export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 export cluster_name=${cluster_name:-SingleNodeCluster}
 
 
-yum install -y git jq
+yum install -y git jq nc
 cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
