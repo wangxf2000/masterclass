@@ -145,8 +145,9 @@ hdfs dfs -ls -R /hive_data
 beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
-#enable PAM auth for zeppelin
+#enable PAM auth for zeppelin, Hue
 setfacl -m user:zeppelin:r /etc/shadow
+setfacl -m user:hue:r /etc/shadow
 
 cd ../Scripts/interpreters/
 
@@ -243,3 +244,4 @@ hive.execute("select * from cost_savings.claim_savings").show(10)
 # 3. offsets.topic.replication.factor = 1
 # 4. Hbase: Enable Atlas Hook=true
 # 5. ranger.tagsync.atlas.hdfs.instance.cm.ranger.service=cm_hdfs
+# 6. Hue: auth_backend=desktop.auth.backend.PamBackend
