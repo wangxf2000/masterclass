@@ -141,21 +141,22 @@ cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 ./06-copy-data-to-hdfs-dc.sh
 hdfs dfs -ls -R /hive_data
 
-#create hive tables
+echo "Create hive tables..."
 beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
-#enable PAM auth for zeppelin, Hue
+echo "enable PAM auth for zeppelin, Hue..."
 setfacl -m user:zeppelin:r /etc/shadow
 setfacl -m user:hue:r /etc/shadow
 
-#import sample Hue queries
+echo "import sample Hue queries..."
 #these were previously exported via: mysqldump -u hue -pcloudera hue desktop_document2 > desktop_document2.sql
 mysql -u hue -pcloudera hue < ./data/desktop_document2.sql
 
+sleep 5 
 cd ../Scripts/interpreters/
 
-#In Zeppelin, create shell and jdbc interpreter settings via API
+echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
 
 #login to zeppelin and grab cookie 
 cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
