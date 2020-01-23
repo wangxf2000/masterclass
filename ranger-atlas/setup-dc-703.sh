@@ -149,6 +149,10 @@ beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 setfacl -m user:zeppelin:r /etc/shadow
 setfacl -m user:hue:r /etc/shadow
 
+#import sample Hue queries
+#these were previously exported via: mysqldump -u hue -pcloudera hue desktop_document2 > desktop_document2.sql
+mysql -u hue -pcloudera hue < ./data/desktop_document2.sql
+
 cd ../Scripts/interpreters/
 
 #In Zeppelin, create shell and jdbc interpreter settings via API
