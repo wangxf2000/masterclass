@@ -243,10 +243,11 @@ hive.execute("select zipcode, insuranceid, bloodtype from worldwidebank.ww_custo
 hive.execute("select * from cost_savings.claim_savings").show(10)
 
 
-#GA build workarounds:
-# 1. Enable Ranger plugin for HDFS
-# 2. add etl group to admins by dfs.permissions.superusergroup=etl
-# 3. offsets.topic.replication.factor = 1
-# 4. Hbase: Enable Atlas Hook=true
-# 5. ranger.tagsync.atlas.hdfs.instance.cm.ranger.service=cm_hdfs
-# 6. Hue: auth_backend=desktop.auth.backend.PamBackend
+#GA build CM configs:
+# 1. HDFS > Enable Ranger plugin for HDFS
+# 2. HDFS > add etl group to admins by dfs.permissions.superusergroup=etl
+# 3. Kafka > offsets.topic.replication.factor = 1
+# 4. Hbase > Enable Atlas Hook=true
+# 5. Ranger > ranger.tagsync.atlas.hdfs.instance.cm.ranger.service=cm_hdfs
+# 6. Hue > auth_backend=desktop.auth.backend.PamBackend
+# 7. HDFS > core-site saftey > hadoop.proxyuser.zeppelin.groups=*, hadoop.proxyuser.zeppelin.hosts=*
