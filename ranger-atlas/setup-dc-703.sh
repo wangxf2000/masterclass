@@ -209,6 +209,20 @@ echo "Sleeping for 60s..."
 sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
+
+echo "Setting up Nifi / Atlas"
+cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
+
+cd /var/lib/nifi/
+mv flow.xml.gz flow.xml.gz.orig
+cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/flow.xml .
+#sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g;" flow.xml
+gzip flow.xml
+chown nifi:nifi flow.xml.gz  
+
+nifi_keytab=$(find /var/run/cloudera-scm-agent/process/ -name nifi.keytab | tail -1)
+cp ${nifi_keytab} /tmp
+
 echo "Setup complete! Restart Zeppelin to see imported demo notebooks"
 exit 0
 
