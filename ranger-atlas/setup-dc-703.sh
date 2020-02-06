@@ -222,8 +222,9 @@ chown nifi:nifi flow.xml.gz
 
 nifi_keytab=$(find /var/run/cloudera-scm-agent/process/ -name nifi.keytab | tail -1)
 cp ${nifi_keytab} /tmp
+chown nifi:nifi /tmp/nifi.keytab
 
-echo "Setup complete! Restart Zeppelin to see imported demo notebooks"
+echo "Setup complete! Restart Zeppelin/NiFi to see imported notebooks/templates"
 exit 0
 
 -------------------------
