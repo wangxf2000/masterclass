@@ -16,7 +16,6 @@ export atlas_pass=${atlas_pass:-BadPass#1}
 export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 #export cluster_name=${cluster_name:-SingleNodeCluster}
 export host=$(hostname -f)
-export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
 
 yum install -y git jq nc
 cd /tmp
@@ -210,8 +209,9 @@ echo "Sleeping for 60s..."
 sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
+export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
 
-echo "Setting up Nifi / Atlas"
+echo "Setting up Nifi / Atlas. cluster_name:${cluster_name} kdc_realm:${kdc_realm} host:${host}"
 cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
 sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" /tmp/atlas-application.properties
 chown nifi:nifi /tmp/atlas-application.properties
