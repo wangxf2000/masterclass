@@ -212,7 +212,7 @@ sleep 60
 
 echo "Setting up Nifi / Atlas"
 cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
-chown nifi:nifi atlas-application.properties
+chown nifi:nifi /tmp/atlas-application.properties
 
 cd /var/lib/nifi/
 mv flow.xml.gz flow.xml.gz.orig
