@@ -211,21 +211,24 @@ sleep 60
 
 export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
 
-echo "Setting up Nifi / Atlas. cluster_name:${cluster_name} kdc_realm:${kdc_realm} host:${host}"
-cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
-sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" /tmp/atlas-application.properties
-chown nifi:nifi /tmp/atlas-application.properties
+if [ -d "/var/lib/nifi/" ] 
+then
+    echo "Setting up Nifi / Atlas. cluster_name:${cluster_name} kdc_realm:${kdc_realm} host:${host}"
+    cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
+    sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" /tmp/atlas-application.properties
+    chown nifi:nifi /tmp/atlas-application.properties
 
-cd /var/lib/nifi/
-mv flow.xml.gz flow.xml.gz.orig
-cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/flow.xml .
-sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" flow.xml
-gzip flow.xml
-chown nifi:nifi flow.xml.gz  
+    cd /var/lib/nifi/
+    mv flow.xml.gz flow.xml.gz.orig
+    cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/flow.xml .
+    sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" flow.xml
+    gzip flow.xml
+    chown nifi:nifi flow.xml.gz  
 
-nifi_keytab=$(find /var/run/cloudera-scm-agent/process/ -name nifi.keytab | tail -1)
-cp ${nifi_keytab} /tmp
-chown nifi:nifi /tmp/nifi.keytab
+    nifi_keytab=$(find /var/run/cloudera-scm-agent/process/ -name nifi.keytab | tail -1)
+    cp ${nifi_keytab} /tmp
+    chown nifi:nifi /tmp/nifi.keytab
+fi
 
 echo "Setup complete! Restart Zeppelin/NiFi to see imported notebooks/templates"
 exit 0
