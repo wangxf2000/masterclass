@@ -1,4 +1,4 @@
-# Ranger Atlas (Hortonia Bank)
+# Ranger Atlas (Worldwide Bank)
 
 ## Demo overview
 
@@ -13,7 +13,7 @@ Tested with:
 - [x] HDP 3.0.0 / Ambari 2.7.0.0
 
 
-## Fresh install of HDP plus Hortoniabank demo
+## Fresh install of CDP-DC plus Worldwide demo
 
 - Pre-reqs:
   - Launch a single vanilla Centos/RHEL 7.x VM (e.g. on local VM or openstack or cloud provider of choice) 
@@ -34,7 +34,7 @@ cd SingleNodeCDPCluster
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup-dc-703.sh | sudo -E bash
 ```
 
-- This will run for about 35min and install CDP 7.0.3 cluster with the Ranger/Atlas demo installed
+- This will run for about 35min and install CDP-DC 7.0.3 cluster with the Ranger/Atlas demo installed
 
 
 
