@@ -26,11 +26,12 @@ yum install -y git
 #setup KDC 
 curl -sSL https://gist.github.com/abajwa-hw/bca3d23fe146c3ebd59a9b5fd19480a3/raw | sudo -E sh
 
+#install single node CDP-DC cluster
 git clone https://github.com/fabiog1901/SingleNodeCDPCluster.git
 cd SingleNodeCDPCluster
 ./setup_krb.sh gcp templates/wwbank_krb.json
 
-#setup demo
+#setup demo on cluster
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup-dc-703.sh | sudo -E bash
 ```
 
