@@ -1,5 +1,7 @@
 #Installs CDP-DC single node plus Worldwide bank demo on IBM Cloud
 #Pre-reqs:
+# - OS: CentOS 7 or RHEL 7
+# - vCPUs: 16
 # - Memory: 64GB RAM
 # - Disk: 100 GB
 # - Make sure that ext4 or xfs is used for /kudu
