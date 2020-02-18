@@ -1,6 +1,7 @@
 #Installs CDP-DC single node plus Worldwide bank demo on IBM Cloud
 #Pre-reqs:
-# - Size:
+# - Memory: 64GB RAM
+# - Disk: 100 GB
 # - Make sure that ext4 or xfs is used for /kudu
 #Run by:
 #curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_ibm.sh | sudo -E sh
