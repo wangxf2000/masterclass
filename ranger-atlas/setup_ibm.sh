@@ -47,6 +47,8 @@ git clone https://github.com/fabiog1901/SingleNodeCDPCluster.git
 cd SingleNodeCDPCluster
 ./setup_krb.sh gcp templates/wwbank_krb.json
 
+echo "Sleeping for 30s..."
+sleep 30
 
 echo "Setting up Worldwide bank demo..."
 curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup-dc-703.sh | sudo -E bash
