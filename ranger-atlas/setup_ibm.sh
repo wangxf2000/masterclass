@@ -1,3 +1,4 @@
+#curl -sSL https://raw.githubusercontent.com/abajwa-hw/masterclass/master/ranger-atlas/setup_ibm.sh | sudo -E sh
 #!/bin/bash
 host=$(hostname)
 IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
