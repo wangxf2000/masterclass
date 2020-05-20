@@ -9,6 +9,7 @@ export user='etl_user'              ## Admin user (e.g. etl_user) make sure IPA 
 export password='BadPass#1'         ## replace with pasword
 export lake_knox='10.X.X.X'       ## private IP address of DataLake master node
 export s3bucket="s3a://mybucket/datadir/dataeng"   ##replace with your data S3 bucket for dataeng
+export airlinedemoset="s3a://pse-airline-demo/"   ## either s3a://cldr-airline-demo/ or s3a://pse-airline-demo/ depending on which AWS account you're using
 
 #1. Confirm demo users/groups are in Ranger (e.g. joe_analyst, michelle_dpo, jeremy_contractor, diane_csr) else Ranger policy import will fail
 #2. Confirm that group cdp_<env name> is created and present in Ranger. Confirm above user is part of this group or he won't have admin rights
@@ -157,7 +158,7 @@ sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/TransSchema-cloud.hsql
 beeline -f ./data/TransSchema-cloud.hsql
 
 #optionally setup Airline demo dataset too
-hdfs dfs -cp s3a://cldr-airline-demo/ ${s3bucket}
+hdfs dfs -cp ${airlinedemoset} ${s3bucket}
 sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/AirlineSchema-cloud.hql
 beeline -f ./data/AirlineSchema-cloud.hql
 
