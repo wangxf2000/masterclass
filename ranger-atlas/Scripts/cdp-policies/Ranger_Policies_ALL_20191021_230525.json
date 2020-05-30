@@ -1449,6 +1449,10 @@
             {
               "type": "publish",
               "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
             }
           ],
           "users": [
@@ -1569,6 +1573,10 @@
           "accesses": [
             {
               "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
               "isAllowed": true
             }
           ],
