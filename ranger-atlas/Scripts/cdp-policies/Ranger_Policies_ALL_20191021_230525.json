@@ -1171,6 +1171,81 @@
     },
     {
       "service": "cm_kafka",
+      "name": "all - consumergroup",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for all - consumergroup",
+      "isAuditEnabled": true,
+      "resources": {
+        "consumergroup": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "delete",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "cruisecontrol",
+            "streamsmsgmgr",
+            "kafka",
+            "streamsrepmgr"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "kafka",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 100,
+      "guid": "ea12d295-4722-4664-bb3a-27e94587388c",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "cm_kafka",
       "name": "all - topic",
       "policyType": 0,
       "policyPriority": 0,
@@ -1219,92 +1294,37 @@
             {
               "type": "alter_configs",
               "isAllowed": true
-            }
-          ],
-          "users": [
-            "kafka",
-            "rangerlookup"
-          ],
-          "groups": [],
-          "roles": [
-            "Admins"
-          ],
-          "conditions": [],
-          "delegateAdmin": true
-        }
-      ],
-      "denyPolicyItems": [],
-      "allowExceptions": [],
-      "denyExceptions": [],
-      "dataMaskPolicyItems": [],
-      "rowFilterPolicyItems": [],
-      "serviceType": "kafka",
-      "options": {},
-      "validitySchedules": [],
-      "policyLabels": [],
-      "zoneName": "",
-      "isDenyAllElse": false,
-      "id": 48,
-      "guid": "350ddd21-7c27-48e8-8c38-ef2f5c238899",
-      "isEnabled": true,
-      "version": 1
-    },
-    {
-      "service": "cm_kafka",
-      "name": "all - cluster",
-      "policyType": 0,
-      "policyPriority": 0,
-      "description": "Policy for all - cluster",
-      "isAuditEnabled": true,
-      "resources": {
-        "cluster": {
-          "values": [
-            "*"
-          ],
-          "isExcludes": false,
-          "isRecursive": false
-        }
-      },
-      "policyItems": [
-        {
-          "accesses": [
-            {
-              "type": "configure",
-              "isAllowed": true
             },
             {
-              "type": "describe",
-              "isAllowed": true
-            },
-            {
-              "type": "create",
-              "isAllowed": true
-            },
-            {
-              "type": "kafka_admin",
-              "isAllowed": true
-            },
-            {
-              "type": "idempotent_write",
-              "isAllowed": true
-            },
-            {
-              "type": "describe_configs",
-              "isAllowed": true
-            },
-            {
-              "type": "alter_configs",
+              "type": "alter",
               "isAllowed": true
             }
           ],
           "users": [
+            "cruisecontrol",
+            "streamsmsgmgr",
             "kafka",
-            "rangerlookup"
+            "streamsrepmgr"
           ],
           "groups": [],
           "roles": [],
           "conditions": [],
           "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
         }
       ],
       "denyPolicyItems": [],
@@ -1318,8 +1338,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 49,
-      "guid": "6534a682-7772-48e5-90a2-5dd619c2cf2a",
+      "id": 101,
+      "guid": "17b5b568-90c7-4807-ab5c-af2042a4713d",
       "isEnabled": true,
       "version": 1
     },
@@ -1352,13 +1372,30 @@
             }
           ],
           "users": [
+            "cruisecontrol",
+            "streamsmsgmgr",
             "kafka",
-            "rangerlookup"
+            "streamsrepmgr"
           ],
           "groups": [],
           "roles": [],
           "conditions": [],
           "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
         }
       ],
       "denyPolicyItems": [],
@@ -1372,8 +1409,107 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 50,
-      "guid": "23b98550-fc4d-451c-a9ee-1e850f81332d",
+      "id": 102,
+      "guid": "e742ca52-050b-4c58-91df-f54c044621a3",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "cm_kafka",
+      "name": "all - cluster",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for all - cluster",
+      "isAuditEnabled": true,
+      "resources": {
+        "cluster": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "configure",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "kafka_admin",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
+              "isAllowed": true
+            },
+            {
+              "type": "idempotent_write",
+              "isAllowed": true
+            },
+            {
+              "type": "describe_configs",
+              "isAllowed": true
+            },
+            {
+              "type": "alter_configs",
+              "isAllowed": true
+            },
+            {
+              "type": "cluster_action",
+              "isAllowed": true
+            },
+            {
+              "type": "alter",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "cruisecontrol",
+            "streamsmsgmgr",
+            "kafka",
+            "streamsrepmgr"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "kafka",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 103,
+      "guid": "2063e20d-4f96-4697-bc14-d90578855b2e",
       "isEnabled": true,
       "version": 1
     },
@@ -1402,13 +1538,30 @@
             }
           ],
           "users": [
+            "cruisecontrol",
+            "streamsmsgmgr",
             "kafka",
-            "rangerlookup"
+            "streamsrepmgr"
           ],
           "groups": [],
           "roles": [],
           "conditions": [],
           "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
         }
       ],
       "denyPolicyItems": [],
@@ -1422,8 +1575,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 51,
-      "guid": "51ca6cd0-e999-4556-ad03-4ef8b6e707a3",
+      "id": 104,
+      "guid": "23965e04-5568-4c2d-a76b-e3e72aaf7afd",
       "isEnabled": true,
       "version": 1
     },
@@ -1458,7 +1611,9 @@
           "users": [
             "hbase",
             "hive",
-            "impala"
+            "impala",
+            "mlgov",
+            "nifi"
           ],
           "groups": [],
           "roles": [],
@@ -1487,30 +1642,6 @@
           "roles": [],
           "conditions": [],
           "delegateAdmin": false
-        },
-        {
-          "accesses": [
-            {
-              "type": "publish",
-              "isAllowed": true
-            },
-            {
-              "type": "describe",
-              "isAllowed": true
-            },
-            {
-              "type": "create",
-              "isAllowed": true
-            }
-          ],
-          "users": [
-            "kafka",
-            "nifi"
-          ],
-          "groups": [],
-          "roles": [],
-          "conditions": [],
-          "delegateAdmin": false
         }
       ],
       "denyPolicyItems": [],
@@ -1524,10 +1655,10 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 52,
-      "guid": "2ef5efdf-6f6d-499f-bf5d-f24b8699fbaf",
+      "id": 105,
+      "guid": "655d1b2e-3440-4b41-922d-0654b9e0f35b",
       "isEnabled": true,
-      "version": 5
+      "version": 1
     },
     {
       "service": "cm_kafka",
@@ -1549,7 +1680,7 @@
         {
           "accesses": [
             {
-              "type": "create",
+              "type": "publish",
               "isAllowed": true
             },
             {
@@ -1557,7 +1688,7 @@
               "isAllowed": true
             },
             {
-              "type": "publish",
+              "type": "create",
               "isAllowed": true
             }
           ],
@@ -1600,8 +1731,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 53,
-      "guid": "575bfc68-cb36-458c-a767-5db958dba2ef",
+      "id": 106,
+      "guid": "0824f5c8-0c3c-4fb1-82fe-d06ede41fdd4",
       "isEnabled": true,
       "version": 1
     },
@@ -1672,8 +1803,114 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 54,
-      "guid": "7dc9f926-f1b3-457c-b33a-99613b310566",
+      "id": 107,
+      "guid": "29c5561d-e443-4d69-9ff1-cd9b33c4155a",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "cm_kafka",
+      "name": "atlas consumergroup",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for atlas consumergroup",
+      "isAuditEnabled": true,
+      "resources": {
+        "consumergroup": {
+          "values": [
+            "atlas"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "atlas"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "kafka",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 108,
+      "guid": "d1f7b5e8-7fc4-4705-86d8-2cb596531361",
+      "isEnabled": true,
+      "version": 1
+    },
+    {
+      "service": "cm_kafka",
+      "name": "ranger_entities_consumer consumergroup",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for ranger_entities_consumer consumergroup",
+      "isAuditEnabled": true,
+      "resources": {
+        "consumergroup": {
+          "values": [
+            "ranger_entities_consumer"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangertagsync"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "kafka",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 109,
+      "guid": "de578f04-95d1-4b34-b29b-4359fe613f71",
       "isEnabled": true,
       "version": 1
     },
@@ -1698,6 +1935,18 @@
           "accesses": [
             {
               "type": "publish",
+              "isAllowed": true
+            },
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
               "isAllowed": true
             }
           ],
@@ -1738,10 +1987,10 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 55,
-      "guid": "f57e9b4b-8262-46ad-9425-12df957e15e3",
+      "id": 110,
+      "guid": "c1db1975-98d0-4b12-bed7-43a6f8151176",
       "isEnabled": true,
-      "version": 1
+      "version": 4
     },
     {
       "service": "cm_kafka",
@@ -1767,7 +2016,15 @@
               "isAllowed": true
             },
             {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
               "type": "describe",
+              "isAllowed": true
+            },
+            {
+              "type": "create",
               "isAllowed": true
             }
           ],
@@ -1791,8 +2048,167 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 56,
-      "guid": "88d03861-cb4f-4258-bde5-56e4d6f97da3",
+      "id": 111,
+      "guid": "4d93e30d-555e-4351-9801-3d3ce6623938",
+      "isEnabled": true,
+      "version": 3
+    },
+    {
+      "service": "cm_kafka",
+      "name": "access: console consumer group",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "allows access to console consumer",
+      "isAuditEnabled": true,
+      "resources": {
+        "consumergroup": {
+          "values": [
+            "console-consumer*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "consume",
+              "isAllowed": true
+            },
+            {
+              "type": "describe",
+              "isAllowed": true
+            }
+          ],
+          "users": [],
+          "groups": [
+            "public"
+          ],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "kafka",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 152,
+      "guid": "db46b237-9065-49b5-a44b-0e1749fa3803",
+      "isEnabled": true,
+      "version": 2
+    },
+    {
+      "service": "cm_atlas",
+      "name": "all - entity-type, entity-classification, entity, entity-business-metadata",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for all - entity-type, entity-classification, entity, entity-business-metadata",
+      "isAuditEnabled": true,
+      "resources": {
+        "entity-type": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity-business-metadata": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity-classification": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "entity-update-business-metadata",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "beacon",
+            "dpprofiler",
+            "admin",
+            "nifi",
+            "admin"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "entity-read",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangertagsync"
+          ],
+          "groups": [
+            "public"
+          ],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        },
+        {
+          "accesses": [
+            {
+              "type": "entity-read",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "atlas",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 31,
+      "guid": "79ef14e8-cb36-4d95-ba83-28a1bb2838da",
       "isEnabled": true,
       "version": 1
     },
@@ -1859,13 +2275,14 @@
             }
           ],
           "users": [
+            "beacon",
+            "dpprofiler",
             "admin",
-            "rangerlookup"
+            "nifi",
+            "admin"
           ],
           "groups": [],
-          "roles": [
-            "Admins"
-          ],
+          "roles": [],
           "conditions": [],
           "delegateAdmin": true
         },
@@ -1891,22 +2308,10 @@
             {
               "type": "entity-read",
               "isAllowed": true
-            },
-            {
-              "type": "entity-create",
-              "isAllowed": true
-            },
-            {
-              "type": "entity-update",
-              "isAllowed": true
-            },
-            {
-              "type": "entity-delete",
-              "isAllowed": true
             }
           ],
           "users": [
-            "nifi"
+            "rangerlookup"
           ],
           "groups": [],
           "roles": [],
@@ -1925,10 +2330,120 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 57,
-      "guid": "dbb4ea6d-71fa-4026-ba67-101efa84b4ed",
+      "id": 32,
+      "guid": "ba61a395-50b8-4e3c-950d-fa12874acaad",
       "isEnabled": true,
-      "version": 2
+      "version": 1
+    },
+    {
+      "service": "cm_atlas",
+      "name": "all - entity-type, entity-classification, entity, entity-label",
+      "policyType": 0,
+      "policyPriority": 0,
+      "description": "Policy for all - entity-type, entity-classification, entity, entity-label",
+      "isAuditEnabled": true,
+      "resources": {
+        "entity-type": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity-classification": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity-label": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        },
+        "entity": {
+          "values": [
+            "*"
+          ],
+          "isExcludes": false,
+          "isRecursive": false
+        }
+      },
+      "policyItems": [
+        {
+          "accesses": [
+            {
+              "type": "entity-add-label",
+              "isAllowed": true
+            },
+            {
+              "type": "entity-remove-label",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "beacon",
+            "dpprofiler",
+            "admin",
+            "nifi",
+            "admin"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": true
+        },
+        {
+          "accesses": [
+            {
+              "type": "entity-read",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangertagsync"
+          ],
+          "groups": [
+            "public"
+          ],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        },
+        {
+          "accesses": [
+            {
+              "type": "entity-read",
+              "isAllowed": true
+            }
+          ],
+          "users": [
+            "rangerlookup"
+          ],
+          "groups": [],
+          "roles": [],
+          "conditions": [],
+          "delegateAdmin": false
+        }
+      ],
+      "denyPolicyItems": [],
+      "allowExceptions": [],
+      "denyExceptions": [],
+      "dataMaskPolicyItems": [],
+      "rowFilterPolicyItems": [],
+      "serviceType": "atlas",
+      "options": {},
+      "validitySchedules": [],
+      "policyLabels": [],
+      "zoneName": "",
+      "isDenyAllElse": false,
+      "id": 33,
+      "guid": "35200dbf-acde-4fc8-b5dd-7b03b5031518",
+      "isEnabled": true,
+      "version": 1
     },
     {
       "service": "cm_atlas",
@@ -2005,8 +2520,10 @@
             }
           ],
           "users": [
+            "beacon",
+            "dpprofiler",
             "admin",
-            "rangerlookup",
+            "nifi",
             "admin"
           ],
           "groups": [
@@ -2028,8 +2545,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 58,
-      "guid": "68833203-80b5-4621-8364-f46c15de9f95",
+      "id": 34,
+      "guid": "60494242-8e20-4b10-a25c-fe9620706a3a",
       "isEnabled": true,
       "version": 1
     },
@@ -2062,14 +2579,14 @@
             }
           ],
           "users": [
+            "beacon",
+            "dpprofiler",
             "admin",
-            "rangerlookup",
+            "nifi",
             "admin"
           ],
           "groups": [],
-          "roles": [
-            "Admins"
-          ],
+          "roles": [],
           "conditions": [],
           "delegateAdmin": true
         }
@@ -2085,8 +2602,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 59,
-      "guid": "b4f5e5d2-2666-4eed-aafb-8a69ae90db24",
+      "id": 35,
+      "guid": "93d7c941-c6f4-488a-b93c-1d429bb5c1f8",
       "isEnabled": true,
       "version": 1
     },
@@ -2130,39 +2647,16 @@
             }
           ],
           "users": [
+            "beacon",
+            "dpprofiler",
             "admin",
-            "rangerlookup",
+            "nifi",
             "admin"
-          ],
-          "groups": [],
-          "roles": [
-            "Admins"
-          ],
-          "conditions": [],
-          "delegateAdmin": true
-        },
-        {
-          "accesses": [
-            {
-              "type": "type-create",
-              "isAllowed": true
-            },
-            {
-              "type": "type-update",
-              "isAllowed": true
-            },
-            {
-              "type": "type-delete",
-              "isAllowed": true
-            }
-          ],
-          "users": [
-            "nifi"
           ],
           "groups": [],
           "roles": [],
           "conditions": [],
-          "delegateAdmin": false
+          "delegateAdmin": true
         }
       ],
       "denyPolicyItems": [],
@@ -2176,14 +2670,14 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 60,
-      "guid": "b9eb0514-dc02-4a65-8029-0d36e58ae5da",
+      "id": 36,
+      "guid": "7e1b4a30-10d0-42c4-83ce-24a7763b97eb",
       "isEnabled": true,
-      "version": 2
+      "version": 1
     },
     {
       "service": "cm_atlas",
-      "name": " Allow users to manage favorite searches",
+      "name": "Allow users to manage favorite searches",
       "policyType": 0,
       "policyPriority": 0,
       "isAuditEnabled": true,
@@ -2252,8 +2746,8 @@
       "policyLabels": [],
       "zoneName": "",
       "isDenyAllElse": false,
-      "id": 61,
-      "guid": "1d5fe431-bf82-4540-aa66-8adb0860d22a",
+      "id": 37,
+      "guid": "064f9c10-9cba-4dc6-9359-16859c306129",
       "isEnabled": true,
       "version": 1
     },
