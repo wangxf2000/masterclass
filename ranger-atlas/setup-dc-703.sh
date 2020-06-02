@@ -15,6 +15,7 @@ export ranger_password=${ranger_password:-BadPass#1}
 export atlas_pass=${atlas_pass:-BadPass#1}
 export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 #export cluster_name=${cluster_name:-SingleNodeCluster}
+export import_hue_queries=${import_hue_queries:-true}
 export host=$(hostname -f)
 
 yum install -y git jq nc
@@ -149,9 +150,11 @@ echo "enable PAM auth for zeppelin, Hue..."
 setfacl -m user:zeppelin:r /etc/shadow
 setfacl -m user:hue:r /etc/shadow
 
-echo "import sample Hue queries..."
-#these were previously exported via: mysqldump -u hue -pcloudera hue desktop_document2 > desktop_document2.sql
-mysql -u hue -pcloudera hue < ./data/desktop_document2.sql
+if [ "${import_hue_queries}" = true  ]; then
+   echo "import sample Hue queries..."
+   #these were previously exported via: mysqldump -u hue -pcloudera hue desktop_document2 > desktop_document2.sql
+   mysql -u hue -pcloudera hue < ./data/desktop_document2.sql
+fi
 
 sleep 5 
 cd ../Scripts/interpreters/
