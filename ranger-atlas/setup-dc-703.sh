@@ -198,7 +198,7 @@ cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive Merge.json" ./2EXWA
 chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
 
 
--------------------------
+echo "-------------------------"
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 sed -i.bak "s/21000/31000/g" env_atlas.sh
 sed -i.bak "s/localhost/${atlas_host}/g" env_atlas.sh
