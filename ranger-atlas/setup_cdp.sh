@@ -158,8 +158,9 @@ sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/TransSchema-cloud.hsql
 beeline -f ./data/TransSchema-cloud.hsql
 
 #optionally setup Airline demo dataset too
-hdfs dfs -cp ${airlinedemoset} ${s3bucket}
-sed -i.bak "s|__mybucket__|${s3bucket}|g" ./data/AirlineSchema-cloud.hql
+hdfs dfs -mkdir ${s3bucket}/airlinedata
+hdfs dfs -cp ${airlinedemoset} ${s3bucket}/airlinedata/
+sed -i.bak "s|__mybucket__|${s3bucket}/airlinedata|g" ./data/AirlineSchema-cloud.hql
 beeline -f ./data/AirlineSchema-cloud.hql
 
 echo "Sleeping for 60s..."
