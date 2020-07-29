@@ -247,6 +247,11 @@ CREATE VIEW IF NOT EXISTS hr.uk_employees AS SELECT * FROM hr.employees where re
 
 CREATE VIEW IF NOT EXISTS hr.eu_employees AS SELECT * FROM hr.employees where region='EU';
 
+CREATE VIEW IF NOT EXISTS worldwidebank.it_customers AS SELECT * FROM  worldwidebank.ww_customers where country='IT';
+CREATE VIEW IF NOT EXISTS worldwidebank.es_customers AS SELECT * FROM  worldwidebank.ww_customers where country='ES';
+CREATE VIEW IF NOT EXISTS worldwidebank.gb_customers AS SELECT * FROM  worldwidebank.ww_customers where country='GB';
+CREATE VIEW IF NOT EXISTS worldwidebank.fr_customers AS SELECT * FROM  worldwidebank.ww_customers where country='FR';
+CREATE VIEW IF NOT EXISTS worldwidebank.de_customers AS SELECT * FROM  worldwidebank.ww_customers where country='DE';
 
 
 
