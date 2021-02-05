@@ -238,7 +238,7 @@ then
     chown nifi:nifi /tmp/nifi.keytab
 fi
 
-echo "Setup complete! Restart Zeppelin/NiFi to see imported notebooks/templates"
+echo "Setup complete! Restart CMS and Zeppelin to see imported notebooks"
 exit 0
 
 -------------------------
