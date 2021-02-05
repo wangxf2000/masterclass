@@ -3,6 +3,7 @@
 #run on CDP-DC master node
 export enable_kerberos=${enable_kerberos:-true}      ## whether kerberos is enabled on cluster
 export atlas_host=${atlas_host:-$(hostname -f)}      ##atlas hostname (if not on current host). Override with your own
+export ranger_host=${ranger_host:-$(hostname -f)}    ##ranger hostname (if not on current host). Override with your own
 
 #default settings for cloudcat cluster. You can override for your own setup
 # export ranger_password=${ranger_password:-admin123}  
@@ -16,6 +17,7 @@ export atlas_pass=${atlas_pass:-BadPass#1}
 export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 #export cluster_name=${cluster_name:-SingleNodeCluster}
 export import_hue_queries=${import_hue_queries:-true}
+export import_zeppelin_queries=${import_zeppelin_queries:-true}
 export host=$(hostname -f)
 
 yum install -y git jq nc
@@ -33,9 +35,10 @@ sleep 60
 
 
 ranger_curl="curl -u admin:${ranger_password}"
-ranger_url="http://localhost:6080/service"
+ranger_url="http://${ranger_host}:6080/service"
 
 
+#create etl role
 ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: application/json" ${ranger_url}/public/v2/api/roles  -d @- <<EOF
 {
    "name":"Admins",
@@ -56,7 +59,7 @@ ${ranger_curl} -X POST -H "Content-Type: application/json" -H "Accept: applicati
 EOF
 
 
-
+#Update Hive service def to enable prohibition policies for Hive
 ${ranger_curl} ${ranger_url}/public/v2/api/servicedef/name/hive \
   | jq '.options = {"enableDenyAndExceptionsInPolicies":"true"}' \
   | jq '.policyConditions = [
@@ -146,56 +149,55 @@ echo "Create hive tables..."
 beeline  -n etl_user -f ./data/HiveSchema-dc.hsql
 beeline  -n etl_user -f ./data/TransSchema-cloud.hsql
 
-echo "enable PAM auth for zeppelin, Hue..."
-setfacl -m user:zeppelin:r /etc/shadow
-setfacl -m user:hue:r /etc/shadow
-
 if [ "${import_hue_queries}" = true  ]; then
    echo "import sample Hue queries..."
    #these were previously exported via: mysqldump -u hue -pcloudera hue desktop_document2 > desktop_document2.sql
    mysql -u hue -pcloudera hue < ./data/desktop_document2.sql
+   setfacl -m user:hue:r /etc/shadow     ## enable PAM auth for Hue
 fi
 
 sleep 5 
-cd ../Scripts/interpreters/
 
-echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
+if [ "${import_zeppelin_queries}" = true  ]; then
+   echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
+   cd ../Scripts/interpreters/
+   #login to zeppelin and grab cookie 
+   cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
+   echo "$cookie" > cookie.txt
 
-#login to zeppelin and grab cookie 
-cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
-echo "$cookie" > cookie.txt
+   #Create shell interpreter setting
+   curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./shell.json
 
-#Create shell interpreter setting
-curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./shell.json
+   #Create jdbc interpreter setting
+   hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
+   sed -i.bak "s|__hivejar__|${hivejar}|g" ./jdbc.json
+   curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./jdbc.json
 
-#Create jdbc interpreter setting
-hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
-sed -i.bak "s|__hivejar__|${hivejar}|g" ./jdbc.json
-curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./jdbc.json
-
-#list all interpreters settings - jdbc and sh should now be added
-curl -b ./cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
-
-
-#import zeppelin notebooks
-cd /var/lib/zeppelin/notebook
-mkdir 2EKX5F5MF
-cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Joe-Analyst.json"  ./2EKX5F5MF/note.json
-
-mkdir 2EMPR5K29
-cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Ivanna EU HR.json" ./2EMPR5K29/note.json
-
-mkdir 2EKHXD4H3
-cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ etl_user.json" ./2EKHXD4H3/note.json
-
-mkdir 2EZM9PAXV
-cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive ACID.json" ./2EZM9PAXV/note.json
-
-mkdir 2EXWA1114
-cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive Merge.json" ./2EXWA1114/note.json
+   #list all interpreters settings - jdbc and sh should now be added
+   curl -b ./cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
 
 
-chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
+   #import zeppelin notebooks
+   cd /var/lib/zeppelin/notebook
+   mkdir 2EKX5F5MF
+   cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Joe-Analyst.json"  ./2EKX5F5MF/note.json
+
+   mkdir 2EMPR5K29
+   cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Ivanna EU HR.json" ./2EMPR5K29/note.json
+
+   mkdir 2EKHXD4H3
+   cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ etl_user.json" ./2EKHXD4H3/note.json
+
+   mkdir 2EZM9PAXV
+   cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive ACID.json" ./2EZM9PAXV/note.json
+
+   mkdir 2EXWA1114
+   cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive Merge.json" ./2EXWA1114/note.json
+
+   chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
+
+   setfacl -m user:zeppelin:r /etc/shadow   ## enable PAM auth for zeppelin
+fi
 
 
 echo "-------------------------"
@@ -204,18 +206,21 @@ sed -i.bak "s/21000/31000/g" env_atlas.sh
 sed -i.bak "s/localhost/${atlas_host}/g" env_atlas.sh
 sed -i.bak "s/ATLAS_PASS=admin/ATLAS_PASS=${atlas_pass}/g" env_atlas.sh
 
+#import Atlas tags
 ./01-atlas-import-classification.sh
 
+#create Hbase tables and Kafka topics
 ./08-create-hbase-kafka-dc.sh
 
 echo "Sleeping for 60s..."
 sleep 60
+#associate Hive/Hbase/Kafka/HDFS entities with tags (needed for tag based policies)
 ./09-associate-entities-with-tags-dc.sh
 
-export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
 
 if [ -d "/var/lib/nifi/" ] 
 then
+    export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
     echo "Setting up Nifi / Atlas. cluster_name:${cluster_name} kdc_realm:${kdc_realm} host:${host}"
     cp /tmp/masterclass/ranger-atlas/HortoniaMunichSetup/data/atlas-application.properties /tmp
     sed -i "s/cdp.cloudera.com/${host}/g; s/CLOUDERA.COM/${kdc_realm}/g; s/WWBank/${cluster_name}/g;" /tmp/atlas-application.properties
