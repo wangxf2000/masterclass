@@ -160,7 +160,7 @@ sleep 5
 
 if [ "${import_zeppelin_queries}" = true  ]; then
    echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
-   cd ../Scripts/interpreters/
+   cd /tmp/masterclass/ranger-atlas/Scripts/interpreters
    #login to zeppelin and grab cookie 
    cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
    echo "$cookie" > cookie.txt
