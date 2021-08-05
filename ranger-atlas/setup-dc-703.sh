@@ -26,9 +26,6 @@ yum install -y git jq nc
 
 cluster_name=$(curl -X GET -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/  | jq '.items[0].name' | tr -d '"')
 echo "cluster name is: ${cluster_name}
-
-#restart CM service
-curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/cm/service/commands/restart
  
 cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
@@ -252,7 +249,11 @@ then
     chown nifi:nifi /tmp/nifi.keytab
 fi
 
-echo "Setup complete! Restart CMS and Zeppelin to see imported notebooks"
+echo "restarting CMS service..."
+curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/cm/service/commands/restart
+
+
+echo "Setup complete!"
 exit 0
 
 -------------------------
