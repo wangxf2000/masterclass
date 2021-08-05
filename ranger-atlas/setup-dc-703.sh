@@ -174,15 +174,18 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    cat cookie.txt
 
    echo "Create shell interpreter setting..."
+   echo "curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json"
    curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
 
    echo "Create jdbc interpreter setting...."
    hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
    sed -i.bak "s|__hivejar__|${hivejar}|g" ${intpr_dir}/jdbc.json
+   echo "curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json"   
    curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
 
    echo "listing all interpreters settings - jdbc and sh should now be included..."
-   curl -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
+   echo "curl -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id"
+   curl -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
 
 
    echo "importing zeppelin notebooks..."
