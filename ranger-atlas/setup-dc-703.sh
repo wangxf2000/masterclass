@@ -22,12 +22,14 @@ export host=$(hostname -f)
 export cm_api_ver="v44" 
 export cm_password="admin"
 
+yum install -y git jq nc
+
 cluster_name=$(curl -X GET -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/  | jq '.items[0].name' | tr -d '"')
+echo "cluster name is: ${cluster_name}
 
 #restart CM service
 curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/cm/service/commands/restart
  
-yum install -y git jq nc
 cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
@@ -166,8 +168,8 @@ fi
 sleep 5 
 
 if [ "${import_zeppelin_queries}" = true  ]; then
-   echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
    cd /tmp/masterclass/ranger-atlas/Scripts/interpreters
+   echo "In Zeppelin, create shell and jdbc interpreter settings via API from ${PWD}"
    echo "login to zeppelin and grab cookie..."
    cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
    echo "$cookie" > cookie.txt
