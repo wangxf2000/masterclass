@@ -218,7 +218,7 @@ sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
 
-if [ -d "/var/lib/nifi/" ] 
+if [ -d "/var/lib/nifi/" ] && [ -n "$(ls /var/lib/nifi/)" ]
 then
     export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
     echo "Setting up Nifi / Atlas. cluster_name:${cluster_name} kdc_realm:${kdc_realm} host:${host}"
