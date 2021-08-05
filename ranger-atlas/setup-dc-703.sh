@@ -171,7 +171,8 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    echo "login to zeppelin and grab cookie..."
    cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
    echo "$cookie" > ${intpr_dir}/cookie.txt
-   cat cookie.txt
+   echo "Writing cookie to ${intpr_dir}/cookie.txt"
+   cat ${intpr_dir}/cookie.txt
 
    echo "Create shell interpreter setting..."
    echo "curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json"
