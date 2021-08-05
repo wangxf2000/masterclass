@@ -25,7 +25,7 @@ export cm_password="admin"
 yum install -y git jq nc
 
 cluster_name=$(curl -X GET -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/  | jq '.items[0].name' | tr -d '"')
-echo "cluster name is: ${cluster_name}
+echo "cluster name is: ${cluster_name}"
  
 cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
