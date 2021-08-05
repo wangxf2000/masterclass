@@ -19,7 +19,14 @@ export kdc_realm=${kdc_realm:-CLOUDERA.COM}
 export import_hue_queries=${import_hue_queries:-true}
 export import_zeppelin_queries=${import_zeppelin_queries:-true}
 export host=$(hostname -f)
+export cm_api_ver="v44" 
+export cm_password="admin"
 
+cluster_name=$(curl -X GET -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/  | jq '.items[0].name' | tr -d '"')
+
+#restart CM service
+curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/cm/service/commands/restart
+ 
 yum install -y git jq nc
 cd /tmp
 git clone https://github.com/abajwa-hw/masterclass  
@@ -161,23 +168,24 @@ sleep 5
 if [ "${import_zeppelin_queries}" = true  ]; then
    echo "In Zeppelin, create shell and jdbc interpreter settings via API.."
    cd /tmp/masterclass/ranger-atlas/Scripts/interpreters
-   #login to zeppelin and grab cookie 
+   echo "login to zeppelin and grab cookie..."
    cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
    echo "$cookie" > cookie.txt
+   cat cookie.txt
 
-   #Create shell interpreter setting
+   echo "Create shell interpreter setting..."
    curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./shell.json
 
-   #Create jdbc interpreter setting
+   echo "Create jdbc interpreter setting...."
    hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
    sed -i.bak "s|__hivejar__|${hivejar}|g" ./jdbc.json
    curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./jdbc.json
 
-   #list all interpreters settings - jdbc and sh should now be added
+   echo "listing all interpreters settings - jdbc and sh should now be included..."
    curl -b ./cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
 
 
-   #import zeppelin notebooks
+   echo "importing zeppelin notebooks..."
    cd /var/lib/zeppelin/notebook
    mkdir 2EKX5F5MF
    cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Security _ WorldWideBank _ Joe-Analyst.json"  ./2EKX5F5MF/note.json
@@ -197,6 +205,9 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
 
    setfacl -m user:zeppelin:r /etc/shadow   ## enable PAM auth for zeppelin
+   
+   echo "restarting Zeppelin..."
+   curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/${cluster_name}/services/zeppelin/commands/restart
 fi
 
 
@@ -218,6 +229,7 @@ sleep 60
 ./09-associate-entities-with-tags-dc.sh
 
 
+#If NiFi is install, attempt to install the demo NiFi flow
 if [ -d "/var/lib/nifi/" ] && [ -n "$(ls /var/lib/nifi/)" ]
 then
     export cluster_name=$(curl -X GET -u admin:admin http://localhost:7180/api/v40/clusters/  | jq '.items[0].name' | tr -d '"')
