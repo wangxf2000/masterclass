@@ -165,23 +165,24 @@ fi
 sleep 5 
 
 if [ "${import_zeppelin_queries}" = true  ]; then
-   cd /tmp/masterclass/ranger-atlas/Scripts/interpreters
+   intpr_dir="/tmp/masterclass/ranger-atlas/Scripts/interpreters"
+   cd ${intpr_dir}
    echo "In Zeppelin, create shell and jdbc interpreter settings via API from ${PWD}"
    echo "login to zeppelin and grab cookie..."
    cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
-   echo "$cookie" > cookie.txt
+   echo "$cookie" > ${intpr_dir}/cookie.txt
    cat cookie.txt
 
    echo "Create shell interpreter setting..."
-   curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./shell.json
+   curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
 
    echo "Create jdbc interpreter setting...."
    hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
-   sed -i.bak "s|__hivejar__|${hivejar}|g" ./jdbc.json
-   curl -b ./cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @./jdbc.json
+   sed -i.bak "s|__hivejar__|${hivejar}|g" ${intpr_dir}/jdbc.json
+   curl -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
 
    echo "listing all interpreters settings - jdbc and sh should now be included..."
-   curl -b ./cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
+   curl -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep "id"
 
 
    echo "importing zeppelin notebooks..."
