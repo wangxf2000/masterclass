@@ -169,24 +169,18 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    cd ${intpr_dir}
    echo "In Zeppelin, create shell and jdbc interpreter settings via API from ${PWD}"
    echo "login to zeppelin and grab cookie..."
-   cookie=$( curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1  )
-   echo "$cookie" > ${intpr_dir}/cookie.txt
-   echo "Writing cookie to ${intpr_dir}/cookie.txt"
-   cat ${intpr_dir}/cookie.txt
-
+   id=`curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1 | grep -Eo 'JSESSIONID=[0-9A-Za-z-]+'`
+   sleep 1
    echo "Create shell interpreter setting..."
-   echo "curl -v -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json"
-   curl -v -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
-
+   curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
+   sleep 1
    echo "Create jdbc interpreter setting...."
    hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
    sed -i.bak "s|__hivejar__|${hivejar}|g" ${intpr_dir}/jdbc.json
-   echo "curl -v -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json"   
-   curl -v -b ${intpr_dir}/cookie.txt -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
-
+   curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
+   sleep 1
    echo "listing all interpreters settings - jdbc and sh should now be included..."
-   echo "curl -v -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id"
-   curl -v -b ${intpr_dir}/cookie.txt http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
+   curl -v --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
 
 
    echo "importing zeppelin notebooks..."
