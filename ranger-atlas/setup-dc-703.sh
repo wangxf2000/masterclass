@@ -165,26 +165,6 @@ fi
 sleep 5 
 
 if [ "${import_zeppelin_queries}" = true  ]; then
-   intpr_dir="/tmp/masterclass/ranger-atlas/Scripts/interpreters"
-   cd ${intpr_dir}
-   echo "In Zeppelin, create shell and jdbc interpreter settings via API from ${PWD}"
-   echo "login to zeppelin and grab cookie..."
-   id=`curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1 | grep -Eo 'JSESSIONID=[0-9A-Za-z-]+'`
-   echo "Session id:${id}"
-   sleep 1
-   echo "Create shell interpreter setting..."
-   echo "curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json"
-   curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
-   sleep 1
-   echo "Create jdbc interpreter setting...."
-   hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
-   sed -i.bak "s|__hivejar__|${hivejar}|g" ${intpr_dir}/jdbc.json
-   echo "curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json"
-   curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
-   sleep 1
-   echo "listing all interpreters settings - jdbc and sh should now be included..."
-   echo "curl -v --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id"
-   curl -v --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
 
    echo "importing zeppelin notebooks..."
    cd /var/lib/zeppelin/notebook
@@ -204,11 +184,35 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    cp "/tmp/masterclass/ranger-atlas/Notebooks-CDP/Demos _ Hive Merge.json" ./2EXWA1114/note.json
 
    chown -R  zeppelin:zeppelin /var/lib/zeppelin/notebook 
-
-   setfacl -m user:zeppelin:r /etc/shadow   ## enable PAM auth for zeppelin
    
    echo "restarting Zeppelin..."
    curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/${cluster_name}/services/zeppelin/commands/restart
+   sleep 60
+   while ! echo exit | nc localhost 8885; do echo "waiting for Zeppelin to come up..."; sleep 10; done
+
+   intpr_dir="/tmp/masterclass/ranger-atlas/Scripts/interpreters"
+   cd ${intpr_dir}
+   echo "In Zeppelin, create shell and jdbc interpreter settings via API from ${PWD}"
+   echo "login to zeppelin and grab cookie..."
+   id=`curl -i --data "userName=etl_user&password=BadPass#1" -X POST http://$(hostname -f):8885/api/login | grep HttpOnly  | tail -1 | grep -Eo 'JSESSIONID=[0-9A-Za-z-]+'`
+   echo "Session id:${id}"
+   sleep 1
+   echo "Create shell interpreter setting..."
+   #echo "curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json"
+   curl --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/shell.json
+   sleep 1
+   echo "Create jdbc interpreter setting...."
+   hivejar=$(ls /opt/cloudera/parcels/CDH/jars/hive-jdbc-3*-standalone.jar)
+   sed -i.bak "s|__hivejar__|${hivejar}|g" ${intpr_dir}/jdbc.json
+   #echo "curl -v --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json"
+   curl --cookie $id -X POST http://$(hostname -f):8885/api/interpreter/setting -d @${intpr_dir}/jdbc.json
+   sleep 1
+   echo "listing all interpreters settings - jdbc and sh should now be included..."
+   #echo "curl -v --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id"
+   curl --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
+   
+   setfacl -m user:zeppelin:r /etc/shadow   ## enable PAM auth for zeppelin
+
 fi
 
 
@@ -253,6 +257,8 @@ fi
 
 echo "restarting CMS service..."
 curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/cm/service/commands/restart
+sleep 60
+while ! echo exit | nc localhost 9996; do echo "waiting for ServiceMonitor to come up..."; sleep 10; done
 
 
 echo "Setup complete!"
