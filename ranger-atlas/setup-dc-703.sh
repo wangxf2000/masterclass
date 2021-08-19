@@ -210,7 +210,12 @@ if [ "${import_zeppelin_queries}" = true  ]; then
    echo "listing all interpreters settings - jdbc and sh should now be included..."
    #echo "curl -v --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id"
    curl --cookie $id http://$(hostname -f):8885/api/interpreter/setting | python -m json.tool | grep id
-   
+
+   echo "restarting Zeppelin..."
+   curl -X POST -u admin:${cm_password} http://localhost:7180/api/${cm_api_ver}/clusters/${cluster_name}/services/zeppelin/commands/restart
+   sleep 60
+   while ! echo exit | nc localhost 8885; do echo "waiting for Zeppelin to come up..."; sleep 10; done
+
    setfacl -m user:zeppelin:r /etc/shadow   ## enable PAM auth for zeppelin
 
 fi
