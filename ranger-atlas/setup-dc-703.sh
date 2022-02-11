@@ -28,7 +28,7 @@ cluster_name=$(curl -X GET -u admin:${cm_password} http://localhost:7180/api/${c
 echo "cluster name is: ${cluster_name}"
  
 cd /tmp
-git clone https://github.com/abajwa-hw/masterclass  
+git clone https://github.com/wangxf2000/masterclass  
 cd /tmp/masterclass/ranger-atlas/HortoniaMunichSetup
 chmod +x *.sh
 ./04-create-os-users.sh  
